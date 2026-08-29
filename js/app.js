@@ -13,16 +13,16 @@ let _zc=100;
 class Boot{
   async go(){
     const L=document.getElementById('boot-text'),B=document.getElementById('boot-bar');
-    const msgs=['> BIOS v4.2... OK','> RAM: 65536K... OK','> Cargando kernel...','> mount /expedientes... OK','> daemon PID=1337','> NET: handshake seguro','> CRYPT: AES-256','> CLEARANCE: NIVEL-\u03A9','> ARCHIVOS: 6 expedientes','> UI: escritorio listo...'];
+    const msgs=['> BIOS v4.2... OK','> RAM: 65536K... OK','> CRYPT: AES-256','> CLEARANCE: NIVEL-\u03A9','> ARCHIVOS: 6 expedientes','> UI: escritorio listo...'];
     for(let i=0;i<msgs.length;i++){
       const l=document.createElement('div');L.appendChild(l);
-      for(let j=0;j<msgs[i].length;j++){l.textContent=msgs[i].substring(0,j+1);await this.wait(10+Math.random()*15)}
+      for(let j=0;j<msgs[i].length;j++){l.textContent=msgs[i].substring(0,j+1);await this.wait(3+Math.random()*5)}
       if(B)B.style.width=((i+1)/msgs.length*95)+'%';
-      L.scrollTop=L.scrollHeight;await this.wait(120+Math.random()*100);
+      L.scrollTop=L.scrollHeight;await this.wait(30+Math.random()*40);
     }
-    const f=document.createElement('div');f.innerHTML='> SISTEMA LISTO<span class="cur"></span>';L.appendChild(f);await this.wait(500);
-    if(B)B.style.width='100%';await this.wait(600);
-    document.getElementById('boot-screen').style.opacity='0';document.getElementById('boot-screen').style.transition='opacity .5s';await this.wait(500);
+    const f=document.createElement('div');f.innerHTML='> SISTEMA LISTO<span class="cur"></span>';L.appendChild(f);await this.wait(200);
+    if(B)B.style.width='100%';await this.wait(200);
+    document.getElementById('boot-screen').style.opacity='0';document.getElementById('boot-screen').style.transition='opacity .3s';await this.wait(300);
     document.getElementById('desktop').classList.remove('hidden');this.renderFolders();
   }
   wait(ms){return new Promise(r=>setTimeout(r,ms))}
