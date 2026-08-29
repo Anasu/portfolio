@@ -31,7 +31,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .ps .pl{font-size:.5rem;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
 .ps .pv{font-size:.65rem}
 .ps .pv.green{color:var(--green)}
-.ps .pv.num{font-size:2rem;text-align:center;font-family:var(--serif);font-weight:700;color:var(--green);text-shadow:0 0 15px rgba(0,255,136,.2)}
+.ps .pv.num{font-size:2rem;text-align:center;font-family:var(--serif);font-weight:700;color:var(--green);text-shadow:0 0 15px rgba(112,54,231,.25)}
 .plog{font-size:.48rem;color:#3a4a5a;line-height:1.6;min-height:120px}
 .plog div{padding:1px 0}
 #windows-container{position:fixed;inset:0;pointer-events:none;z-index:500}
