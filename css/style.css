@@ -19,8 +19,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));grid-template-rows:repeat(auto-fill,140px);gap:8px;align-content:start;overflow-y:auto}
 .folder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 8px;border:2px outset #c0c0c0;background:#0d0d0d;cursor:pointer;user-select:none;width:120px;position:relative;transition:none}
 .folder:active{border-style:inset;border-color:#606060}
-.folder .ico{font-size:2rem;line-height:1}
-.folder .lbl{font-size:.65rem;color:#fff;text-align:center;word-break:break-word;width:100%}
+.folder .ico{font-size:2.5rem;line-height:1;filter:grayscale(.2)}
+.folder .lbl{font-family:var(--serif);font-size:.75rem;color:#fff;text-align:center;letter-spacing:2px;margin-top:4px}
+.folder .cat{font-family:var(--mono);font-size:.5rem;color:#8a9bae;text-align:center;margin-top:2px;text-transform:uppercase;letter-spacing:1px}
 .folder:hover,.folder.sel{background:var(--blue)}
 .folder:hover .ico,.folder.sel .ico{filter:brightness(1.2)}
 .panel{width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;overflow-y:auto;flex-shrink:0}

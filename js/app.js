@@ -27,8 +27,9 @@ class Boot{
   renderFolders(){
     const g=document.getElementById('grid');
     EXP.forEach(e=>{
+      const cat=e.cat.split('·')[0].trim().substring(0,12);
       const f=document.createElement('div');f.className='folder';f.dataset.id=e.id;
-      f.innerHTML='<span class="ico">'+e.ico+'</span><span class="lbl">'+e.titulo+'</span>';
+      f.innerHTML='<span class="ico">'+e.ico+'</span><span class="lbl">'+e.titulo+'</span><span class="cat">'+cat+'</span>';
       f.addEventListener('click',ev=>{ev.stopPropagation();document.querySelectorAll('.folder').forEach(x=>x.classList.remove('sel'));f.classList.add('sel')});
       f.addEventListener('dblclick',()=>Window.open(e));g.appendChild(f);
     });
