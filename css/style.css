@@ -16,12 +16,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .tbar-left,.tbar-right{display:flex;align-items:center;gap:12px;font-size:1rem;color:#ccc;letter-spacing:1px}
 .tbar-brand{color:#fff;font-family:var(--serif);font-size:1rem;letter-spacing:3px}
 .desktop-body{flex:1;display:flex;overflow:hidden}
-.grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));grid-template-rows:auto;gap:10px;align-content:start;overflow-y:auto}
-.folder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border:2px outset #c0c0c0;background:#0d0d0d;cursor:pointer;user-select:none;min-width:140px;position:relative;transition:background .2s}
+.grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));grid-template-rows:auto;gap:16px;align-content:start;overflow-y:auto
+.folder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border:2px outset #c0c0c0;background:#0d0d0d;cursor:pointer;user-select:none;min-width:140px;max-width:250px;position:relative;transition:background .2s;box-sizing:border-box}
 .folder:active{border-style:inset;border-color:#606060}
 .folder .ico{font-size:3rem;line-height:1;filter:grayscale(.2)}
-.folder .lbl{font-family:var(--serif);font-size:1.05rem;color:#fff;text-align:center;letter-spacing:2px;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.folder .cat{font-family:var(--mono);font-size:.8rem;color:#8a9bae;text-align:center;margin-top:2px;text-transform:uppercase;letter-spacing:1px;width:100%;line-height:1.3}
+.folder .lbl{font-family:var(--serif);font-size:1.05rem;color:#fff;text-align:center;letter-spacing:2px;margin-top:4px;overflow-wrap:break-word;word-break:break-word;width:100%}
+.folder .cat{font-family:var(--mono);font-size:.8rem;color:#8a9bae;text-align:center;margin-top:2px;text-transform:uppercase;letter-spacing:1px;width:100%;line-height:1.3;overflow-wrap:break-word;word-break:break-word}
 .folder:hover,.folder.sel{background:rgba(255,255,255,.15) !important}
 .folder:hover .ico,.folder.sel .ico{filter:brightness(1.2)}
 .panel{width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;overflow-y:auto;flex-shrink:0}
