@@ -24,7 +24,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .tbar-brand{color:#fff;font-family:var(--serif);font-size:1rem;letter-spacing:3px}
 .desktop-body{flex:1;display:flex;overflow:hidden}
 .grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));grid-template-rows:repeat(auto-fill,200px);gap:16px;align-content:start;overflow-y:auto}
-.folder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border:2px outset #c0c0c0;background:#0d0d0d;cursor:pointer;user-select:none;min-width:160px;height:180px;position:relative;transition:background .2s, border-color .25s, box-shadow .25s;box-sizing:border-box}
+.folder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border:2px outset #c0c0c0;background:#0d0d0d;cursor:pointer;user-select:none;min-width:160px;height:180px;position:relative;z-index:5;transition:background .2s, border-color .25s, box-shadow .25s;box-sizing:border-box}
 .folder:active{border-style:inset;border-color:#606060}
 .folder .ico{font-size:3rem;line-height:1;filter:grayscale(.2)}
 .folder .lbl{font-family:var(--serif);font-size:1.05rem;color:#fff;text-align:center;letter-spacing:2px;margin-top:4px;max-width:100%;overflow-wrap:break-word;width:100%;line-height:1.2}

@@ -22,6 +22,7 @@ class Boot{
     if(B)B.style.width='100%';await this.wait(200);
     document.getElementById('boot-screen').style.opacity='0';document.getElementById('boot-screen').style.transition='opacity .3s';await this.wait(300);
     document.getElementById('desktop').classList.remove('hidden');this.renderFolders();
+    setTimeout(()=>{const b=document.getElementById('boot-screen');if(b)b.style.display='none'},3000) ;
   }
   wait(ms){return new Promise(r=>setTimeout(r,ms))}
   renderFolders(){
@@ -30,8 +31,12 @@ class Boot{
       const cat=e.cat.split('·')[0].trim();
       const f=document.createElement('div');f.className='folder';f.dataset.id=e.id;
       f.innerHTML='<span class="ico">'+e.ico+'</span><span class="lbl">'+e.titulo+'</span><span class="cat">'+cat+'</span>';
-      f.addEventListener('click',ev=>{ev.stopPropagation();document.querySelectorAll('.folder').forEach(x=>x.classList.remove('sel'));f.classList.add('sel')});
-      f.addEventListener('dblclick',()=>Window.open(e));g.appendChild(f);
+      f.addEventListener('click',ev=>{
+        ev.stopPropagation();
+        document.querySelectorAll('.folder').forEach(x=>x.classList.remove('sel'));
+        f.classList.add('sel');
+        Window.open(e);
+      });g.appendChild(f);
     });
   }
 }
