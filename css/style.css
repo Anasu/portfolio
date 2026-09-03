@@ -29,9 +29,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .folder .ico{font-size:3rem;line-height:1;filter:grayscale(.2)}
 .folder .lbl{font-family:var(--serif);font-size:1.05rem;color:#fff;text-align:center;letter-spacing:2px;margin-top:4px;max-width:100%;overflow-wrap:break-word;width:100%;line-height:1.2}
 .folder .cat{font-family:var(--mono);font-size:.8rem;color:#8a9bae;text-align:center;margin-top:2px;text-transform:uppercase;letter-spacing:1px;width:100%;max-width:100%;line-height:1.3;overflow-wrap:break-word}
-.folder:hover,.folder.sel{background:rgba(112,54,231,.18) !important;border-color:var(--green);box-shadow:0 0 8px rgba(112,54,231,.3),inset 0 0 6px rgba(112,54,231,.08)}
-.folder:hover .ico,.folder.sel .ico{filter:brightness(1.3) drop-shadow(0 0 4px var(--green))}
-.panel{width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;overflow-y:auto;flex-shrink:0}
+.folder.sel{background:#fff !important;border-width:6px;box-shadow:none}
+.folder:hover{background:rgba(112,54,231,.12) !important;border-color:var(--green);box-shadow:0 0 8px rgba(112,54,231,.3)}
+.folder:hover.sel{background:rgba(112,54,231,.22) !important}
+.folder .ico{filter:grayscale(.2)}.folder.sel .ico{filter:none}.folder:hover .ico{filter:brightness(1.3)}
+/* label bajo carpeta seleccionada */.folder .lbl-ab{font-size:.75rem;color:#7036E7;text-align:center;letter-spacing:1px;margin-top:-2px;font-weight:700;display:none}.folder.sel .lbl-ab{display:block}
+.panel{
+width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;overflow-y:auto;flex-shrink:0}
 .ps{padding:14px 16px;border-bottom:1px solid var(--brd-lt)}
 .ps h3{font-family:var(--serif);font-size:1rem;letter-spacing:3px;color:var(--green);margin-bottom:6px}
 .ps .ul{width:40px;height:2px;background:linear-gradient(90deg,var(--green),transparent);margin-bottom:8px}

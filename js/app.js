@@ -22,7 +22,7 @@ class Boot{
     if(B)B.style.width='100%';await this.wait(200);
     document.getElementById('boot-screen').style.opacity='0';document.getElementById('boot-screen').style.transition='opacity .3s';await this.wait(300);
     document.getElementById('desktop').classList.remove('hidden');this.renderFolders();
-    setTimeout(()=>{const b=document.getElementById('boot-screen');if(b)b.style.display='none'},3000) ;
+    setTimeout(()=>{const b=document.getElementById('boot-screen');if(b)b.style.display='none'},4000);
   }
   wait(ms){return new Promise(r=>setTimeout(r,ms))}
   renderFolders(){
@@ -30,7 +30,8 @@ class Boot{
     EXP.forEach(e=>{
       const cat=e.cat.split('·')[0].trim();
       const f=document.createElement('div');f.className='folder';f.dataset.id=e.id;
-      f.innerHTML='<span class="ico">'+e.ico+'</span><span class="lbl">'+e.titulo+'</span><span class="cat">'+cat+'</span>';
+      f.innerHTML='<span class="ico">'+e.ico+'</span><span class="lbl">'+e.titulo+'</span><span class="cat">'+cat+'</span><span class="lbl-ab" style="display:none">&#x25CB; ABierto</span>';
+        f.style.borderColor='#8a5cf0';
       f.addEventListener('click',ev=>{
         ev.stopPropagation();
         document.querySelectorAll('.folder').forEach(x=>x.classList.remove('sel'));
@@ -47,6 +48,10 @@ class Window{
     let w=document.querySelector('.win[data-id="'+exp.id+'"]');
     if(w){w.style.display='flex';return}
     w=document.createElement('div');w.className='win active';w.style.zIndex=++_zc;w.dataset.id=exp.id;
+    const vw=window.innerWidth,vh=window.innerHeight,pw=document.getElementById('panel')?document.getElementById('panel').offsetWidth||0:0;
+    // centrar ventana en el area visible
+    w.style.left=Math.max(20,(vw-pw-700)/2)+'px';
+    w.style.top=Math.max(20,Math.floor((vh-400)/2))+'px';
     const tag=exp.st==='solved'?'ftag ok':'ftag op',tagL=exp.st==='solved'?'RESUELTOS':'ABIERTO';
     const imgs=[];for(let i=0;i<4;i++)imgs.push('<div class="img-ph">IMG_'+(i+1)+'</div>');
     const files=exp.arc.map(f=>'<div class="frow">\u{1F4C4} '+f+'</div>').join('');
