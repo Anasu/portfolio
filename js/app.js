@@ -19,10 +19,18 @@ class Boot{
       L.scrollTop=L.scrollHeight;await this.wait(30+Math.random()*40);
     }
     const f=document.createElement('div');f.innerHTML='> SISTEMA LISTO<span class="cur"></span>';L.appendChild(f);await this.wait(200);
-    if(B)B.style.width='100%';await this.wait(200);
-    document.getElementById('boot-screen').style.opacity='0';document.getElementById('boot-screen').style.transition='opacity .3s';await this.wait(300);
-    document.getElementById('desktop').classList.remove('hidden');this.renderFolders();
-    setTimeout(()=>{const b=document.getElementById('boot-screen');if(b)b.style.display='none'},4000);
+    if(B)B.style.width='100%';
+    // sincronizar display:none con la opacidad
+    const self=this;
+    document.getElementById('boot-screen').style.transition='opacity .3s';
+    const bootEl=document.getElementById('boot-screen');
+    setTimeout(()=>{bootEl.style.opacity='0'},50);
+    window.addEventListener('transitionend',(function handler(ev){if(ev.propertyName==='opacity'){
+      window.removeEventListener('transitionend',handler);
+      bootEl.style.display='none';
+      document.getElementById('desktop').classList.remove('hidden');
+      self.renderFolders();
+    }}),false);
   }
   wait(ms){return new Promise(r=>setTimeout(r,ms))}
   renderFolders(){
