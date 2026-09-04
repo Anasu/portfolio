@@ -44,7 +44,7 @@ class Boot{
         ev.stopPropagation();
         document.querySelectorAll('.folder').forEach(x=>x.classList.remove('sel'));
         f.classList.add('sel');
-        Window.open(e);
+        Window.open(e,f);
       });g.appendChild(f);
     });
   }
@@ -52,24 +52,20 @@ class Boot{
 
 /* WINDOW */
 class Window{
-  static open(exp){
+  static open(exp,el){
     let w=document.querySelector('.win[data-id="'+exp.id+'"]');
     if(w){w.style.display='flex';return}
     w=document.createElement('div');w.className='win active';w.style.zIndex=++_zc;w.dataset.id=exp.id;
-    // posicionamiento en cascada
-    const tb=document.querySelector('.taskbar-top');
-    const tbH=tb?tb.clientHeight:34;
+    // posicionamiento: 10% del ancho (min 40px) y 24px debajo del botón
     const winW=700,winH=400;
-    if(!window._lastWinPos){
-      // primera ventana: centrada
-      window._lastWinPos={left:Math.max(20,(window.innerWidth-winW)/2),top:Math.max(20,Math.floor((window.innerHeight-winH-tbH)/2))};
-    }else{
-      // siguientes: 40px abajo y 40px derecha de la última
-      window._lastWinPos.left=Math.max(20,window._lastWinPos.left+40);
-      window._lastWinPos.top=Math.max(20,window._lastWinPos.top+40);
+    const left=Math.max(40,window.innerWidth*0.1);
+    let top=40;
+    if(el){
+      const r=el.getBoundingClientRect();
+      top=Math.max(40,r.bottom+24);
     }
-    w.style.left=window._lastWinPos.left+'px';
-    w.style.top=window._lastWinPos.top+'px';
+    w.style.left=left+'px';
+    w.style.top=top+'px';
     const tag=exp.st==='solved'?'ftag ok':'ftag op',tagL=exp.st==='solved'?'RESUELTOS':'ABIERTO';
     const tags=exp.tech.split(',').map(t=>'<span class="ftag">'+t.trim()+'</span>').join('');
     // sección impacto (si existe)
