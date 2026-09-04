@@ -92,10 +92,10 @@ class Window{
     const imgs=[];for(let i=0;i<4;i++)imgs.push('<div class="img-ph">IMG_'+(i+1)+'</div>');
     w.innerHTML='<div class="wtb"><span class="wti">\u{1F4DC} '+exp.titulo+'</span><div class="wb"><button class="cl">\u00D7</button></div></div><div class="wct"><h2>'+exp.titulo+'</h2><div class="meta"><span>CATEGOR\u00CDA:</span> '+exp.cat+'<span>ANO:</span> '+exp.ano+'<span>NIVEL:</span> '+exp.niv+'<span class="'+tag+'">'+tagL+'</span>'+tags+'</div><p class="brief">'+exp.det+'</p>'+sec+(sec?'<h4>ARCHIVOS DEL SISTEMA</h4>':'')+'<div class="files">'+files+'</div><h4>ENTREGABLES</h4><div class="img-row">'+imgs.join('')+'</div></div>';
     document.getElementById('windows-container').appendChild(w);
-    let drag=false,dx,dy;const tb=w.querySelector('.wtb');
-    tb.addEventListener('mousedown',e=>{drag=true;dx=e.clientX-w.offsetLeft;dy=e.clientY-w.offsetTop;tb.classList.add('dg');w.style.zIndex=++_zc});
+    let drag=false,dx,dy;const wtb=w.querySelector('.wtb');
+    wtb.addEventListener('mousedown',e=>{drag=true;dx=e.clientX-w.offsetLeft;dy=e.clientY-w.offsetTop;wtb.classList.add('dg');w.style.zIndex=++_zc});
     document.addEventListener('mousemove',e=>{if(drag){w.style.left=(e.clientX-dx)+'px';w.style.top=(e.clientY-dy)+'px'}});
-    document.addEventListener('mouseup',()=>{drag=false;tb.classList.remove('dg')});
+    document.addEventListener('mouseup',()=>{drag=false;wtb.classList.remove('dg')});
     w.addEventListener('mousedown',()=>{w.style.zIndex=++_zc});
     w.querySelector('.cl').addEventListener('click',()=>w.remove());
   }
