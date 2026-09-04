@@ -56,10 +56,20 @@ class Window{
     let w=document.querySelector('.win[data-id="'+exp.id+'"]');
     if(w){w.style.display='flex';return}
     w=document.createElement('div');w.className='win active';w.style.zIndex=++_zc;w.dataset.id=exp.id;
-    const body=document.querySelector('.desktop-body');
-    const bw=body?body.clientWidth:window.innerWidth;
-    w.style.left=Math.max(20,(bw-700)/2)+'px';
-    w.style.top=Math.max(20,Math.floor((window.innerHeight-400-document.querySelector('.taskbar-top')?.clientHeight||34)/2))+'px';
+    // posicionamiento en cascada
+    const tb=document.querySelector('.taskbar-top');
+    const tbH=tb?tb.clientHeight:34;
+    const winW=700,winH=400;
+    if(!window._lastWinPos){
+      // primera ventana: centrada
+      window._lastWinPos={left:Math.max(20,(window.innerWidth-winW)/2),top:Math.max(20,Math.floor((window.innerHeight-winH-tbH)/2))};
+    }else{
+      // siguientes: 40px abajo y 40px derecha de la última
+      window._lastWinPos.left=Math.max(20,window._lastWinPos.left+40);
+      window._lastWinPos.top=Math.max(20,window._lastWinPos.top+40);
+    }
+    w.style.left=window._lastWinPos.left+'px';
+    w.style.top=window._lastWinPos.top+'px';
     const tag=exp.st==='solved'?'ftag ok':'ftag op',tagL=exp.st==='solved'?'RESUELTOS':'ABIERTO';
     const tags=exp.tech.split(',').map(t=>'<span class="ftag">'+t.trim()+'</span>').join('');
     // sección impacto (si existe)
