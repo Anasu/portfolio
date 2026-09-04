@@ -48,10 +48,10 @@ class Window{
     let w=document.querySelector('.win[data-id="'+exp.id+'"]');
     if(w){w.style.display='flex';return}
     w=document.createElement('div');w.className='win active';w.style.zIndex=++_zc;w.dataset.id=exp.id;
-    const vw=window.innerWidth,vh=window.innerHeight,pw=document.getElementById('panel')?document.getElementById('panel').offsetWidth||0:0;
-    // centrar ventana en el area visible
-    w.style.left=Math.max(20,(vw-pw-700)/2)+'px';
-    w.style.top=Math.max(20,Math.floor((vh-400)/2))+'px';
+    const body=document.querySelector('.desktop-body');
+    const bw=body?body.clientWidth:window.innerWidth;
+    w.style.left=Math.max(20,(bw-700)/2)+'px';
+    w.style.top=Math.max(20,Math.floor((window.innerHeight-400-d.taskbar-top?.clientHeight||34)/2))+'px';
     const tag=exp.st==='solved'?'ftag ok':'ftag op',tagL=exp.st==='solved'?'RESUELTOS':'ABIERTO';
     const imgs=[];for(let i=0;i<4;i++)imgs.push('<div class="img-ph">IMG_'+(i+1)+'</div>');
     const files=exp.arc.map(f=>'<div class="frow">\u{1F4C4} '+f+'</div>').join('');
