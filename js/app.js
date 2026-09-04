@@ -1,6 +1,6 @@
 /* EL PANEL DEL INVESTIGADOR */
 const EXP=[
-{id:'exp001',titulo:'ALTA MAR',cat:'Design System · Aeronáutica',ano:'2024',ico:'\u{2708}\u{FE0F}',niv:'CONFIDENCIAL',det:'Design system integral para plataforma de mantenimiento aeronáutico. Componentización, tokenización y guía de diseño para equipo de 12 desarrolladores.',tech:'Figma, Design Tokens, Storybook, React',fch:'03/2024',st:'solved',arc:['/ds/tokens.json','/ds/components/buttons.fig','/ds/guidelines.pdf','/ds/storybook.html']},
+{id:'exp001',titulo:'E-MANTTO',cat:'Design System · Aeronáutica',ano:'2024',ico:'\u{2708}\u{FE0F}',niv:'CONFIDENCIAL',det:'Design system integral para el área de mantenimiento aeronáutico. Centralización de componentes y optimización de flujos de alta densidad operativa.',tech:'Figma, Design Tokens, AI (MCP), Gobernanza UX, Storybook',fch:'03/2024',st:'solved',arc:['/ds/tokens.json','/ds/components-library.fig','/ds/patterns-guidelines.pdf','/ds/ai-mcp-prompts.json'],impacto:[{lab:'TTM',val:'7→1 mes',desc:'+IA en fase 2'},{lab:'Adopción',val:'+90%',desc:'reutilización en células activas'},{lab:'CSAT',val:'>4.5/5',desc:'satisfacción equipo producto'},{lab:'Escala',val:'~10 prod.',desc:'ecosistema unificado'}],desafio:'El área de mantenimiento operaba con ~10 productos digitales fragmentados, cada uno resolviendo pantallas complejas (filtros, dashboards, formularios) de forma aislada. Esto generaba graves inconsistencias de flujo y UI, elevando el riesgo de error humano en operaciones críticas de seguridad aérea.',estrategia:[{tit:'Diseño para la Densidad',txt:'Traduje la identidad visual a contextos industriales sumamente densos, resguardando accesibilidad y consistencia.'},{tit:'Estandarización Sin Fricción',txt:'Guías de patrones UI/UX (dashboards/filtros avanzados) + plantillas con componentes intercambiables. Síntesis de soluciones existentes para minimizar resistencia al cambio.'},{tit:'Eficiencia con IA',txt:'Modelo MCP + arneses de IA para automatizar tareas operativas diarias del equipo de diseño.'}]},
 {id:'exp002',titulo:'FLUJO',cat:'Fintech · Mobile Native',ano:'2023',ico:'\u{1F4B1}',niv:'CONFIDENCIAL',det:'Migración y evolución nativa de app fintech con 2M+ usuarios. Refactoring de arquitectura, rediseño de flujos críticos y optimización de performance.',tech:'React Native, TypeScript, GraphQL, AWS',fch:'08/2023',st:'solved',arc:['/app/flow-diagram.fig','/app/perf-report.pdf','/app/api/schema.json','/app/screens/mobile.fig']},
 {id:'exp003',titulo:'PUENTE',cat:'EdTech · Inclusión Digital',ano:'2023',ico:'\u{1F393}\u{FE0F}',niv:'PÚBLICO',det:'Producto digital de educación tecnológica para comunidades en riesgo. Diseño centrado en accesibilidad, baja conectividad y contextos multilingües.',tech:'Vue.js, Node.js, Firebase, Figma',fch:'05/2023',st:'solved',arc:['/bridge/user-research.md','/bridge/accessibility-audit.pdf','/bridge/prototype-v2.fig','/bridge/analytics/dashboard.html']},
 {id:'exp004',titulo:'NEXUS',cat:'Dirección Técnica · Creative Tech',ano:'2024',ico:'\u{1F4A1}',niv:'CONFIDENCIAL',det:'Dirección técnica y narrativa visual para proyecto de producto digital. Pipelines de producción, pipelines creativos y coordinación interdisciplinaria.',tech:'Unity, Three.js, Blender, Node.js',fch:'11/2024',st:'solved',arc:['/nexus/pipeline.md','/nexus/visual-bible.pdf','/nexus/tech-specs.json','/nexus/showreel.html']}
@@ -61,10 +61,26 @@ class Window{
     w.style.left=Math.max(20,(bw-700)/2)+'px';
     w.style.top=Math.max(20,Math.floor((window.innerHeight-400-document.querySelector('.taskbar-top')?.clientHeight||34)/2))+'px';
     const tag=exp.st==='solved'?'ftag ok':'ftag op',tagL=exp.st==='solved'?'RESUELTOS':'ABIERTO';
-    const imgs=[];for(let i=0;i<4;i++)imgs.push('<div class="img-ph">IMG_'+(i+1)+'</div>');
-    const files=exp.arc.map(f=>'<div class="frow">\u{1F4C4} '+f+'</div>').join('');
     const tags=exp.tech.split(',').map(t=>'<span class="ftag">'+t.trim()+'</span>').join('');
-    w.innerHTML='<div class="wtb"><span class="wti">\u{1F4DC} '+exp.titulo+'</span><div class="wb"><button class="cl">\u00D7</button></div></div><div class="wct"><h2>'+exp.titulo+'</h2><div class="meta"><span>CATEGOR\u00CDA:</span> '+exp.cat+'<span>ANO:</span> '+exp.ano+'<span>NIVEL:</span> '+exp.niv+'<span class="'+tag+'">'+tagL+'</span>'+tags+'</div><p class="brief">'+exp.det+'</p><h4>ARCHIVO</h4><div class="files">'+files+'</div><h4>ENTREGABLES</h4><div class="img-row">'+imgs.join('')+'</div></div>';
+    // sección impacto (si existe)
+    let sec='';
+    if(exp.impacto&&exp.impacto.length){
+      sec+='<h4>RESUMEN DE IMPACTO</h4><div class="impact-grid">';
+      exp.impacto.forEach(k=>{sec+='<div class="kpi-item"><div class="kpi-val">'+k.val+'</div><div class="kpi-lab">'+k.lab+'</div><div class="kpi-desc">'+k.desc+'</div></div>'});
+      sec+='</div>';
+    }
+    // sección desafío (si existe)
+    if(exp.desafio){sec+='<h4>EL DESAFÍO</h4><p class="section-text">'+exp.desafio+'</p>'}
+    // sección estrategia (si existe)
+    if(exp.estrategia&&exp.estrategia.length){
+      sec+='<h4>ESTRATEGIA Y ACCIÓN</h4>';
+      exp.estrategia.forEach(s=>{sec+='<div class="strategy-item"><div class="strategy-title">'+s.tit+'</div><div class="strategy-text">'+s.txt+'</div></div>'});
+    }
+    // archivos
+    const files=exp.arc.map(f=>'<div class="frow">\u{1F4C4} '+f+'</div>').join('');
+    // imágenes dummy
+    const imgs=[];for(let i=0;i<4;i++)imgs.push('<div class="img-ph">IMG_'+(i+1)+'</div>');
+    w.innerHTML='<div class="wtb"><span class="wti">\u{1F4DC} '+exp.titulo+'</span><div class="wb"><button class="cl">\u00D7</button></div></div><div class="wct"><h2>'+exp.titulo+'</h2><div class="meta"><span>CATEGOR\u00CDA:</span> '+exp.cat+'<span>ANO:</span> '+exp.ano+'<span>NIVEL:</span> '+exp.niv+'<span class="'+tag+'">'+tagL+'</span>'+tags+'</div><p class="brief">'+exp.det+'</p>'+sec+(sec?'<h4>ARCHIVOS DEL SISTEMA</h4>':'')+'<div class="files">'+files+'</div><h4>ENTREGABLES</h4><div class="img-row">'+imgs.join('')+'</div></div>';
     document.getElementById('windows-container').appendChild(w);
     let drag=false,dx,dy;const tb=w.querySelector('.wtb');
     tb.addEventListener('mousedown',e=>{drag=true;dx=e.clientX-w.offsetLeft;dy=e.clientY-w.offsetTop;tb.classList.add('dg');w.style.zIndex=++_zc});
