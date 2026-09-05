@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div id="boot-screen">
+<div id="boot-screen" aria-live="polite">
   <div class="crt-overlay"></div>
   <div class="boot-content">
     <pre id="boot-text"></pre>
@@ -18,16 +18,16 @@
   </div>
 </div>
 
-<div id="desktop" class="hidden">
-  <div class="taskbar-top" id="taskbar-top"></div>
+<div id="desktop" class="hidden" role="main" aria-label="Escritorio principal">
+  <div class="taskbar-top" id="taskbar-top" role="toolbar" aria-label="Barra superior del sistema"></div>
   <div class="desktop-body">
-    <div class="grid" id="grid"></div>
-    <aside class="panel" id="panel"></aside>
+    <div class="grid" id="grid" role="list" aria-label="Expedientes disponibles"></div>
+    <aside class="panel" id="panel" role="complementary" aria-label="Panel del sistema"></aside>
   </div>
-  <div class="console-bar"></div>
+  <div class="console-bar" role="log" aria-label="Consola de comandos"></div>
 </div>
 
-<div id="windows-container"></div>
+<div id="windows-container" role="presentation" aria-hidden="true"></div>
 <div class="scanlines"></div>
 <div class="vignette"></div>
 

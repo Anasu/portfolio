@@ -1,5 +1,8 @@
 :root{--bg:#070912;--panel:#0d1317;--win:#0c1922;--green:#7036E7;--green-dim:#8a5cf0;--green-dark:#5226a0;--blue:#1D2547;--blue-lt:#2a3460;--gold:#c9a84c;--red:#cc3333;--brd:#2a3f52;--brd-lt:#1a2a38;--txt:#bcc5cf;--dim:#576574;--mono:'Fira Code',monospace;--serif:'Cinzel',serif;--serif2:'Playfair Display',serif}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+/* focus visible — no altera diseño */
+:focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:2px}
+.folder:focus-visible{outline-offset:-2px}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--green);font-family:var(--mono);font-size:14px}
 .hidden{display:none!important}
 /* retro scrollbar con patrón de puntos y flechas triangulares */

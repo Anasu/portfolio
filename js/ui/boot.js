@@ -61,7 +61,7 @@ export class Boot {
 
     EXP.forEach(exp => {
       const category = exp.cat.split('·')[0].trim();
-      const folder = makeEl('div', '', { class: 'folder', 'data-id': exp.id });
+      const folder = makeEl('div', '', { class: 'folder', 'data-id': exp.id, tabindex: '0', role: 'listitem', 'aria-label': exp.titulo + ' — ' + category });
       folder.style.borderColor = 'var(--green-dim, #8a5cf0)';
 
       // Icono
