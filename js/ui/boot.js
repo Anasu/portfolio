@@ -1,5 +1,6 @@
 /* BOOT — Secuencia de arranque estilo terminal CRT */
 import { EXP } from '../data/exp.js';
+import { Window } from './window.js';
 import { makeEl } from './utils.js';
 
 export class Boot {
