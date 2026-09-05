@@ -1,14 +1,7 @@
 /* CONSOLE — Barra de comandos estilo terminal */
 import { EXP } from '../data/exp.js';
 import { Window } from './window.js';
-
-/** @returns {HTMLElement} */
-function makeEl(tag, text, attrs) {
-  const node = document.createElement(tag);
-  if (text !== undefined) node.textContent = text;
-  if (attrs) Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
-  return node;
-}
+import { makeEl } from './utils.js';
 
 export function renderConsole() {
   const consoleBar = document.querySelector('.console-bar');

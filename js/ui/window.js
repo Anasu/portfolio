@@ -1,13 +1,6 @@
 /* WINDOW — Ventanas modales arrastrables */
 import { EXP } from '../data/exp.js';
-
-/** @returns {HTMLElement} */
-function makeEl(tag, text, attrs) {
-  const node = document.createElement(tag);
-  if (text !== undefined) node.textContent = text;
-  if (attrs) Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
-  return node;
-}
+import { makeEl } from './utils.js';
 
 /** @returns {HTMLElement} */
 function metaLabel(label, value) {
@@ -15,17 +8,6 @@ function metaLabel(label, value) {
   part.appendChild(document.createTextNode(label + ': '));
   part.appendChild(document.createTextNode(value));
   return part;
-}
-
-/** @returns {HTMLElement} */
-function statRow(label, value, valueColor) {
-  const row = makeEl('div', '', { style: 'display:flex;justify-content:space-between' });
-  row.appendChild(document.createTextNode(label));
-  const valSpan = document.createElement('span');
-  valSpan.style.color = valueColor;
-  valSpan.textContent = value;
-  row.appendChild(valSpan);
-  return row;
 }
 
 export const Window = {

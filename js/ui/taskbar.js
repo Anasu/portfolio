@@ -1,13 +1,5 @@
 /* TASKBAR — Barra superior con reloj en tiempo real */
-import { EXP } from '../data/exp.js';
-
-/** @returns {HTMLElement} */
-function makeEl(tag, text, attrs) {
-  const node = document.createElement(tag);
-  if (text !== undefined) node.textContent = text;
-  if (attrs) Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
-  return node;
-}
+import { makeEl } from './utils.js';
 
 export function renderTaskbar() {
   const taskbar = document.getElementById('taskbar-top');
