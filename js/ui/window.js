@@ -1,4 +1,4 @@
-/* WINDOW — Ventanas modales arrastrables */
+/* WINDOW — Ventanas modales arrastrables con minimizar/apilar */
 import { EXP } from '../data/exp.js';
 import { makeEl } from './utils.js';
 
@@ -12,6 +12,7 @@ function metaLabel(label, value) {
 
 export const Window = {
   _zc: 100,
+  _openCount: 0,
 
   /** Incrementa z-index con límite de seguridad */
   nextZ() {
@@ -19,12 +20,22 @@ export const Window = {
     return this._zc;
   },
 
+  /** Abre una ventana con desplazamiento acumulativo (12px abajo + 12px derecha) */
   open(exp, folderEl) {
+    // Si ya existe y está minimizada, restaurarla
     const existing = document.querySelector('.win[data-id="' + exp.id + '"]');
-    if (existing) { existing.style.display = 'flex'; return; }
+    if (existing) {
+      if (existing.classList.contains('minimized')) {
+        existing.classList.remove('minimized');
+      }
+      existing.style.display = 'flex';
+      existing.style.zIndex = this.nextZ();
+      return;
+    }
 
     const container = document.getElementById('windows-container');
     const fragment = document.createDocumentFragment();
+    this._openCount++;
 
     // === Barra de título ===
     const titleBar = makeEl('div', '', { class: 'wtb' });
@@ -34,6 +45,14 @@ export const Window = {
     titleBar.appendChild(titleInner);
 
     const winBtns = makeEl('div', '', { class: 'wb' });
+
+    // Botón minimizar (➖)
+    const minBtn = makeEl('button', '\u2796', {
+      'aria-label': 'Minimizar ventana'
+    });
+    winBtns.appendChild(minBtn);
+
+    // Botón cerrar (×)
     const closeBtn = makeEl('button', '\u00D7', { class: 'cl', 'aria-label': 'Cerrar ventana' });
     winBtns.appendChild(closeBtn);
     titleBar.appendChild(winBtns);
@@ -139,35 +158,56 @@ export const Window = {
     win.setAttribute('aria-modal', 'true');
     win.setAttribute('aria-label', 'Expediente: ' + exp.titulo);
 
-    const winLeft = Math.max(40, window.innerWidth * 0.1);
-    let winTop = 40;
+    // Posición: apilada 12px abajo + 12px derecha de la anterior
+    const baseLeft = Math.max(40, window.innerWidth * 0.1);
+    const baseTop = 40;
+    const offsetX = (this._openCount - 1) * 12;
+    const offsetY = (this._openCount - 1) * 12;
+
+    // Si hay folderEl, usa su posición como base para el top
+    let winLeft = baseLeft + offsetX;
+    let winTop = baseTop + offsetY;
     if (folderEl) {
       const rect = folderEl.getBoundingClientRect();
-      winTop = Math.max(40, rect.bottom + 24);
+      winTop = Math.max(baseTop + offsetY, rect.bottom + 24);
+      winLeft = Math.max(baseLeft + offsetX, rect.left - 300);
     }
+
     win.style.left = winLeft + 'px';
     win.style.top = winTop + 'px';
+
+    // Guardamos la última posición visible para restaurar
+    win.dataset.lastLeft = winLeft + 'px';
+    win.dataset.lastTop = winTop + 'px';
 
     container.appendChild(win);
     while (fragment.firstChild) win.appendChild(fragment.firstChild);
 
     // === Drag con cleanup ===
-    let dragging = false, offsetX, offsetY;
+    let dragging = false, offsetXDrag, offsetYDrag;
+    let dragMoved = false;  // true si el mouse se movió (no es solo click)
     let handlers = null;
 
     titleBar.addEventListener('mousedown', e => {
       dragging = true;
-      offsetX = e.clientX - win.offsetLeft;
-      offsetY = e.clientY - win.offsetTop;
+      dragMoved = false;
+      offsetXDrag = e.clientX - win.offsetLeft;
+      offsetYDrag = e.clientY - win.offsetTop;
       titleBar.classList.add('dg');
       win.style.zIndex = this.nextZ();
+      // Guardar posición actual como última visible
+      win.dataset.lastLeft = win.style.left;
+      win.dataset.lastTop = win.style.top;
     });
 
     handlers = {
       mousemove: e => {
         if (dragging) {
-          win.style.left = (e.clientX - offsetX) + 'px';
-          win.style.top = (e.clientY - offsetY) + 'px';
+          dragMoved = true;
+          win.style.left = (e.clientX - offsetXDrag) + 'px';
+          win.style.top = (e.clientY - offsetYDrag) + 'px';
+          win.dataset.lastLeft = win.style.left;
+          win.dataset.lastTop = win.style.top;
         }
       },
       mouseup: () => {
@@ -180,6 +220,25 @@ export const Window = {
 
     win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
 
+    // === Minimizar ===
+    minBtn.addEventListener('click', () => {
+      win.classList.add('minimized');
+      win.style.zIndex = 600;
+    });
+
+    // Click en ventana minimizada → restaurar
+    win.addEventListener('click', (e) => {
+      if (win.classList.contains('minimized') && !dragMoved) {
+        win.classList.remove('minimized');
+        win.style.display = 'flex';
+        win.style.zIndex = Window.nextZ();
+        // Restaurar última posición
+        if (win.dataset.lastLeft) win.style.left = win.dataset.lastLeft;
+        if (win.dataset.lastTop) win.style.top = win.dataset.lastTop;
+      }
+    });
+
+    // === Cerrar ===
     closeBtn.addEventListener('click', () => {
       if (handlers) {
         document.removeEventListener('mousemove', handlers.mousemove);
