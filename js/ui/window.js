@@ -334,28 +334,50 @@ export const Window = {
   }
 };
 
-/** Reposiciona dinámicamente todas las ventanas minimizadas en fila horizontal */
+/** Reposiciona dinámicamente las ventanas minimizadas */
 Window._repositionMinimized = function () {
-  const minimized = document.querySelectorAll('.win.minimized');
+  const minimized = Array.from(document.querySelectorAll('.win.minimized'));
   const count = minimized.length;
   if (count === 0) return;
-  const spacing = 204; // 200px + 4px gap
-  const totalWidth = count * spacing;
+
   const isMobile = window.innerWidth <= 900;
-  if (isMobile) {
-    // En mobile, centrar horizontalmente
-    const startX = Math.max(4, (window.innerWidth - totalWidth) / 2);
-    minimized.forEach((w, i) => {
-      w.style.left = (startX + i * spacing) + 'px';
-      w.style.transform = 'none';
-    });
-  } else {
-    const startX = Math.max(4, (window.innerWidth - totalWidth) / 2);
-    minimized.forEach((w, i) => {
-      w.style.left = (startX + i * spacing) + 'px';
-      w.style.transform = 'none';
-    });
-  }
+  const winWidth = 200;
+  const gap = 4;
+  const rowHeight = 32;
+  const margin = 4;
+
+  // Calcular cuántas caben por fila
+  const colsPerRow = isMobile
+    ? Math.floor((window.innerWidth - margin * 2) / (winWidth + gap))
+    : Math.floor((window.innerWidth - margin * 2) / (winWidth + gap));
+
+  const cols = Math.max(colsPerRow, 1);
+
+  minimized.forEach((win, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+
+    if (isMobile) {
+      // Mobile: abajo a la izquierda, izquierda a derecha
+      // Si no caben, segunda fila de abajo hacia arriba
+      const x = margin + col * (winWidth + gap);
+      const y = window.innerHeight - margin - rowHeight - row * (rowHeight + gap);
+      win.style.left = x + 'px';
+      win.style.top = y + 'px';
+      win.style.bottom = 'auto';
+      win.style.transform = 'none';
+    } else {
+      // Desktop: abajo a la derecha, izquierda a derecha
+      // 32px por encima de la console-bar para no taparla
+      // Si no caben, segunda fila de abajo hacia arriba
+      const x = window.innerWidth - margin - (cols - col) * (winWidth + gap);
+      const y = window.innerHeight - margin - rowHeight - row * (rowHeight + gap) - 32;
+      win.style.left = x + 'px';
+      win.style.top = y + 'px';
+      win.style.bottom = 'auto';
+      win.style.transform = 'none';
+    }
+  });
 };
 
 // Reposicionar al redimensionar la ventana

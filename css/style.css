@@ -164,7 +164,7 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .console-bar{display:flex;align-items:center;padding:2px 12px;background:#0a0c0e;border-top:2px solid var(--brd);min-height:28px;flex-shrink:0;gap:4px;flex-wrap:wrap}
 .console-bar .cp{color:var(--green-dark);margin-right:4px;font-size:1rem;white-space:nowrap}
 .console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:var(--green);font-family:var(--mono);font-size:1rem}
-/* Ventana minimizada — apilada arriba del console-bar */
+/* Ventana minimizada */
 .win.minimized{
   position:fixed !important;
   z-index:600 !important;
@@ -178,8 +178,7 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
   cursor:pointer !important;
   border:2px solid var(--brd) !important;
   box-shadow:0 2px 8px rgba(0,0,0,.6) !important;
-  bottom:32px;
-  transition:left .2s ease, width .2s ease
+  transition:left .2s ease, top .2s ease
 }
 .win.minimized .wtb{
   display:flex;align-items:center;justify-content:center;
