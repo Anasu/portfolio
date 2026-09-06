@@ -281,5 +281,3 @@ Window._repositionMinimized = function () {
 window.addEventListener('resize', () => {
   Window._repositionMinimized();
 });
-  }
-};
