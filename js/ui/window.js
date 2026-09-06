@@ -185,6 +185,11 @@ export const Window = {
         document.removeEventListener('mousemove', handlers.mousemove);
         document.removeEventListener('mouseup', handlers.mouseup);
       }
+      // Deseleccionar carpeta al cerrar ventana
+      if (folderEl) {
+        folderEl.classList.remove('sel');
+        folderEl.querySelector('.ico').textContent = '\u{1F4C1}'; // 📁
+      }
       win.remove();
     });
   }
