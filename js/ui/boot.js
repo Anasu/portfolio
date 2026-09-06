@@ -72,8 +72,12 @@ export class Boot {
 
       folder.addEventListener('click', ev => {
         ev.stopPropagation();
-        document.querySelectorAll('.folder').forEach(x => x.classList.remove('sel'));
+        document.querySelectorAll('.folder').forEach(x => {
+          x.classList.remove('sel');
+          x.querySelector('.ico').textContent = '\u{1F4C1}'; // 📁 cerrado
+        });
         folder.classList.add('sel');
+        folder.querySelector('.ico').textContent = '\u{1F4C2}'; // 📂 abierto
         Window.open(exp, folder);
       });
 
