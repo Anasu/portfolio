@@ -62,18 +62,18 @@ export class Boot {
     EXP.forEach(exp => {
       const category = exp.cat.split('·')[0].trim();
       const folder = makeEl('div', '', { class: 'folder', 'data-id': exp.id, tabindex: '0', role: 'listitem', 'aria-label': exp.titulo + ' — ' + category });
-      folder.style.borderColor = 'var(--green-dim, #8a5cf0)';
 
-      // Icono
-      folder.appendChild(makeEl('span', exp.ico, { class: 'ico' }));
-      // Label
-      folder.appendChild(makeEl('span', exp.titulo, { class: 'lbl' }));
-      // Categoría
-      folder.appendChild(makeEl('span', category, { class: 'cat' }));
-      // "ABIERTO" (oculto, visible con .sel)
-      const lblOpen = makeEl('span', '\u25CB ABierto', { class: 'lbl-ab' });
-      lblOpen.style.display = 'none';
-      folder.appendChild(lblOpen);
+      // Tab (solapa superior)
+      const tab = makeEl('div', '', { class: 'tab' });
+      tab.appendChild(makeEl('span', exp.ico, { class: 'ico' }));
+      tab.appendChild(makeEl('span', exp.titulo, { class: 'lbl' }));
+      folder.appendChild(tab);
+
+      // Body (cuerpo principal)
+      const body = makeEl('div', '', { class: 'body' });
+      body.appendChild(makeEl('span', category, { class: 'cat' }));
+      body.appendChild(makeEl('span', '\u25CB ABierto', { class: 'ab' }));
+      folder.appendChild(body);
 
       folder.addEventListener('click', ev => {
         ev.stopPropagation();
@@ -86,5 +86,9 @@ export class Boot {
     });
 
     grid.appendChild(fragment);
+
+    // Texto terminal de affordance
+    const afford = makeEl('div', '> C:\\EXPEDIENTES> selecciona una carpeta para abrir expediente', { class: 'affordance' });
+    grid.appendChild(afford);
   }
 }
