@@ -98,9 +98,16 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .win .wtb{background:linear-gradient(90deg,var(--blue),var(--blue-lt));padding:3px 6px;display:flex;justify-content:space-between;align-items:center;cursor:grab;flex-shrink:0}
 .win .wtb.dg{cursor:grabbing}
 .win .wti{color:#fff;font-size:1rem;display:flex;align-items:center;gap:6px}
-.win .wb{display:flex;gap:2px}
-.win .wb button{width:16px;height:16px;background:#c0c0c0;border:2px outset #ddd;font-size:1rem;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;line-height:1}
+.win .wb{display:flex;gap:4px;padding:0 4px}
+.win .wb button{
+  width:24px;height:24px;background:#c0c0c0;border:2px outset #ddd;
+  font-size:.85rem;cursor:pointer;padding:0;display:flex;
+  align-items:center;justify-content:center;line-height:1;
+  transition:background .15s, transform .1s
+}
+.win .wb button:active{transform:translate(1px,1px);border-style:inset}
 .win .wb .cl{background:#e04040;color:#fff}
+.win .wb .cl:hover{background:#ff5555}
 .win .wct{padding:1.5rem;overflow-y:auto;flex:1;color:var(--green);font-size:1rem;line-height:1.6}
 .wct h2{font-family:var(--serif);color:var(--gold);font-size:2rem;margin-bottom:8px;text-shadow:0 0 10px rgba(201,168,76,.2)}
 .wct h4{font-family:var(--serif);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase}
@@ -130,7 +137,7 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .console-bar{display:flex;align-items:center;padding:2px 12px;background:#0a0c0e;border-top:2px solid var(--brd);min-height:28px;flex-shrink:0;gap:4px;flex-wrap:wrap}
 .console-bar .cp{color:var(--green-dark);margin-right:4px;font-size:1rem;white-space:nowrap}
 .console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:var(--green);font-family:var(--mono);font-size:1rem}
-/* Ventana minimizada en esquina inferior izquierda */
+/* Ventana minimizada — apilada arriba del console-bar */
 .win.minimized{
   position:fixed !important;
   z-index:600 !important;
@@ -143,7 +150,9 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
   pointer-events:auto !important;
   cursor:pointer !important;
   border:2px solid var(--brd) !important;
-  box-shadow:0 2px 8px rgba(0,0,0,.6) !important
+  box-shadow:0 2px 8px rgba(0,0,0,.6) !important;
+  bottom:32px;
+  transition:left .2s ease, width .2s ease
 }
 .win.minimized .wtb{
   display:flex;align-items:center;justify-content:center;
@@ -154,11 +163,6 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 }
 .win.minimized .wb{display:none !important}
 .win.minimized .wct{display:none}
-/* Varias ventanas minimizadas: apiladas verticalmente abajo */
-#desktop > #windows-container .win.minimized:nth-of-type(1){bottom:38px;left:4px}
-#desktop > #windows-container .win.minimized:nth-of-type(2){bottom:38px;left:208px}
-#desktop > #windows-container .win.minimized:nth-of-type(3){bottom:38px;left:412px}
-#desktop > #windows-container .win.minimized:nth-of-type(4){bottom:38px;left:616px}
 .console-bar input::placeholder{color:#2a4030}
 .scanlines{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.12) 1px,rgba(0,0,0,.12) 2px)}
 .vignette{position:fixed;inset:0;z-index:9997;pointer-events:none;box-shadow:inset 0 0 150px rgba(0,0,0,.5)}

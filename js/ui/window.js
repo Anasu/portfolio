@@ -184,13 +184,13 @@ export const Window = {
     while (fragment.firstChild) win.appendChild(fragment.firstChild);
 
     // === Drag con cleanup ===
-    let dragging = false, offsetXDrag, offsetYDrag;
-    let dragMoved = false;  // true si el mouse se movió (no es solo click)
+    let dragging = false, offsetXDrag, offsetYDrag, clickStartX, clickStartY;
     let handlers = null;
 
     titleBar.addEventListener('mousedown', e => {
       dragging = true;
-      dragMoved = false;
+      clickStartX = e.clientX;
+      clickStartY = e.clientY;
       offsetXDrag = e.clientX - win.offsetLeft;
       offsetYDrag = e.clientY - win.offsetTop;
       titleBar.classList.add('dg');
@@ -203,7 +203,6 @@ export const Window = {
     handlers = {
       mousemove: e => {
         if (dragging) {
-          dragMoved = true;
           win.style.left = (e.clientX - offsetXDrag) + 'px';
           win.style.top = (e.clientY - offsetYDrag) + 'px';
           win.dataset.lastLeft = win.style.left;
@@ -221,14 +220,24 @@ export const Window = {
     win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
 
     // === Minimizar ===
-    minBtn.addEventListener('click', () => {
+    minBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       win.classList.add('minimized');
       win.style.zIndex = 600;
+      Window._repositionMinimized();
     });
 
     // Click en ventana minimizada → restaurar
+    win.addEventListener('mousedown', (e) => {
+      if (win.classList.contains('minimized')) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+    });
+
     win.addEventListener('click', (e) => {
-      if (win.classList.contains('minimized') && !dragMoved) {
+      if (win.classList.contains('minimized')) {
+        e.stopPropagation();
         win.classList.remove('minimized');
         win.style.display = 'flex';
         win.style.zIndex = Window.nextZ();
@@ -239,7 +248,8 @@ export const Window = {
     });
 
     // === Cerrar ===
-    closeBtn.addEventListener('click', () => {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (handlers) {
         document.removeEventListener('mousemove', handlers.mousemove);
         document.removeEventListener('mouseup', handlers.mouseup);
@@ -251,5 +261,25 @@ export const Window = {
       }
       win.remove();
     });
+  }
+};
+
+/** Reposiciona dinámicamente todas las ventanas minimizadas en fila horizontal */
+Window._repositionMinimized = function () {
+  const minimized = document.querySelectorAll('.win.minimized');
+  const count = minimized.length;
+  if (count === 0) return;
+  const spacing = 204; // 200px + 4px gap
+  const totalWidth = count * spacing;
+  const startX = Math.max(4, (window.innerWidth - totalWidth) / 2);
+  minimized.forEach((w, i) => {
+    w.style.left = (startX + i * spacing) + 'px';
+  });
+};
+
+// Reposicionar al redimensionar la ventana
+window.addEventListener('resize', () => {
+  Window._repositionMinimized();
+});
   }
 };
