@@ -217,6 +217,7 @@ export const Window = {
     let dragging = false, offsetXDrag, offsetYDrag, clickStartX, clickStartY;
     let handlers = null;
     let touchHandlers = null;
+    const self = this;
 
     function startDrag(clientX, clientY) {
       dragging = true;
@@ -225,7 +226,7 @@ export const Window = {
       offsetXDrag = clientX - win.offsetLeft;
       offsetYDrag = clientY - win.offsetTop;
       titleBar.classList.add('dg');
-      win.style.zIndex = this.nextZ();
+      win.style.zIndex = self.nextZ();
       // Guardar posición actual como última visible
       win.dataset.lastLeft = win.style.left;
       win.dataset.lastTop = win.style.top;
