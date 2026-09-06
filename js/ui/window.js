@@ -20,6 +20,11 @@ export const Window = {
     return this._zc;
   },
 
+  /** Detecta si estamos en mobile */
+  _isMobile() {
+    return window.innerWidth <= 900;
+  },
+
   /** Abre una ventana con desplazamiento acumulativo (12px abajo + 12px derecha) */
   open(exp, folderEl) {
     // Si ya existe y está minimizada, restaurarla
@@ -30,6 +35,12 @@ export const Window = {
       }
       existing.style.display = 'flex';
       existing.style.zIndex = this.nextZ();
+      // En mobile, restaurar posición centrada
+      if (this._isMobile()) {
+        existing.style.left = '50%';
+        existing.style.top = '50%';
+        existing.style.transform = 'translate(-50%, -50%)';
+      }
       return;
     }
 
@@ -158,64 +169,113 @@ export const Window = {
     win.setAttribute('aria-modal', 'true');
     win.setAttribute('aria-label', 'Expediente: ' + exp.titulo);
 
-    // Posición: apilada 12px abajo + 12px derecha de la anterior
-    const baseLeft = Math.max(40, window.innerWidth * 0.1);
-    const baseTop = 40;
-    const offsetX = (this._openCount - 1) * 12;
-    const offsetY = (this._openCount - 1) * 12;
+    // Posición: apilada 12px abajo + 12px derecha de la anterior (desktop)
+    // En mobile, centrar la ventana
+    const isMobile = this._isMobile();
 
-    // Si hay folderEl, usa su posición como base para el top
-    let winLeft = baseLeft + offsetX;
-    let winTop = baseTop + offsetY;
-    if (folderEl) {
-      const rect = folderEl.getBoundingClientRect();
-      winTop = Math.max(baseTop + offsetY, rect.bottom + 24);
-      winLeft = Math.max(baseLeft + offsetX, rect.left - 300);
+    let winLeft, winTop;
+    if (isMobile) {
+      winLeft = 50;
+      winTop = 50;
+      win.style.left = winLeft + '%';
+      win.style.top = winTop + '%';
+      win.style.transform = 'translate(-50%, -50%)';
+      win.style.maxWidth = '95vw';
+    } else {
+      const baseLeft = Math.max(40, window.innerWidth * 0.1);
+      const baseTop = 40;
+      const offsetX = (this._openCount - 1) * 12;
+      const offsetY = (this._openCount - 1) * 12;
+
+      // Si hay folderEl, usa su posición como base para el top
+      winLeft = baseLeft + offsetX;
+      winTop = baseTop + offsetY;
+      if (folderEl) {
+        const rect = folderEl.getBoundingClientRect();
+        winTop = Math.max(baseTop + offsetY, rect.bottom + 24);
+        winLeft = Math.max(baseLeft + offsetX, rect.left - 300);
+      }
+
+      win.style.left = winLeft + 'px';
+      win.style.top = winTop + 'px';
+      win.style.transform = 'none';
     }
 
-    win.style.left = winLeft + 'px';
-    win.style.top = winTop + 'px';
-
     // Guardamos la última posición visible para restaurar
-    win.dataset.lastLeft = winLeft + 'px';
-    win.dataset.lastTop = winTop + 'px';
+    if (isMobile) {
+      win.dataset.lastLeft = '50%';
+      win.dataset.lastTop = '50%';
+    } else {
+      win.dataset.lastLeft = winLeft + 'px';
+      win.dataset.lastTop = winTop + 'px';
+    }
 
     container.appendChild(win);
     while (fragment.firstChild) win.appendChild(fragment.firstChild);
 
-    // === Drag con cleanup ===
+    // === Drag con cleanup (mouse + touch) ===
     let dragging = false, offsetXDrag, offsetYDrag, clickStartX, clickStartY;
     let handlers = null;
+    let touchHandlers = null;
 
-    titleBar.addEventListener('mousedown', e => {
+    function startDrag(clientX, clientY) {
       dragging = true;
-      clickStartX = e.clientX;
-      clickStartY = e.clientY;
-      offsetXDrag = e.clientX - win.offsetLeft;
-      offsetYDrag = e.clientY - win.offsetTop;
+      clickStartX = clientX;
+      clickStartY = clientY;
+      offsetXDrag = clientX - win.offsetLeft;
+      offsetYDrag = clientY - win.offsetTop;
       titleBar.classList.add('dg');
       win.style.zIndex = this.nextZ();
       // Guardar posición actual como última visible
       win.dataset.lastLeft = win.style.left;
       win.dataset.lastTop = win.style.top;
+    }
+
+    function moveDrag(clientX, clientY) {
+      if (dragging) {
+        win.style.left = (clientX - offsetXDrag) + 'px';
+        win.style.top = (clientY - offsetYDrag) + 'px';
+        win.style.transform = 'none';
+        win.dataset.lastLeft = win.style.left;
+        win.dataset.lastTop = win.style.top;
+      }
+    }
+
+    function endDrag() {
+      dragging = false;
+      titleBar.classList.remove('dg');
+    }
+
+    // Mouse events
+    titleBar.addEventListener('mousedown', e => {
+      startDrag(e.clientX, e.clientY);
     });
 
     handlers = {
-      mousemove: e => {
-        if (dragging) {
-          win.style.left = (e.clientX - offsetXDrag) + 'px';
-          win.style.top = (e.clientY - offsetYDrag) + 'px';
-          win.dataset.lastLeft = win.style.left;
-          win.dataset.lastTop = win.style.top;
-        }
-      },
-      mouseup: () => {
-        dragging = false;
-        titleBar.classList.remove('dg');
-      }
+      mousemove: e => moveDrag(e.clientX, e.clientY),
+      mouseup: endDrag
     };
     document.addEventListener('mousemove', handlers.mousemove);
     document.addEventListener('mouseup', handlers.mouseup);
+
+    // Touch events for mobile
+    titleBar.addEventListener('touchstart', e => {
+      const touch = e.touches[0];
+      startDrag(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    touchHandlers = {
+      touchmove: e => {
+        if (dragging) {
+          e.preventDefault();
+          const touch = e.touches[0];
+          moveDrag(touch.clientX, touch.clientY);
+        }
+      },
+      touchend: endDrag
+    };
+    document.addEventListener('touchmove', touchHandlers.touchmove, { passive: false });
+    document.addEventListener('touchend', touchHandlers.touchend);
 
     win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
 
@@ -244,6 +304,12 @@ export const Window = {
         // Restaurar última posición
         if (win.dataset.lastLeft) win.style.left = win.dataset.lastLeft;
         if (win.dataset.lastTop) win.style.top = win.dataset.lastTop;
+        // En mobile, restaurar centrado
+        if (Window._isMobile()) {
+          win.style.left = '50%';
+          win.style.top = '50%';
+          win.style.transform = 'translate(-50%, -50%)';
+        }
       }
     });
 
@@ -253,6 +319,10 @@ export const Window = {
       if (handlers) {
         document.removeEventListener('mousemove', handlers.mousemove);
         document.removeEventListener('mouseup', handlers.mouseup);
+      }
+      if (touchHandlers) {
+        document.removeEventListener('touchmove', touchHandlers.touchmove);
+        document.removeEventListener('touchend', touchHandlers.touchend);
       }
       // Deseleccionar carpeta al cerrar ventana
       if (folderEl) {
@@ -271,13 +341,40 @@ Window._repositionMinimized = function () {
   if (count === 0) return;
   const spacing = 204; // 200px + 4px gap
   const totalWidth = count * spacing;
-  const startX = Math.max(4, (window.innerWidth - totalWidth) / 2);
-  minimized.forEach((w, i) => {
-    w.style.left = (startX + i * spacing) + 'px';
-  });
+  const isMobile = window.innerWidth <= 900;
+  if (isMobile) {
+    // En mobile, centrar horizontalmente
+    const startX = Math.max(4, (window.innerWidth - totalWidth) / 2);
+    minimized.forEach((w, i) => {
+      w.style.left = (startX + i * spacing) + 'px';
+      w.style.transform = 'none';
+    });
+  } else {
+    const startX = Math.max(4, (window.innerWidth - totalWidth) / 2);
+    minimized.forEach((w, i) => {
+      w.style.left = (startX + i * spacing) + 'px';
+      w.style.transform = 'none';
+    });
+  }
 };
 
 // Reposicionar al redimensionar la ventana
 window.addEventListener('resize', () => {
   Window._repositionMinimized();
+  // Recentrar ventanas abiertas al cambiar entre mobile/desktop
+  const wins = document.querySelectorAll('.win:not(.minimized):not([data-id=""])');
+  wins.forEach(win => {
+    if (!win.dataset.id) return;
+    const isMobile = window.innerWidth <= 900;
+    if (isMobile && win.style.transform === 'none') {
+      win.style.left = '50%';
+      win.style.top = '50%';
+      win.style.transform = 'translate(-50%, -50%)';
+    } else if (!isMobile && win.style.transform && win.style.transform.includes('translate')) {
+      // Recuperar última posición guardada
+      if (win.dataset.lastLeft) win.style.left = win.dataset.lastLeft;
+      if (win.dataset.lastTop) win.style.top = win.dataset.lastTop;
+      win.style.transform = 'none';
+    }
+  });
 });
