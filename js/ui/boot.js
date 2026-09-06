@@ -63,17 +63,12 @@ export class Boot {
       const category = exp.cat.split('·')[0].trim();
       const folder = makeEl('div', '', { class: 'folder', 'data-id': exp.id, tabindex: '0', role: 'listitem', 'aria-label': exp.titulo + ' — ' + category });
 
-      // Tab (solapa superior)
-      const tab = makeEl('div', '', { class: 'tab' });
-      tab.appendChild(makeEl('span', exp.ico, { class: 'ico' }));
-      tab.appendChild(makeEl('span', exp.titulo, { class: 'lbl' }));
-      folder.appendChild(tab);
-
-      // Body (cuerpo principal)
-      const body = makeEl('div', '', { class: 'body' });
-      body.appendChild(makeEl('span', category, { class: 'cat' }));
-      body.appendChild(makeEl('span', '\u25CB ABierto', { class: 'ab' }));
-      folder.appendChild(body);
+      // Icono de carpeta
+      folder.appendChild(makeEl('span', '📁', { class: 'ico' }));
+      // Nombre
+      folder.appendChild(makeEl('span', exp.titulo, { class: 'lbl' }));
+      // Categoría
+      folder.appendChild(makeEl('span', category, { class: 'cat' }));
 
       folder.addEventListener('click', ev => {
         ev.stopPropagation();
