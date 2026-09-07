@@ -1,4 +1,4 @@
-/* CONSOLE — Barra de comandos estilo terminal */
+/* CONSOLE — Barra de comandos estilo terminal + Quake overlay */
 import { EXP } from '../data/exp.js';
 import { Window } from './window.js';
 import { makeEl } from './utils.js';
@@ -19,6 +19,51 @@ export function renderConsole() {
   fragment.appendChild(prompt);
   fragment.appendChild(input);
   consoleBar.appendChild(fragment);
+
+  // Referencias al quake terminal
+  const quakeEl = document.getElementById('quake-terminal');
+  const qtBody = document.getElementById('qt-body');
+  const qtToggle = document.getElementById('quake-toggle');
+  const qtClose = document.getElementById('qt-close');
+
+  /** Estado del quake terminal */
+  let quakeOpen = false;
+  const MAX_LINES = 50; // máximo de líneas históricas en el quake
+
+  function openQuake() {
+    if (quakeOpen) return;
+    quakeEl.classList.remove('hidden');
+    quakeEl.classList.add('open');
+    quakeOpen = true;
+    input.focus();
+  }
+
+  function closeQuake() {
+    if (!quakeOpen) return;
+    quakeEl.classList.add('hidden');
+    quakeEl.classList.remove('open');
+    quakeOpen = false;
+  }
+
+  function toggleQuake() {
+    quakeOpen ? closeQuake() : openQuake();
+  }
+
+  /** Agrega una línea al quake terminal */
+  function qtLog(text, cls) {
+    if (!quakeOpen && !text.startsWith('[USR]')) return;
+    // Si se abre por un comando de usuario, abrir el quake
+    if (text.startsWith('[USR]') && !quakeOpen) openQuake();
+
+    const line = makeEl('div', text, { class: 'qt-line ' + (cls || 'qt-out') });
+    qtBody.appendChild(line);
+
+    // Mantener máximo de líneas
+    while (qtBody.children.length > MAX_LINES) {
+      qtBody.removeChild(qtBody.firstChild);
+    }
+    qtBody.scrollTop = qtBody.scrollHeight;
+  }
 
   /** Escribe un mensaje en el panel lateral (registro) */
   const logToPanel = (msg, cls) => {
@@ -65,7 +110,7 @@ export function renderConsole() {
         <span>E-MANTTO · FLUJO · PUENTE · NEXUS</span>
       </div>
       <p class="brief">Diseñador de experiencias digitales con enfoque en accesibilidad, estrategia de producto y dirección técnica. Especializado en design systems, inclusión digital y optimización de flujos complejos.</p>
-      
+
       <h4>🔗 Enlaces</h4>
       <div style="display:flex;gap:16px;margin:12px 0;flex-wrap:wrap">
         <a href="https://linkedin.com/in/anasu" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none;border:1px solid var(--green-dark);padding:6px 14px;font-family:var(--mono);font-size:.9rem;letter-spacing:1px">LinkedIn ↗</a>
@@ -188,7 +233,21 @@ export function renderConsole() {
     'sudo make me a sandwich': '[ALERT] Comando compuesto detectado. No puedes usar sudo para hacer sándwiches en este sistema.',
   };
 
+  // Toggle quake terminal con el botón ^
+  if (qtToggle) qtToggle.addEventListener('click', toggleQuake);
+  if (qtClose) qtClose.addEventListener('click', closeQuake);
+
+  // Abrir quake al hacer focus en el input
+  input.addEventListener('focus', () => {
+    openQuake();
+  });
+
+  // Cerrar quake con Escape
   input.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && quakeOpen) {
+      closeQuake();
+      return;
+    }
     if (e.key !== 'Enter') return;
 
     const raw = input.value.trim();
@@ -196,7 +255,10 @@ export function renderConsole() {
     input.value = '';
     if (!cmd) return;
 
-    // Log the command typed
+    // Log the command typed in quake terminal
+    qtLog('$ ' + raw, 'qt-cmd');
+
+    // Also log to panel
     logToPanel('[USR] ' + raw);
 
     switch (cmd) {
@@ -215,6 +277,7 @@ export function renderConsole() {
       case 'cls':
         clearPanel();
         logToPanel('[SYS] Registro purgado con éxito.');
+        qtLog('[SYS] Registro purgado con éxito.', 'qt-sys');
         break;
 
       case 'contact':
@@ -228,14 +291,23 @@ export function renderConsole() {
           const slug = x.titulo.toLowerCase().replace(/[\s\-]+/g, '-');
           logToPanel('[LS] ' + x.ico + ' ' + x.titulo.padEnd(12) + '[' + x.id + '|' + slug + ']');
         });
+        // Also show in quake
+        EXP.forEach(x => {
+          const slug = x.titulo.toLowerCase().replace(/[\s\-]+/g, '-');
+          qtLog('  ' + x.ico + ' ' + x.titulo.padEnd(12) + '[' + x.id + '|' + slug + ']', 'qt-out');
+        });
         break;
 
       case 'date':
-        logToPanel('[DATE] ' + new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' }));
+        const dateStr = new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+        logToPanel('[DATE] ' + dateStr);
+        qtLog('[DATE] ' + dateStr, 'qt-sys');
         break;
 
       case 'whoami':
-        logToPanel('[WHOAMI] investigador@panel — Detective UX/UI, nivel clearance Ω');
+        const whoamiMsg = '[WHOAMI] investigador@panel — Detective UX/UI, nivel clearance Ω';
+        logToPanel(whoamiMsg);
+        qtLog(whoamiMsg, 'qt-gold');
         break;
 
       default:
@@ -245,21 +317,35 @@ export function renderConsole() {
           const exp = findExp(target);
           if (exp) {
             Window.open(exp);
-            logToPanel('[OPEN] Abriendo: ' + exp.titulo + ' (' + exp.id + ')');
+            const openMsg = '[OPEN] Abriendo: ' + exp.titulo + ' (' + exp.id + ')';
+            logToPanel(openMsg);
+            qtLog(openMsg, 'qt-gold');
           } else {
-            logToPanel('[ERR] Expediente no encontrado: "' + target + '". Escribe "ls" para ver los disponibles.');
+            const errMsg = '[ERR] Expediente no encontrado: "' + target + '". Escribe "ls" para ver los disponibles.';
+            logToPanel(errMsg);
+            qtLog(errMsg, 'qt-err');
           }
         }
         // Check terminal jokes
         else if (terminalJokes[cmd]) {
-          logToPanel(terminalJokes[cmd]);
+          const joke = terminalJokes[cmd];
+          logToPanel(joke);
+          // Split multi-line responses for quake
+          joke.split('\n').forEach(line => {
+            if (line.includes('[ALERT]')) qtLog(line, 'qt-err');
+            else if (line.includes('[SYS]') || line.includes('[GIT]') || line.includes('[NET]') || line.includes('[FS]')) qtLog(line, 'qt-sys');
+            else if (line.includes('[WHOAMI]')) qtLog(line, 'qt-gold');
+            else qtLog(line, 'qt-out');
+          });
         }
         // Partial match for terminal commands
         else {
           let matched = false;
           for (const key of Object.keys(terminalJokes)) {
             if (key.startsWith(cmd) || cmd.startsWith(key.substring(0, 3))) {
-              logToPanel('[SYS] ¿Quisiste decir: "' + key + '"? → ' + terminalJokes[key]);
+              const msg = '[SYS] ¿Quisiste decir: "' + key + '"? → ' + terminalJokes[key];
+              logToPanel(msg);
+              qtLog(msg, 'qt-sys');
               matched = true;
               break;
             }
@@ -270,11 +356,16 @@ export function renderConsole() {
               '[ERR] "' + cmd + '" no es reconocido. El detective necesita más información. Prueba: help',
               '[SYS] No reconozco ese comando. Parece código clasificado... o simplemente un error. Escribe "help".'
             ];
-            logToPanel(responses[Math.floor(Math.random() * responses.length)]);
+            const err = responses[Math.floor(Math.random() * responses.length)];
+            logToPanel(err);
+            qtLog(err, 'qt-err');
           }
         }
         break;
     }
+
+    // Mantener foco en el input después de ejecutar
+    input.focus();
   });
 }
 
