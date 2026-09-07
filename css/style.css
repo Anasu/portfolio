@@ -175,6 +175,8 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
   left:0;
   right:0;
   height:80px;
+  min-height:80px;
+  max-height:50vh;
   background:#0a0e14;
   border-top:2px solid #2c313a;
   display:flex;
@@ -186,6 +188,30 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
   transform:translateY(100%);
   opacity:0;
   pointer-events:none
+}
+.qt-resize-handle{
+  height:6px;
+  cursor:n-resize;
+  flex-shrink:0;
+  position:relative;
+  background:transparent;
+  transition:background .15s
+}
+.qt-resize-handle::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:60px;
+  height:2px;
+  background:#3e4455;
+  border-radius:1px
+}
+.qt-resize-handle:hover::after,
+.qt-resize-handle.dragging::after{
+  background:#61afef;
+  width:80px
 }
 .qt-body{
   flex:1;

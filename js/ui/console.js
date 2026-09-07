@@ -24,6 +24,54 @@ export function renderConsole() {
   const quakeEl = document.getElementById('quake-terminal');
   const qtBody = document.getElementById('qt-body');
   const qtToggle = document.getElementById('quake-toggle');
+  const qtResizeHandle = document.getElementById('qt-resize-handle');
+
+  /** Resize — arrastrar handle para cambiar altura */
+  let isResizing = false;
+
+  function startResize(e) {
+    e.preventDefault();
+    isResizing = true;
+    qtResizeHandle.classList.add('dragging');
+    document.body.style.cursor = 'n-resize';
+    document.body.style.userSelect = 'none';
+  }
+
+  function doResize(clientY) {
+    if (!isResizing) return;
+    const wrapperRect = consoleBar.parentElement.getBoundingClientRect();
+    // Distancia desde el bottom del wrapper hasta el cursor
+    let newHeight = wrapperRect.bottom - clientY;
+    // Clamp entre 80px y 50vh
+    const minH = 80;
+    const maxH = Math.min(50 * window.innerHeight / 100, window.innerHeight - 28);
+    newHeight = Math.max(minH, Math.min(maxH, newHeight));
+    quakeEl.style.height = newHeight + 'px';
+  }
+
+  function stopResize() {
+    if (!isResizing) return;
+    isResizing = false;
+    qtResizeHandle.classList.remove('dragging');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  }
+
+  // Mouse events para resize
+  if (qtResizeHandle) {
+    qtResizeHandle.addEventListener('mousedown', startResize);
+    window.addEventListener('mousemove', e => doResize(e.clientY));
+    window.addEventListener('mouseup', stopResize);
+  }
+
+  // Touch events para resize en móvil
+  if (qtResizeHandle) {
+    qtResizeHandle.addEventListener('touchstart', startResize, { passive: false });
+    window.addEventListener('touchmove', e => {
+      if (isResizing && e.touches[0]) doResize(e.touches[0].clientY);
+    }, { passive: false });
+    window.addEventListener('touchend', stopResize);
+  }
 
   /** Estado del quake terminal */
   let quakeOpen = false;
