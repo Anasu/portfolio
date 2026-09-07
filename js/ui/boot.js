@@ -84,10 +84,13 @@ export class Boot {
       fragment.appendChild(folder);
     });
 
-    grid.appendChild(fragment);
+    // Barra de navegación / breadcrumbs arriba a la izquierda
+    const bc = document.getElementById('breadcrumb');
+    const prompt = makeEl('span', '', { class: 'bc-prompt' });
+    prompt.textContent = '> C:\\EXPEDIENTES> ';
+    bc.appendChild(prompt);
+    bc.appendChild(document.createTextNode('selecciona una carpeta para abrir expediente'));
 
-    // Texto terminal de affordance
-    const afford = makeEl('div', '> C:\\EXPEDIENTES> selecciona una carpeta para abrir expediente', { class: 'affordance' });
-    grid.appendChild(afford);
+    grid.appendChild(fragment);
   }
 }
