@@ -24,7 +24,6 @@ export function renderConsole() {
   const quakeEl = document.getElementById('quake-terminal');
   const qtBody = document.getElementById('qt-body');
   const qtToggle = document.getElementById('quake-toggle');
-  const qtClose = document.getElementById('qt-close');
 
   /** Estado del quake terminal */
   let quakeOpen = false;
@@ -33,7 +32,6 @@ export function renderConsole() {
   function openQuake() {
     if (quakeOpen) return;
     quakeEl.classList.remove('hidden');
-    quakeEl.classList.add('open');
     quakeOpen = true;
     input.focus();
   }
@@ -41,7 +39,6 @@ export function renderConsole() {
   function closeQuake() {
     if (!quakeOpen) return;
     quakeEl.classList.add('hidden');
-    quakeEl.classList.remove('open');
     quakeOpen = false;
   }
 
@@ -235,7 +232,6 @@ export function renderConsole() {
 
   // Toggle quake terminal con el botón ^
   if (qtToggle) qtToggle.addEventListener('click', toggleQuake);
-  if (qtClose) qtClose.addEventListener('click', closeQuake);
 
   // Abrir quake al hacer focus en el input
   input.addEventListener('focus', () => {
@@ -244,8 +240,9 @@ export function renderConsole() {
 
   // Cerrar quake con Escape
   input.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && quakeOpen) {
-      closeQuake();
+    if (e.key === 'Escape') {
+      if (quakeOpen) closeQuake();
+      else input.blur();
       return;
     }
     if (e.key !== 'Enter') return;

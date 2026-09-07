@@ -163,7 +163,60 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .strategy-item{margin-bottom:16px;padding:12px;background:#0e2030;border:1px solid var(--brd-lt)}
 .strategy-title{font-family:var(--serif2);color:var(--gold);font-size:1.05rem;margin-bottom:6px;font-weight:700}
 .strategy-text{color:var(--txt);font-size:.95rem;line-height:1.6}
-.console-bar{display:flex;align-items:center;padding:2px 12px;background:#0a0c0e;border-top:2px solid var(--brd);min-height:28px;flex-shrink:0;gap:4px;flex-wrap:wrap}
+.console-bar-wrapper{
+  position:relative;
+  display:flex;
+  flex-direction:column-reverse;
+  flex-shrink:0
+}
+.quake-terminal{
+  position:absolute;
+  bottom:28px;
+  left:0;
+  right:0;
+  height:80px;
+  background:#0a0e14;
+  border-top:2px solid #2c313a;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  transition:transform .2s ease,opacity .2s ease
+}
+.quake-terminal.hidden{
+  transform:translateY(100%);
+  opacity:0;
+  pointer-events:none
+}
+.qt-body{
+  flex:1;
+  overflow-y:auto;
+  padding:4px 16px;
+  font-family:var(--mono);
+  font-size:.8rem;
+  line-height:1.5;
+  color:#abb2bf
+}
+.qt-body .qt-line{
+  padding:1px 0;
+  white-space:pre-wrap;
+  word-break:break-all
+}
+.qt-body .qt-cmd{color:#98c379}
+.qt-body .qt-out{color:#abb2bf}
+.qt-body .qt-err{color:#e06c75}
+.qt-body .qt-sys{color:#61afef}
+.qt-body .qt-gold{color:#e5c07b}
+.console-bar{
+  display:flex;
+  align-items:center;
+  padding:2px 12px;
+  background:#0a0c0e;
+  border-top:2px solid var(--brd);
+  min-height:28px;
+  flex-shrink:0;
+  gap:4px;
+  flex-wrap:wrap
+}
 .console-bar .cp{color:#56b6c2;margin-right:4px;font-size:1rem;white-space:nowrap}
 .console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:#ffffff;font-family:var(--mono);font-size:1rem}
 /* Ventana minimizada */
@@ -194,52 +247,24 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .console-bar input::placeholder{color:#2a4030}
 /* ===== Quake toggle button ===== */
 .quake-toggle{
-  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
-  width:32px;height:26px;display:flex;align-items:center;justify-content:center;
-  background:#1a1b1e;border:1px solid var(--brd);border-bottom:none;
-  color:#abb2bf;font-size:.85rem;cursor:pointer;z-index:400;
+  position:absolute;
+  bottom:28px;
+  right:16px;
+  width:28px;
+  height:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#1a1b1e;
+  border:1px solid var(--brd);
+  color:#abb2bf;
+  font-size:.9rem;
+  cursor:pointer;
+  z-index:400;
   transition:background .15s,color .15s
 }
 .quake-toggle:hover{background:#2c313a;color:#61afef}
-/* ===== Quake terminal overlay ===== */
-.quake-terminal{
-  position:absolute;bottom:0;left:0;right:0;
-  width:min(90vw,700px);max-height:180px;
-  margin:0 auto;z-index:10000;
-  background:#0a0e14;border:2px solid #2c313a;border-bottom:none;
-  box-shadow:0 -4px 24px rgba(0,0,0,.8);display:flex;flex-direction:column;
-  transition:transform .2s ease,opacity .2s ease
-}
-.quake-terminal.hidden{transform:translateY(100%);opacity:0;pointer-events:none}
-.qt-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:4px 12px;background:#181a1f;border-bottom:1px solid #2c313a;flex-shrink:0
-}
-.qt-title{font-family:var(--mono);font-size:.75rem;color:#61afef;letter-spacing:1px}
-.qt-close{
-  width:20px;height:20px;background:#e04040;border:none;color:#fff;font-size:.7rem;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  border-radius:2px;transition:background .15s
-}
-.qt-close:hover{background:#ff5555}
-.qt-body{
-  flex:1;overflow-y:auto;padding:6px 12px;font-family:var(--mono);font-size:.8rem;
-  line-height:1.5;color:#abb2bf;background:#0a0e14
-}
-.qt-body .qt-line{padding:1px 0;white-space:pre-wrap;word-break:break-all}
-.qt-body .qt-cmd{color:#98c379} /* gitbash green for commands */
-.qt-body .qt-out{color:#abb2bf} /* default output */
-.qt-body .qt-err{color:#e06c75} /* red for errors */
-.qt-body .qt-sys{color:#61afef} /* blue for system messages */
-.qt-body .qt-gold{color:#e5c07b} /* gold for special */
-/* Quake open state — slides up */
-.quake-terminal.open{transform:translateY(0);opacity:1}
-/* Scrollbar estilo gitbash oscuro */
-.qt-body::-webkit-scrollbar{width:8px}
-.qt-body::-webkit-scrollbar-track{background:#0a0e14}
-.qt-body::-webkit-scrollbar-thumb{background:#2c313a;border-radius:4px}
-.qt-body::-webkit-scrollbar-thumb:hover{background:#3e4455}
 .scanlines{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.12) 1px,rgba(0,0,0,.12) 2px)}
 .vignette{position:fixed;inset:0;z-index:9997;pointer-events:none;box-shadow:inset 0 0 150px rgba(0,0,0,.5)}
-@media(max-width:900px){.panel{display:none!important}.desktop-body{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));grid-template-rows:auto;max-width:80vw;margin:0 auto;width:100%}.win{width:min(90vw, 80vw)!important;min-width:0!important;max-width:min(90vw, 80vw)!important;max-height:70vh!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}.wct .img-ph{width:140px!important}.win .wti{font-size:.8rem}.console-bar{flex-wrap:wrap;padding:8px}.console-bar .cp{width:100%;margin-bottom:4px}.console-bar input{min-width:100%}}
+@media(max-width:900px){.panel{display:none!important}.desktop-body{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));grid-template-rows:auto;max-width:80vw;margin:0 auto;width:100%}.win{width:min(90vw, 80vw)!important;min-width:0!important;max-width:min(90vw, 80vw)!important;max-height:70vh!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}.wct .img-ph{width:140px!important}.win .wti{font-size:.8rem}.quake-terminal{height:60px}.console-bar{flex-wrap:wrap;padding:8px}.console-bar .cp{width:100%;margin-bottom:4px}.console-bar input{min-width:100%}}
 @media(max-width:500px){.taskbar-top{flex-direction:column;padding:4px 8px;gap:4px}.grid{padding:8px;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));max-width:90vw;gap:16px}.folder .ico{font-size:2.2rem}.folder .lbl{font-size:.75rem}.folder .cat{font-size:.6rem}.breadcrumb{padding:8px 16px 4px;font-size:.7rem}.win{width:95vw!important;max-width:95vw!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}}
