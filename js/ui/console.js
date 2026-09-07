@@ -73,6 +73,17 @@ export function renderConsole() {
     window.addEventListener('touchend', stopResize);
   }
 
+  // Cerrar quake al hacer click afuera
+  document.addEventListener('click', e => {
+    if (!quakeOpen) return;
+    const isInsideQuake = quakeEl.contains(e.target);
+    const isInsideInput = input.contains(e.target);
+    const isToggleBtn = qtToggle && qtToggle.contains(e.target);
+    if (!isInsideQuake && !isInsideInput && !isToggleBtn) {
+      closeQuake();
+    }
+  });
+
   /** Estado del quake terminal */
   let quakeOpen = false;
   const MAX_LINES = 50; // máximo de líneas históricas en el quake
