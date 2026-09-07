@@ -1,6 +1,6 @@
 /* BOOT — Secuencia de arranque estilo terminal CRT */
 import { CONFIG } from '../data/config.js';
-import { EXP } from '../data/exp.js';
+import { EXP_LIST } from '../data/exp.js';
 import { Window } from './window.js';
 import { makeEl } from './utils.js';
 
@@ -10,7 +10,7 @@ export class Boot {
     const bootBar = document.getElementById('boot-bar');
     const messages = [
       ...CONFIG.bootMessages.map(fn => fn(CONFIG)),
-      `> ARCHIVOS: ${EXP.length} expedientes`,
+      `> ARCHIVOS: ${EXP_LIST.length} expedientes`,
       '> UI: escritorio listo...'
     ];
 
@@ -57,7 +57,7 @@ export class Boot {
     const grid = document.getElementById('grid');
     const fragment = document.createDocumentFragment();
 
-    EXP.forEach(exp => {
+    EXP_LIST.forEach(exp => {
       const category = exp.cat.split('·')[0].trim();
       const folder = makeEl('div', '', { class: 'folder', 'data-id': exp.id, tabindex: '0', role: 'listitem', 'aria-label': exp.titulo + ' — ' + category });
 

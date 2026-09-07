@@ -1,5 +1,4 @@
 /* WINDOW — Ventanas modales arrastrables con minimizar/apilar */
-import { EXP } from '../data/exp.js';
 import { makeEl } from './utils.js';
 
 /** @returns {HTMLElement} */

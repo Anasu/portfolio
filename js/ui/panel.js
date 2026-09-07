@@ -1,5 +1,5 @@
 /* PANEL — Panel lateral con estadísticas y registro */
-import { EXP } from '../data/exp.js';
+import { EXP_LIST } from '../data/exp.js';
 import { makeEl, statRow } from './utils.js';
 
 /** @returns {HTMLElement} */
@@ -30,7 +30,7 @@ export function renderPanel() {
   // Sección EXPEDIENTES
   const expSection = makeEl('div', '', { class: 'ps' });
   expSection.appendChild(labelDiv('EXPEDIENTES'));
-  expSection.appendChild(makeEl('div', String(EXP.length), {
+  expSection.appendChild(makeEl('div', String(EXP_LIST.length), {
     class: 'pv num',
     style: 'font-size:3.5rem;text-align:center;font-family:var(--serif);font-weight:700;color:var(--green);text-shadow:0 0 15px rgba(112,54,231,.25)'
   }));
@@ -41,8 +41,8 @@ export function renderPanel() {
   statSection.appendChild(labelDiv('ESTADÍSTICA'));
 
   const statBox = makeEl('div', '', { style: 'margin-top:8px;display:flex;flex-direction:column;gap:5px;font-size:1rem' });
-  const solvedCount = EXP.filter(x => x.st === 'solved').length;
-  const classifiedCount = Math.floor(EXP.length / 2);
+  const solvedCount = EXP_LIST.filter(x => x.st === 'solved').length;
+  const classifiedCount = Math.floor(EXP_LIST.length / 2);
 
   statBox.appendChild(statRow('RESUELTOS', String(solvedCount), 'var(--green)'));
   statBox.appendChild(statRow('CLASIFICADOS', String(classifiedCount), 'var(--green)'));

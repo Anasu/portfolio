@@ -1,5 +1,5 @@
 /* CONSOLE — Barra de comandos estilo terminal + Quake overlay */
-import { EXP } from '../data/exp.js';
+import { EXP_LIST } from '../data/exp.js';
 import { Window } from './window.js';
 import { makeEl } from './utils.js';
 
@@ -148,16 +148,16 @@ export function renderConsole() {
   function findExp(query) {
     query = query.toLowerCase().trim();
     // Match by exact id
-    let exp = EXP.find(e => e.id === query);
+    let exp = EXP_LIST.find(e => e.id === query);
     if (exp) return exp;
     // Match by normalized name (strip accents, spaces, hyphens)
     const norm = q => q.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s\-]+/g, '');
-    for (const e of EXP) {
+    for (const e of EXP_LIST) {
       if (norm(e.titulo.toLowerCase()) === norm(query)) return e;
     }
     // Partial match on normalized name
     const nq = norm(query);
-    for (const e of EXP) {
+    for (const e of EXP_LIST) {
       if (norm(e.titulo.toLowerCase()).includes(nq) || nq.includes(norm(e.titulo.toLowerCase()))) return e;
     }
     return null;
@@ -355,12 +355,12 @@ export function renderConsole() {
 
       case 'ls':
       case 'dir':
-        EXP.forEach(x => {
+        EXP_LIST.forEach(x => {
           const slug = x.titulo.toLowerCase().replace(/[\s\-]+/g, '-');
           logToPanel('[LS] ' + x.ico + ' ' + x.titulo.padEnd(12) + '[' + x.id + '|' + slug + ']');
         });
         // Also show in quake
-        EXP.forEach(x => {
+        EXP_LIST.forEach(x => {
           const slug = x.titulo.toLowerCase().replace(/[\s\-]+/g, '-');
           qtLog('  ' + x.ico + ' ' + x.titulo.padEnd(12) + '[' + x.id + '|' + slug + ']', 'qt-out');
         });
