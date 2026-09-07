@@ -29,10 +29,15 @@ export function renderConsole() {
   let quakeOpen = false;
   const MAX_LINES = 50; // máximo de líneas históricas en el quake
 
+  function updateToggleIcon() {
+    if (qtToggle) qtToggle.textContent = quakeOpen ? 'v' : '^';
+  }
+
   function openQuake() {
     if (quakeOpen) return;
     quakeEl.classList.remove('hidden');
     quakeOpen = true;
+    updateToggleIcon();
     input.focus();
   }
 
@@ -40,6 +45,7 @@ export function renderConsole() {
     if (!quakeOpen) return;
     quakeEl.classList.add('hidden');
     quakeOpen = false;
+    updateToggleIcon();
   }
 
   function toggleQuake() {
@@ -202,6 +208,12 @@ export function renderConsole() {
       '  ════════════════════════════════'
     ];
     helpText.forEach(line => logToPanel(line));
+    // También mostrar en quake terminal
+    qtLog('[CMD] ═══ COMANDOS DISPONIBLES ═══', 'qt-sys');
+    helpText.slice(1).forEach(line => {
+      if (line === '') qtLog('');
+      else qtLog(line, 'qt-out');
+    });
   }
 
   /** Respuestas personalizadas para comandos de terminal comunes */
