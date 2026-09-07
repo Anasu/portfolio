@@ -1,4 +1,5 @@
 /* BOOT — Secuencia de arranque estilo terminal CRT */
+import { CONFIG } from '../data/config.js';
 import { EXP } from '../data/exp.js';
 import { Window } from './window.js';
 import { makeEl } from './utils.js';
@@ -8,11 +9,8 @@ export class Boot {
     const bootText = document.getElementById('boot-text');
     const bootBar = document.getElementById('boot-bar');
     const messages = [
-      '> BIOS v4.2... OK',
-      '> RAM: 65536K... OK',
-      '> CRYPT: AES-256',
-      '> CLEARANCE: NIVEL-\u03A9',
-      '> ARCHIVOS: 4 expedientes',
+      ...CONFIG.bootMessages.map(fn => fn(CONFIG)),
+      `> ARCHIVOS: ${EXP.length} expedientes`,
       '> UI: escritorio listo...'
     ];
 
