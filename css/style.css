@@ -164,8 +164,8 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .strategy-title{font-family:var(--serif2);color:var(--gold);font-size:1.05rem;margin-bottom:6px;font-weight:700}
 .strategy-text{color:var(--txt);font-size:.95rem;line-height:1.6}
 .console-bar{display:flex;align-items:center;padding:2px 12px;background:#0a0c0e;border-top:2px solid var(--brd);min-height:28px;flex-shrink:0;gap:4px;flex-wrap:wrap}
-.console-bar .cp{color:var(--green-dark);margin-right:4px;font-size:1rem;white-space:nowrap}
-.console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:var(--green);font-family:var(--mono);font-size:1rem}
+.console-bar .cp{color:#56b6c2;margin-right:4px;font-size:1rem;white-space:nowrap}
+.console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:#ffffff;font-family:var(--mono);font-size:1rem}
 /* Ventana minimizada */
 .win.minimized{
   position:fixed !important;
