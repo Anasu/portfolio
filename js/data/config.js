@@ -167,7 +167,7 @@ export const CONFIG = Object.freeze({
     ogDescription: 'Portafolio profesional de diseño UX/UI, dirección técnica y estrategia de producto.',
     ogType: 'website',
     ogLocale: 'es_CL',
-    themeColor: '#7036E7',
+    themeColor: '#c9a84c',
   },
 
   // Ventanas

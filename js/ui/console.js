@@ -175,8 +175,8 @@ export function renderConsole() {
 
       <h4>🔗 Enlaces</h4>
       <div style="display:flex;gap:16px;margin:12px 0;flex-wrap:wrap">
-        <a href="https://linkedin.com/in/anasu" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none;border:1px solid var(--green-dark);padding:6px 14px;font-family:var(--mono);font-size:.9rem;letter-spacing:1px">LinkedIn ↗</a>
-        <a href="https://github.com/anasu" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none;border:1px solid var(--green-dark);padding:6px 14px;font-family:var(--mono);font-size:.9rem;letter-spacing:1px">GitHub ↗</a>
+        <a href="https://linkedin.com/in/anasu" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border:1px solid var(--accent-dark);padding:6px 14px;font-family:var(--mono);font-size:.9rem;letter-spacing:1px">LinkedIn ↗</a>
+        <a href="https://github.com/anasu" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border:1px solid var(--accent-dark);padding:6px 14px;font-family:var(--mono);font-size:.9rem;letter-spacing:1px">GitHub ↗</a>
         <a href="#" id="btn-download-cv" style="color:var(--gold);text-decoration:none;border:1px solid var(--gold);padding:6px 14px;font-family:var(--mono);font-size:.9rem;letter-spacing:1px">Descargar CV (PDF) ↓</a>
       </div>
 
@@ -195,7 +195,7 @@ export function renderConsole() {
       </div>
 
       <h4>📬 Contacto directo</h4>
-      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:hola@anasu.dev" style="color:var(--green)">hola@anasu.dev</a></p>
+      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:hola@anasu.dev" style="color:var(--accent)">hola@anasu.dev</a></p>
     `;
 
     const win = new Window({ titulo: 'bio — perfil profesional', ico: '\u{1F464}' });
@@ -218,21 +218,21 @@ export function renderConsole() {
           <span style="font-size:1.2rem">📧</span>
           <div>
             <div style="color:var(--gold);font-size:.85rem;letter-spacing:1px">EMAIL</div>
-            <a href="mailto:hola@anasu.dev" style="color:var(--green);text-decoration:none;font-family:var(--mono)">hola@anasu.dev</a>
+            <a href="mailto:hola@anasu.dev" style="color:var(--accent);text-decoration:none;font-family:var(--mono)">hola@anasu.dev</a>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:8px;background:#0e2030;border:1px solid var(--brd)">
           <span style="font-size:1.2rem">💼</span>
           <div>
             <div style="color:var(--gold);font-size:.85rem;letter-spacing:1px">LINKEDIN</div>
-            <a href="https://linkedin.com/in/anasu" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none;font-family:var(--mono)">linkedin.com/in/anasu ↗</a>
+            <a href="https://linkedin.com/in/anasu" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-family:var(--mono)">linkedin.com/in/anasu ↗</a>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:8px;background:#0e2030;border:1px solid var(--brd)">
           <span style="font-size:1.2rem">🐙</span>
           <div>
             <div style="color:var(--gold);font-size:.85rem;letter-spacing:1px">GITHUB</div>
-            <a href="https://github.com/anasu" target="_blank" rel="noopener" style="color:var(--green);text-decoration:none;font-family:var(--mono)">github.com/anasu ↗</a>
+            <a href="https://github.com/anasu" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-family:var(--mono)">github.com/anasu ↗</a>
           </div>
         </div>
       </div>

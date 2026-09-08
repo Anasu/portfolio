@@ -16,9 +16,9 @@ export function renderPanel() {
   // Sección SISTEMA
   const sysSection = makeEl('div', '', { class: 'ps' });
   sysSection.appendChild(makeEl('h3', 'SISTEMA', {
-    style: 'font-family:var(--serif);font-size:1rem;letter-spacing:3px;color:var(--green);margin-bottom:6px'
+    style: 'font-family:var(--mono);font-size:1rem;letter-spacing:3px;color:var(--accent);margin-bottom:6px'
   }));
-  sysSection.appendChild(makeEl('div', '', { class: 'ul', style: 'width:40px;height:2px;background:linear-gradient(90deg,var(--green),transparent);margin-bottom:8px' }));
+  sysSection.appendChild(makeEl('div', '', { class: 'ul', style: 'width:40px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:8px' }));
   fragment.appendChild(sysSection);
 
   // Sección ESTADO
@@ -32,7 +32,7 @@ export function renderPanel() {
   expSection.appendChild(labelDiv('EXPEDIENTES'));
   expSection.appendChild(makeEl('div', String(EXP_LIST.length), {
     class: 'pv num',
-    style: 'font-size:3.5rem;text-align:center;font-family:var(--serif);font-weight:700;color:var(--green);text-shadow:0 0 15px rgba(112,54,231,.25)'
+    style: 'font-size:3.5rem;text-align:center;font-family:var(--mono);font-weight:700;color:#fde68a;text-shadow:0 0 15px rgba(253,230,138,.25)'
   }));
   fragment.appendChild(expSection);
 

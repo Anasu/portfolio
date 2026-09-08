@@ -73,7 +73,7 @@ export const Window = {
 
     // Título H2
     const h2 = makeEl('h2', exp.titulo, {
-      style: 'font-family:var(--serif);color:var(--gold);font-size:2rem;margin-bottom:8px;text-shadow:0 0 10px rgba(201,168,76,.2)'
+      style: 'font-family:var(--mono);color:var(--gold);font-size:2rem;margin-bottom:8px;text-shadow:0 0 10px rgba(201,168,76,.2)'
     });
     content.appendChild(h2);
 
@@ -101,7 +101,7 @@ export const Window = {
     // Impacto
     if (exp.impacto && exp.impacto.length) {
       content.appendChild(makeEl('h4', 'RESUMEN DE IMPACTO', {
-        style: 'font-family:var(--serif);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
+        style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
       }));
       const grid = makeEl('div', '', { class: 'impact-grid' });
       exp.impacto.forEach(k => {
@@ -117,7 +117,7 @@ export const Window = {
     // Desafío
     if (exp.desafio) {
       content.appendChild(makeEl('h4', 'EL DESAFÍO', {
-        style: 'font-family:var(--serif);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
+        style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
       }));
       content.appendChild(makeEl('p', exp.desafio, { class: 'section-text' }));
     }
@@ -125,7 +125,7 @@ export const Window = {
     // Estrategia
     if (exp.estrategia && exp.estrategia.length) {
       content.appendChild(makeEl('h4', 'ESTRATEGIA Y ACCIÓN', {
-        style: 'font-family:var(--serif);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
+        style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
       }));
       exp.estrategia.forEach(s => {
         const item = makeEl('div', '', { class: 'strategy-item' });
@@ -137,7 +137,7 @@ export const Window = {
 
     // Archivos
     content.appendChild(makeEl('h4', 'ARCHIVOS DEL SISTEMA', {
-      style: 'font-family:var(--serif);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
+      style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
     }));
     const filesDiv = makeEl('div', '', { class: 'files' });
     exp.arc.forEach(f => {
@@ -149,7 +149,7 @@ export const Window = {
 
     // Entregables dummy
     content.appendChild(makeEl('h4', 'ENTREGABLES', {
-      style: 'font-family:var(--serif);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
+      style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
     }));
     const imgRow = makeEl('div', '', { class: 'img-row' });
     for (let i = 0; i < 4; i++) {
