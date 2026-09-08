@@ -90,6 +90,60 @@ export const CONFIG = Object.freeze({
     'quit': '[SYS] Quit? Ni hablar. Aún quedan expedientes por explorar.',
     'reboot': '[SYS] Reiniciando... > BIOS v4.2... OK\n> SISTEMA LISTO\nYa estás de vuelta. Todo funciona igual de bien.',
     'sudo make me a sandwich': '[ALERT] Comando compuesto detectado. No puedes usar sudo para hacer sándwiches en este sistema.',
+
+    // --- DNF (Fedora/RHEL) ---
+    'dnf update': '[SYS] Este no es Fedora, detective. Aquí las actualizaciones son de portfolio, no del kernel. Pero buena intención.',
+    'dnf install': '[SYS] dnf install? Acá no hay paquetes RPM — solo componentes de diseño y design tokens. Try `open exp001` instead.',
+
+    // --- NPM / Node ---
+    'npm start': '[SYS] npm start? Aquí el proyecto ya está corriendo, detective. No necesitas package.json para explorar los expedientes.',
+    'npm install': '[SYS] No hay node_modules aquí — solo expedientes clasificados. Los dependencies son: creatividad + curiosidad.',
+    'npm run': '[SYS] npm run? El único script disponible es `open [expediente]`. Pero puedes probar: npm run detective',
+
+    // --- Yarn ---
+    'yarn install': '[SYS] Yarn? Acá no hilamos paquetes, hilamos experiencias. Los expedientes están listos para abrir.',
+    'yarn start': '[SYS] Ya estás dentro del proyecto, detective. No hace falta yarn start — solo escribe `ls` y explora.',
+
+    // --- Pip (Python) ---
+    'pip install': '[SYS] pip install? Esto no es un entorno Python. Acá las librerías son Figma, Storybook y design tokens.',
+    'pip install requests': '[SYS] No necesitas requests para navegar — solo `open [nombre]`. Aunque los datos sí se piden con curiosidad.',
+
+    // --- Cargo (Rust) ---
+    'cargo build': '[SYS] cargo build? Acá no compilamos en Rust, construimos en UX. Pero el diseño está optimizado como código nativo.',
+    'cargo run': '[SYS] El proyecto ya está corriendo. No hace falta cargo run — solo `open exp001` para empezar.',
+
+    // --- Make ---
+    'make': '[SYS] make? Acá no hay Makefile — solo expedientes. Pero si hiciera falta, el target sería: make experience-awesome',
+    'make all': '[SYS] make all ya se ejecutó al cargar el sistema. Todos los expedientes están compilados y listos.',
+
+    // --- Docker ---
+    'docker run': '[SYS] docker run? No hay contenedores aquí — solo ventanas de expedientes corriendo nativamente. 100% host performance.',
+    'docker ps': '[SYS] docker ps? Las únicas containers running son las ventanas del panel. Usa `ls` para listarlas.',
+
+    // --- Composer (PHP) ---
+    'composer install': '[SYS] composer install? Acá no gestionamos dependencies PHP — solo design systems y flujos de trabajo.',
+
+    // --- Bundle (Ruby) ---
+    'bundle install': '[SYS] bundle install? No hay Gemfile en este proyecto. Los gems son: creatividad, estrategia y pixel-perfect.',
+
+    // --- Maya / MEL ---
+    'select -all': '[MAYA] Nice try, detective. Esto no es Maya — no hay viewport para seleccionar todo. Pero sí puedes ver todos los expedientes con `ls`.',
+    'selectAll': '[MAYA] selectAll? Acá no hay escena 3D, solo expedientes 2D. Prueba: `ls` para listar todo el contenido.',
+    'polySphere': '[MAYA] polySphere? Esto no es Maya, detective. No creamos esferas aquí — creamos interfaces. Pero buen intento con el modeling.',
+    'polyCube': '[MAYA] polyCube? Ni modo de crear primitivas 3D en un portafolio web. Acá las cajas son cards de expedientes.',
+    'polyCylinder': '[MAYA] polyCylinder? Acá no hay cilindros — solo datos, diseño y estrategia. El viewport es este panel, detective.',
+    'move': '[MAYA] move? Los objetos no se mueven con el comando MEL aquí. Pero los expedientes sí fluyen entre secciones.',
+    'rotate': '[MAYA] rotate? Acá no rotamos viewports — rotamos perspectivas de producto. Eso se hace en la estrategia, no en MEL.',
+    'scale': '[MAYA] scale? No escalamos polígonos, escalamos experiencias. Pero puedes ampliar expedientes con `open [id]`.',
+    'setKeyframe': '[MAYA] setKeyframe? Esto no es Maya — no hay línea de tiempo ni animación MEL. Los flujos son estáticos pero potentes.',
+    'keyframe': '[MAYA] keyframe? Acá no keyteamos propiedades — keyteamos decisiones de diseño. Eso queda en los expedientes.',
+    'playbackOptions': '[MAYA] playbackOptions? No hay reproducción 3D aquí. Pero los expedientes tienen su propio ritmo de storytelling.',
+    'render': '[MAYA] render? Acá no renderizamos escenas Maya — renderizamos interfaces directamente en el browser. Sin Arnold, sin mental ray.',
+    'renderSceneButton': '[MAYA] renderSceneButton? No hay botón de render en este panel. Solo botones de expedientes y un detective curioso.',
+    'file -new': '[MAYA] file -new? Acá no creamos escenas nuevas — creamos experiencias. Pero puedes explorar otros expedientes con `open [id]`.',
+    'file -open': '[MAYA] file -open? Esto no es Maya, detective. Para abrir contenido usa: `open [nombre o id del expediente]`.',
+    'hotkey': '[MAYA] hotkey? Acá los shortcuts son: `open`, `ls`, `help`. No hay Ctrl+Q para query — pero sí Ctrl+` para la consola, detective.',
+    'delete': '[MAYA] delete? Esto no es Maya viewport. Acá no borramos polyMeshes — solo se eliminan los mal diseño. Y eso no existe aquí.',
   }),
 
   // Errores genéricos de consola (se eligen al azar)
