@@ -75,9 +75,9 @@ export const EXP = {
     st: 'solved',
     arc: ['/ds/tokens.json', '/ds/components-library.fig', '/ds/patterns-guidelines.pdf', '/ds/ai-mcp-prompts.json'],
     impacto: [
-      { lab: 'TTM', val: '7→1 mes', desc: '+IA en fase 2' },
+      { lab: 'TTM', val: '7 → 1 mes', desc: '+IA en fase 2' },
       { lab: 'Adopción', val: '+90%', desc: 'reutilización en células activas' },
-      { lab: 'CSAT', val: '>4.5/5', desc: 'satisfacción equipo producto' },
+      { lab: 'CSAT', val: '>4.5 / 5', desc: 'satisfacción equipo producto' },
       { lab: 'Escala', val: '~10 prod.', desc: 'ecosistema unificado' }
     ],
     desafio: 'El área de mantenimiento operaba con ~10 productos digitales fragmentados, cada uno resolviendo pantallas complejas (filtros, dashboards, formularios) de forma aislada. Esto generaba graves inconsistencias de flujo y UI, elevando el riesgo de error humano en operaciones críticas de seguridad aérea.',
@@ -101,10 +101,10 @@ export const EXP = {
     st: 'solved',
     arc: ['/fintech/ios-design-system.fig', '/fintech/android-design-system.fig', '/fintech/flow-map-and-paths.pdf', '/fintech/wcag-compliance-specs.json'],
     impacto: [
-      { lab: 'Migración', val: '1 año', desc: 'transición integral completa de la app' },
-      { lab: 'Handoff', val: '0 ambig.', desc: 'fuente única de verdad diseño/dev/QA' },
-      { lab: 'Accesibilidad', val: 'WCAG', desc: 'optimización universal de contraste y tacto' },
-      { lab: 'Convergencia', val: '2 SO', desc: 'eliminación de inconsistencias iOS/Android' }
+      { lab: 'Migración', val: '→ 1 año', desc: 'transición integral completa de la app' },
+      { lab: 'Handoff', val: '→ 0 ambig.', desc: 'fuente única de verdad diseño/dev/QA' },
+      { lab: 'Accesibilidad', val: '→ WCAG', desc: 'optimización universal de contraste y tacto' },
+      { lab: 'Convergencia', val: '→ 2 SO', desc: 'eliminación de inconsistencias iOS/Android' }
     ],
     desafio: 'La plataforma operaba sobre una tecnología híbrida con una arquitectura descentralizada, documentación contradictoria y flujos críticos sin registrar. Adicionalmente, existía una grave falta de consistencia entre Android e iOS (sesgo excesivo hacia Material Design) y pantallas clave sin adaptar para accesibilidad.',
     estrategia: [
@@ -128,10 +128,10 @@ export const EXP = {
     st: 'solved',
     arc: ['/edtech/parent-app-wireframes.fig', '/edtech/school-dashboard-desktop.fig', '/edtech/fallback-sms-flow.pdf', '/edtech/accessibility-quilicura-specs.json'],
     impacto: [
-      { lab: 'Omnicanalidad', val: '0% dep.', desc: 'contingencia SMS/Push sin datos móviles' },
-      { lab: 'Accesible', val: 'Base', desc: 'contrastes optimizados + zonas táctiles aumentadas' },
-      { lab: 'Eficiencia B2B', val: '13"', desc: 'dashboard web ultracoracto para portátiles' },
-      { lab: 'Adopción', val: '0 curva', desc: 'apalancada en modelos mentales de apps diarias' }
+      { lab: 'Omnicanalidad', val: '→ 0% dep.', desc: 'contingencia SMS/Push sin datos móviles' },
+      { lab: 'Accesible', val: '→ Base', desc: 'contrastes optimizados + zonas táctiles aumentadas' },
+      { lab: 'Eficiencia B2B', val: '→ 13"', desc: 'dashboard web ultracoracto para portátiles' },
+      { lab: 'Adopción', val: '→ 0 curva', desc: 'apalancada en modelos mentales de apps diarias' }
     ],
     desafio: 'La investigación en escuelas de Quilicura reveló una severa brecha de comunicación entre apoderados (locales y migrantes) y el colegio. Las familias enfrentaban barreras como conectividad intermitente (sin datos móviles activos), dispositivos antiguos de gama baja, baja alfabetización digital y dificultades visuales.',
     estrategia: [
@@ -155,10 +155,10 @@ export const EXP = {
     st: 'solved',
     arc: ['/nexus/render-pipeline-specs.json', '/nexus/camera-rig-presets.ma', '/nexus/character-rigs-fk-ik.fbx', '/nexus/cntv-audit-report.pdf'],
     impacto: [
-      { lab: 'Render', val: '4 meses', desc: 'reducción costos de tiempo de render' },
+      { lab: 'Render', val: '→ 4 meses', desc: 'reducción costos de tiempo de render' },
       { lab: 'Layout', val: '<50%', desc: 'reducción tiempo de layout' },
-      { lab: 'Auditoría', val: '100%', desc: 'aprobación y cero observaciones CNTV' },
-      { lab: 'Producto', val: 'Shift', desc: 'traslado de animación a diseño software' }
+      { lab: 'Auditoría', val: '→ 100%', desc: 'aprobación y cero observaciones CNTV' },
+      { lab: 'Producto', val: '→ Shift', desc: 'traslado de animación a diseño software' }
     ],
     desafio: 'La producción de la primera temporada de la serie 3D operaba bajo un flujo altamente ineficiente: los fondos tomaban varios minutos en renderizarse para un promedio de 150 planos por episodio. La iluminación se configuraba de manera ad-hoc por escena, generando inconsistencias, problemas de cámara, riesgo de retrasos críticos en las entregas de compromisos estatales y un gasto de recursos técnicos desproporcionado.',
     estrategia: [

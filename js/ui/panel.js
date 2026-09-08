@@ -24,7 +24,7 @@ export function renderPanel() {
   // Sección ESTADO
   const stateSection = makeEl('div', '', { class: 'ps' });
   stateSection.appendChild(labelDiv('ESTADO'));
-  stateSection.appendChild(makeEl('div', '\u25CF ONLINE', { class: 'pv green' }));
+  stateSection.appendChild(makeEl('div', '\u25CF ONLINE', { class: 'pv status-ok' }));
   fragment.appendChild(stateSection);
 
   // Sección EXPEDIENTES
@@ -44,10 +44,10 @@ export function renderPanel() {
   const solvedCount = EXP_LIST.filter(x => x.st === 'solved').length;
   const classifiedCount = Math.floor(EXP_LIST.length / 2);
 
-  statBox.appendChild(statRow('RESUELTOS', String(solvedCount), 'var(--green)'));
-  statBox.appendChild(statRow('CLASIFICADOS', String(classifiedCount), 'var(--green)'));
+  statBox.appendChild(statRow('RESUELTOS', String(solvedCount), '#fde68a'));
+  statBox.appendChild(statRow('CLASIFICADOS', String(classifiedCount), 'rgba(253,230,138,.7)'));
 
-  const uptimeRow = statRow('UPTIME', '0s', 'var(--green)');
+  const uptimeRow = statRow('UPTIME', '0s', '#fde68a');
   uptimeRow.lastChild.id = 'uptime';
   statBox.appendChild(uptimeRow);
 

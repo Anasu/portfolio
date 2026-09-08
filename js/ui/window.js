@@ -79,14 +79,14 @@ export const Window = {
 
     // Meta info
     const meta = makeEl('div', '', { class: 'meta' });
-    const tagClass = exp.st === 'solved' ? 'ftag ok' : 'ftag op';
-    const tagLabel = exp.st === 'solved' ? 'RESUELTOS' : 'ABIERTO';
+    const statusClass = exp.st === 'solved' ? 'tag-solved' : 'tag-open';
+    const tagLabel = exp.st === 'solved' ? 'RESUELTOS ✓' : 'ABIERTO →';
 
     meta.appendChild(metaLabel('CATEGORÍA', exp.cat));
     meta.appendChild(metaLabel('AÑO', exp.ano));
     meta.appendChild(metaLabel('NIVEL', exp.niv));
 
-    const statusTag = makeEl('span', tagLabel, { class: tagClass });
+    const statusTag = makeEl('span', tagLabel, { class: 'ftag ' + statusClass });
     meta.appendChild(statusTag);
 
     exp.tech.split(',').forEach(t => {
