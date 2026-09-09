@@ -2,6 +2,7 @@
 import { CONFIG } from '../data/config.js';
 import { EXP_LIST } from '../data/exp.js';
 import { Window } from './window.js';
+import { Contact } from './contact.js';
 import { makeEl } from './utils.js';
 
 export class Boot {
@@ -46,6 +47,7 @@ export class Boot {
         bootEl.style.display = 'none';
         document.getElementById('desktop').classList.remove('hidden');
         self.renderFolders();
+        Contact.renderIcon();
       }
     };
     window.addEventListener('transitionend', onTransEnd, false);

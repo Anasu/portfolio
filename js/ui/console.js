@@ -1,6 +1,7 @@
 /* CONSOLE — Barra de comandos estilo terminal + Quake overlay */
 import { EXP_LIST } from '../data/exp.js';
 import { Window } from './window.js';
+import { Contact } from './contact.js';
 import { makeEl } from './utils.js';
 
 export function renderConsole() {
@@ -195,14 +196,14 @@ export function renderConsole() {
       </div>
 
       <h4>📬 Contacto directo</h4>
-      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:hola@anasu.dev" style="color:var(--accent)">hola@anasu.dev</a></p>
+      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:anazconte@gmail.com" style="color:var(--accent)">anazconte@gmail.com</a></p>
     `;
 
     const win = new Window({ titulo: 'bio — perfil profesional', ico: '\u{1F464}' });
     win.render(bioContent);
     document.getElementById('btn-download-cv')?.addEventListener('click', (e) => {
       e.preventDefault();
-      logToPanel('[SYS] Para descargar tu CV, accede a linkedin.com/in/anasu o envía un email a hola@anasu.dev');
+      logToPanel('[SYS] Para descargar tu CV, accede a linkedin.com/in/anasu o envía un email a anazconte@gmail.com');
     });
   }
 
@@ -218,7 +219,7 @@ export function renderConsole() {
           <span style="font-size:1.2rem">📧</span>
           <div>
             <div style="color:var(--gold);font-size:.85rem;letter-spacing:1px">EMAIL</div>
-            <a href="mailto:hola@anasu.dev" style="color:var(--accent);text-decoration:none;font-family:var(--mono)">hola@anasu.dev</a>
+            <a href="mailto:anazconte@gmail.com" style="color:var(--accent);text-decoration:none;font-family:var(--mono)">anazconte@gmail.com</a>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:8px;background:#0e2030;border:1px solid var(--brd)">
@@ -413,7 +414,9 @@ export function renderConsole() {
 
       case 'contact':
       case 'email':
-        showContact();
+        Contact.openFromCommand();
+        qtLog('[MAIL] Abriendo terminal de correo electrónico...', 'qt-sys');
+        logToPanel('[MAIL] Terminal de correo abierta.');
         break;
 
       case 'ls':

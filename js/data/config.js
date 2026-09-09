@@ -23,9 +23,21 @@ export const CONFIG = Object.freeze({
 
   // Vías de contacto
   contact: {
-    email: 'hola@anasu.dev',
+    email: 'anazconte@gmail.com',
     linkedin: 'https://linkedin.com/in/anasu',
     github: 'https://github.com/anasu',
+  },
+
+  // Formulario de correo (Formspree)
+  formspree: {
+    // Reemplaza con tu endpoint real de Formspree:
+    // 1. Ir a https://formspree.io y crear cuenta gratis
+    // 2. Crear un nuevo formulario → obtener endpoint tipo:
+    //    https://formspree.io/f/xNqLaZkV
+    // 3. Pegarlo abajo en `endpoint`
+    endpoint: 'https://formspree.io/f/moeqypdz',
+    fromName: 'Portafolio — Contacto Web',
+    subjectPrefix: '[Portfolio Contact]',
   },
 
   // Sistema
