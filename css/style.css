@@ -43,8 +43,24 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .tbar-left,.tbar-right{display:flex;align-items:center;gap:12px;font-size:1rem;color:#ccc;letter-spacing:1px}
 .tbar-brand{color:#fff;font-family:var(--mono);font-size:1rem;letter-spacing:3px}
 .desktop-body{flex:1;display:flex;flex-direction:column;overflow:hidden;max-width:100%;padding:0}
-.desktop-content{flex:1;display:flex;overflow:hidden}
-.grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-rows:minmax(160px,max-content);gap:24px;justify-content:center;overflow-y:auto;position:relative}
+.desktop-content{flex:1;display:flex;overflow:hidden;gap:0}
+/* ===== Columna principal (breadcrumb + carpetas) ===== */
+.main-column{
+  flex:1;display:flex;flex-direction:column;overflow:hidden;
+  min-width:0
+}
+.breadcrumb{
+  padding:12px 24px 6px;font-size:.8rem;color:#3a4a5a;
+  letter-spacing:1px;display:flex;align-items:center;gap:0;flex-shrink:0
+}
+.bc-prompt{color:var(--accent);font-weight:700}
+/* ===== Grid de carpetas con flex-wrap ===== */
+.grid{
+  flex:1;padding:24px;
+  display:flex;flex-wrap:wrap;align-content:flex-start;gap:24px;
+  justify-content:center;
+  overflow-y:auto
+}
 /* ===== CONTACT FOLDER (icono fijo desktop) ===== */
 .contact-folder .ico {
   font-size: 3rem;
@@ -309,14 +325,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .folder.sel .ico{transform:scale(1.15)}
 .folder.sel .lbl{color:#000000}
 .folder.sel .cat{color:#000000aa}
-/* Breadcrumb / barra de navegación — arriba a la izquierda */
-.breadcrumb{
-  padding:12px 24px 6px;font-size:.8rem;color:#3a4a5a;
-  letter-spacing:1px;display:flex;align-items:center;gap:0;flex-shrink:0
-}
-.bc-prompt{color:var(--accent);font-weight:700}
 .panel{
-width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;overflow-y:auto;flex-shrink:0}
+  width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;overflow-y:auto;flex-shrink:0
+}
 .ps{padding:14px 16px;border-bottom:1px solid var(--brd-lt)}
 .ps h3{font-family:var(--mono);font-size:1rem;letter-spacing:3px;color:var(--accent);margin-bottom:6px}
 .ps .ul{width:40px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin-bottom:8px}
@@ -525,5 +536,5 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .quake-toggle:hover{background:#2c313a;color:#61afef}
 .scanlines{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.12) 1px,rgba(0,0,0,.12) 2px)}
 .vignette{position:fixed;inset:0;z-index:9997;pointer-events:none;box-shadow:inset 0 0 150px rgba(0,0,0,.5)}
-@media(max-width:900px){.panel{display:none!important}.desktop-body{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));grid-template-rows:auto;max-width:80vw;margin:0 auto;width:100%}.win{width:min(90vw, 80vw)!important;min-width:0!important;max-width:min(90vw, 80vw)!important;max-height:70vh!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}.wct .img-ph{width:140px!important}.win .wti{font-size:.8rem}.quake-terminal{height:60px}.console-bar{flex-wrap:wrap;padding:8px}.console-bar .cp{width:100%;margin-bottom:4px}.console-bar input{min-width:100%}}
-@media(max-width:500px){.taskbar-top{flex-direction:column;padding:4px 8px;gap:4px}.grid{padding:8px;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));max-width:90vw;gap:16px}.breadcrumb{padding:8px 16px 4px;font-size:.7rem}.win{width:95vw!important;max-width:95vw!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}}
+@media(max-width:900px){.panel{display:none!important}.grid{padding:16px;gap:16px}.win{width:min(90vw, 80vw)!important;min-width:0!important;max-width:min(90vw, 80vw)!important;max-height:70vh!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}.wct .img-ph{width:140px!important}.win .wti{font-size:.8rem}.quake-terminal{height:60px}.console-bar{flex-wrap:wrap;padding:8px}.console-bar .cp{width:100%;margin-bottom:4px}.console-bar input{min-width:100%}}
+@media(max-width:500px){.taskbar-top{flex-direction:column;padding:4px 8px;gap:4px}.grid{padding:8px;gap:12px}.breadcrumb{padding:8px 16px 4px;font-size:.7rem}.win{width:95vw!important;max-width:95vw!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}}

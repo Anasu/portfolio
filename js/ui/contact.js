@@ -385,30 +385,11 @@ function openEmailWindow(folderEl) {
   emailWindowEl.setAttribute('aria-modal', 'true');
   emailWindowEl.setAttribute('aria-label', 'Terminal de correo electrónico');
 
-  // Posición centrada (similar a ventanas de expedientes)
-  const isMobile = window.innerWidth <= 900;
-  if (isMobile) {
-    emailWindowEl.style.left = '50%';
-    emailWindowEl.style.top = '50%';
-    emailWindowEl.style.transform = 'translate(-50%, -50%)';
-    emailWindowEl.style.maxWidth = '95vw';
-  } else {
-    const baseLeft = Math.max(40, window.innerWidth * 0.1);
-    const baseTop = 40;
-
-    // Offset basado en ventanas abiertas
-    const openCount = container.querySelectorAll('.win:not([data-id="contact"])').length;
-    emailWindowEl.style.left = (baseLeft + openCount * 12) + 'px';
-    emailWindowEl.style.top = (baseTop + openCount * 12) + 'px';
-
-    if (folderEl) {
-      const rect = folderEl.getBoundingClientRect();
-      emailWindowEl.style.top = Math.max(baseTop, rect.bottom + 24) + 'px';
-      emailWindowEl.style.left = Math.max(baseLeft, rect.left - 300) + 'px';
-    }
-
-    emailWindowEl.style.transform = 'none';
-  }
+  // Siempre centrada horizontal y verticalmente
+  emailWindowEl.style.left = '50%';
+  emailWindowEl.style.top = '50%';
+  emailWindowEl.style.transform = 'translate(-50%, -50%)';
+  emailWindowEl.style.maxWidth = '90vw';
 
   emailWindowEl.dataset.lastLeft = emailWindowEl.style.left;
   emailWindowEl.dataset.lastTop = emailWindowEl.style.top;
@@ -501,13 +482,10 @@ function openEmailWindow(folderEl) {
     winRef.classList.remove('minimized');
     winRef.style.display = 'flex';
     winRef.style.zIndex = Window.nextZ();
-    if (winRef.dataset.lastLeft) winRef.style.left = winRef.dataset.lastLeft;
-    if (winRef.dataset.lastTop) winRef.style.top = winRef.dataset.lastTop;
-    if (window.innerWidth <= 900) {
-      winRef.style.left = '50%';
-      winRef.style.top = '50%';
-      winRef.style.transform = 'translate(-50%, -50%)';
-    }
+    // Siempre centrada
+    winRef.style.left = '50%';
+    winRef.style.top = '50%';
+    winRef.style.transform = 'translate(-50%, -50%)';
   });
 
   // ─── Cerrar ──────────────────────────────────────────────────────
@@ -542,11 +520,11 @@ export const Contact = {
       contactIconEl.style.zIndex = '350';
       document.getElementById('desktop').appendChild(contactIconEl);
     } else {
-      // Mobile: agregar al final del grid (flujo normal)
-      const grid = document.getElementById('grid');
-      if (grid) {
+      // Mobile: agregar al final de .main-column (dentro del flujo)
+      const mainCol = document.querySelector('.main-column');
+      if (mainCol) {
         const folder = createContactFolder();
-        grid.appendChild(folder);
+        mainCol.appendChild(folder);
       }
     }
   },
