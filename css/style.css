@@ -196,7 +196,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   color: var(--accent);
   font-family: var(--mono);
   font-size: .85rem;
-  animation: blink-cursor-text 1s steps(1) infinite;
 }
 
 .em-status-err {

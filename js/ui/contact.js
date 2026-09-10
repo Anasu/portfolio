@@ -69,7 +69,7 @@ function renderEmailForm(container) {
   // Header estilo terminal
   const header = makeEl('div', '', { class: 'em-header' });
   header.appendChild(makeEl('div', '', { class: 'em-title-bar' }));
-  header.appendChild(makeEl('span', '╔══ MAIL TERMINAL v1.0 ═══════════════════════╗', { class: 'em-banner' }));
+  header.appendChild(makeEl('span', 'Sistema de correo privilegiado de detectives', { class: 'em-banner' }));
   container.appendChild(header);
 
   // Formulario
@@ -87,18 +87,21 @@ function renderEmailForm(container) {
     required: true,
     type: 'email',
     placeholder: 'tu@email.com',
+    name: 'from',
   }));
 
   // CC
   form.appendChild(makeRetroInput('cc', 'CC', {
     type: 'email',
     placeholder: 'copia@destino.com (opcional)',
+    name: 'cc',
   }));
 
   // BCC
   form.appendChild(makeRetroInput('bcc', 'BCC', {
     type: 'email',
     placeholder: 'copia oculta (opcional)',
+    name: 'bcc',
   }));
 
   // Asunto
@@ -148,36 +151,65 @@ async function handleFormSubmit(container, e) {
   const statusDiv = container.querySelector('.em-status');
   const submitBtn = document.getElementById('email-submit-btn');
 
-  // Estado de carga
+  // Estado de carga con barra ASCII animada
   submitBtn.textContent = '[ ENVIANDO... ]';
   submitBtn.disabled = true;
   submitBtn.classList.add('sending');
 
   if (statusDiv) {
     statusDiv.innerHTML = '';
-    statusDiv.appendChild(makeEl('div', '⟳ Transmitiendo datos al servidor...', { class: 'em-status-sending' }));
+    const barEl = makeEl('div', '', { class: 'em-status-sending' });
+    statusDiv.appendChild(barEl);
+
+    const frames = [
+      '███▓░░░░░░░░░',
+      '████▓░░░░░░░░',
+      '█████▓░░░░░░░',
+      '██████▓░░░░░░',
+      '███████▓░░░░░',
+      '████████▓░░░░',
+      '█████████▓░░░',
+      '██████████▓░░',
+      '███████████▓░',
+      '████████████▓',
+      '█████████████',
+    ];
+    let frameIdx = 0;
+    const loadingInterval = setInterval(() => {
+      frameIdx = (frameIdx + 1) % frames.length;
+      barEl.textContent = '[ ENVIANDO ] ' + frames[frameIdx];
+    }, 200);
+
+    // Guardar referencia para limpiar al terminar
+    statusDiv.dataset.loadingInterval = String(loadingInterval);
   }
 
   try {
     // Preparar datos para Formspree
     const formData = new FormData(form);
 
-    // Asegurar que el campo FROM se mapee correctamente
-    // Formspree usa 'email' como campo estándar, pero usamos 'from'
+    // Mapear campos del formulario a Formspree
     const data = {};
+    let fromValue = '';
     for (const [key, value] of formData.entries()) {
       if (key === '_replyto') {
         data['_replyto'] = value; // TO → respuesta a
       } else if (key === 'from') {
-        data['email'] = value; // FROM → email del remitente (requerido por Formspree)
+        fromValue = value; // guardar para enviar como email
       } else if (key === 'subject') {
         data['subject'] = CONFIG.formspree.subjectPrefix + ' ' + value;
       } else if (key === 'message') {
         data['message'] = value;
+      } else if (key === 'cc') {
+        if (value.trim()) data['cc'] = value;
+      } else if (key === 'bcc') {
+        if (value.trim()) data['bcc'] = value;
       } else {
         data[key] = value;
       }
     }
+    // Formspree usa 'email' como campo requerido
+    if (fromValue) data['email'] = fromValue;
 
     // Enviar a Formspree
     const response = await fetch(CONFIG.formspree.endpoint, {
@@ -185,6 +217,12 @@ async function handleFormSubmit(container, e) {
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(data),
     });
+
+    // Limpiar barra de carga
+    if (statusDiv && statusDiv.dataset.loadingInterval) {
+      clearInterval(parseInt(statusDiv.dataset.loadingInterval));
+      delete statusDiv.dataset.loadingInterval;
+    }
 
     if (response.ok) {
       // Éxito → reproducir sonido y mostrar mensaje
@@ -195,6 +233,11 @@ async function handleFormSubmit(container, e) {
     }
   } catch (err) {
     console.error('[CONTACT] Error al enviar:', err);
+    // Limpiar barra de carga
+    if (statusDiv && statusDiv.dataset.loadingInterval) {
+      clearInterval(parseInt(statusDiv.dataset.loadingInterval));
+      delete statusDiv.dataset.loadingInterval;
+    }
     if (statusDiv) {
       statusDiv.innerHTML = '';
       statusDiv.appendChild(makeEl('div', '[ERR] Fallo en la transmisión. Intenta de nuevo.', { class: 'em-status-err' }));
@@ -235,15 +278,20 @@ function showSuccessState(container) {
   // Contenedor centrado
   const successWrap = makeEl('div', '', { class: 'em-success' });
 
-  // Arte ASCII de sobre/enviado
+  // Arte ASCII de sobre enviado
   const asciiArt = makeEl('pre', '', { class: 'ascii-art' });
   asciiArt.textContent =
-    '   ╔══════════════════════╗\n' +
-    '   ║                      ║\n' +
-    '   ║    ★ MENSAJE ★       ║\n' +
-    '   ║    ENVIADO ✓         ║\n' +
-    '   ║                      ║\n' +
-    '   ╚══════════════════════╝';
+    '████████████████████████████████\n' +
+    '████░░░░░░░░░░░░░░░░░░░░░░░░████\n' +
+    '██░░██░░░░░░░░░░░░░░░░░░░░██░░██\n' +
+    '██░░░░██░░░░░░░░░░░░░░██░░░░██\n' +
+    '██░░░░░░██░░░░░░░░░░██░░░░░░██\n' +
+    '██░░░░░░░░██░░░░░░██░░░░░░░░██\n' +
+    '██░░░░░░██░░██░░██░░██░░░░░░██\n' +
+    '██░░░░██░░░░░░████░░░░░░██░░██\n' +
+    '██░░██░░░░░░░░░░░░░░░░░░░░██░░██\n' +
+    '████░░░░░░░░░░░░░░░░░░░░░░░░████\n' +
+    '████████████████████████████████';
   successWrap.appendChild(asciiArt);
 
   // Línea decorativa
@@ -489,7 +537,8 @@ export const Contact = {
       contactIconEl = createContactFolder();
       contactIconEl.style.position = 'fixed';
       contactIconEl.style.bottom = '40px';
-      contactIconEl.style.left = '16px';
+      contactIconEl.style.right = '16px';
+      contactIconEl.style.left = 'auto';
       contactIconEl.style.zIndex = '350';
       document.getElementById('desktop').appendChild(contactIconEl);
     } else {
