@@ -43,6 +43,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .tbar-left,.tbar-right{display:flex;align-items:center;gap:12px;font-size:1rem;color:#ccc;letter-spacing:1px}
 .tbar-brand{color:#fff;font-family:var(--mono);font-size:1rem;letter-spacing:3px}
 .desktop-body{flex:1;display:flex;flex-direction:column;overflow:hidden;max-width:100%;padding:0}
+/* Contenedor relativo para posicionar contacto dentro de la columna de carpetas */
+.main-column{position:relative}
+/* Contacto dentro de la sección de carpetas, abajo a la derecha */
+.main-column .contact-folder{position:absolute;bottom:24px;right:24px;z-index:350}
 .desktop-content{flex:1;display:flex;overflow:hidden;gap:0}
 /* ===== Columna principal (breadcrumb + carpetas) ===== */
 .main-column{
@@ -58,7 +62,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .grid{
   flex:1;padding:24px;
   display:flex;flex-wrap:wrap;align-content:flex-start;gap:24px;
-  justify-content:center;
+  justify-content:flex-start;
   overflow-y:auto
 }
 /* ===== CONTACT FOLDER (icono fijo desktop) ===== */
@@ -292,7 +296,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 /* ===== FOLDER — card minimalista con ícono carpeta ===== */
 .folder{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;padding:20px 12px;cursor:pointer;user-select:none;
+  gap:8px;padding:20px 12px;cursor:pointer;-webkit-user-select:none;user-select:none;
   position:relative;z-index:5;
   background:transparent;
   transition:background .25s ease, transform .2s ease, color .25s ease
@@ -340,8 +344,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 #windows-container{position:fixed;inset:0;pointer-events:none;z-index:500}
 .win{position:absolute;pointer-events:auto;background:#1a1b1e;border:2px solid var(--brd);box-shadow:0 8px 32px rgba(0,0,0,.7),inset 0 0 0 1px #222;display:flex;flex-direction:column;width:60vw;min-width:320px;max-width:80vw;max-height:70vh;overflow:hidden}
 .win.active{display:flex}
-.win .wtb{background:linear-gradient(90deg,var(--blue),var(--blue-lt));padding:3px 6px;display:flex;justify-content:space-between;align-items:center;cursor:grab;flex-shrink:0}
-.win .wtb.dg{cursor:grabbing}
+.win .wtb{background:linear-gradient(90deg,var(--blue),var(--blue-lt));padding:3px 6px;display:flex;justify-content:space-between;align-items:center;cursor:grab;flex-shrink:0;-webkit-user-select:none;user-select:none;-webkit-user-drag:none;user-drag:none}
+.win .wtb.dg{cursor:grabbing;-webkit-user-select:none;user-select:none}
+/* Durante drag, bloquear selección en toda la ventana */
+.win.dragging,.win.dragging *{-webkit-user-select:none!important;user-select:none!important;pointer-events:auto!important}
 .win .wti{color:#fff;font-size:1rem;display:flex;align-items:center;gap:6px}
 .win .wb{display:flex;gap:4px;padding:0 4px}
 .win .wb button{
@@ -488,7 +494,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   flex-wrap:wrap
 }
 .console-bar .cp{color:#56b6c2;margin-right:4px;font-size:1rem;white-space:nowrap}
-.console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:#ffffff;font-family:var(--mono);font-size:1rem}
+.console-bar input{flex:1;min-width:200px;background:transparent;border:none;outline:none;color:#ffffff;font-family:var(--mono);font-size:1rem;-webkit-user-select:text;user-select:text}
 /* Ventana minimizada */
 .win.minimized{
   position:fixed !important;
@@ -522,7 +528,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   right:16px;
   width:28px;
   height:24px;
-  display:flex;
+  display:none;
   align-items:center;
   justify-content:center;
   background:#1a1b1e;
@@ -537,4 +543,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .scanlines{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.12) 1px,rgba(0,0,0,.12) 2px)}
 .vignette{position:fixed;inset:0;z-index:9997;pointer-events:none;box-shadow:inset 0 0 150px rgba(0,0,0,.5)}
 @media(max-width:900px){.panel{display:none!important}.grid{padding:16px;gap:16px}.win{width:min(90vw, 80vw)!important;min-width:0!important;max-width:min(90vw, 80vw)!important;max-height:70vh!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}.wct .img-ph{width:140px!important}.win .wti{font-size:.8rem}.quake-terminal{height:60px}.console-bar{flex-wrap:wrap;padding:8px}.console-bar .cp{width:100%;margin-bottom:4px}.console-bar input{min-width:100%}}
+/* Contacto en mobile dentro del flujo de main-column, quake toggle visible */
+@media(max-width:900px){.quake-toggle{display:flex!important}}
 @media(max-width:500px){.taskbar-top{flex-direction:column;padding:4px 8px;gap:4px}.grid{padding:8px;gap:12px}.breadcrumb{padding:8px 16px 4px;font-size:.7rem}.win{width:95vw!important;max-width:95vw!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}}

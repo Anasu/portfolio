@@ -39,6 +39,11 @@ function makeRetroInput(id, label, opts = {}) {
   return wrapper;
 }
 
+/** Crea un input editable con valor por defecto pero modificable */
+function makeEditableInput(id, label, value, opts = {}) {
+  return makeRetroInput(id, label, { ...opts, value: value || '', readonly: false });
+}
+
 /** Crea un textarea retro estilo terminal */
 function makeRetroTextarea(id, label, opts = {}) {
   const wrapper = makeEl('div', '', { class: 'cfld' });
@@ -75,30 +80,30 @@ function renderEmailForm(container) {
   // Formulario
   const form = makeEl('form', '', { class: 'email-form', id: 'email-form' });
 
-  // TO (readonly)
-  form.appendChild(makeRetroInput('to', 'TO', {
-    value: CONFIG.contact.email,
-    readonly: true,
-    name: '_replyto',
-  }));
-
-  // FROM
-  form.appendChild(makeRetroInput('from', 'FROM', {
+  // DE (FROM) — editable
+  form.appendChild(makeEditableInput('from', 'DE', '', {
     required: true,
     type: 'email',
     placeholder: 'tu@email.com',
     name: 'from',
   }));
 
+  // PARA (TO) — readonly
+  form.appendChild(makeRetroInput('to', 'PARA', {
+    value: CONFIG.contact.email,
+    readonly: true,
+    name: '_replyto',
+  }));
+
   // CC
-  form.appendChild(makeRetroInput('cc', 'CC', {
+  form.appendChild(makeEditableInput('cc', 'CC', '', {
     type: 'email',
     placeholder: 'copia@destino.com (opcional)',
     name: 'cc',
   }));
 
-  // BCC
-  form.appendChild(makeRetroInput('bcc', 'BCC', {
+  // CCO (BCC) — editable
+  form.appendChild(makeEditableInput('bcc', 'CCO', '', {
     type: 'email',
     placeholder: 'copia oculta (opcional)',
     name: 'bcc',
@@ -432,6 +437,7 @@ function openEmailWindow(folderEl) {
     offsetXDrag = clientX - winRef.offsetLeft;
     offsetYDrag = clientY - winRef.offsetTop;
     titleBarRef.classList.add('dg');
+    winRef.classList.add('dragging');
     winRef.style.zIndex = Window.nextZ();
     winRef.dataset.lastLeft = winRef.style.left;
     winRef.dataset.lastTop = winRef.style.top;
@@ -450,16 +456,21 @@ function openEmailWindow(folderEl) {
   function endDrag() {
     dragging = false;
     titleBarRef.classList.remove('dg');
+    winRef.classList.remove('dragging');
   }
 
-  titleBar.addEventListener('mousedown', e => startDrag(e.clientX, e.clientY));
+  titleBar.addEventListener('mousedown', e => {
+    e.preventDefault(); // Prevent text selection during drag
+    startDrag(e.clientX, e.clientY);
+  });
   document.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
   document.addEventListener('mouseup', endDrag);
 
   titleBar.addEventListener('touchstart', e => {
+    e.preventDefault(); // Prevent text selection during drag
     const touch = e.touches[0];
     startDrag(touch.clientX, touch.clientY);
-  }, { passive: true });
+  }, { passive: false });
   document.addEventListener('touchmove', e => {
     if (dragging && e.touches[0]) {
       e.preventDefault();
@@ -482,10 +493,17 @@ function openEmailWindow(folderEl) {
     winRef.classList.remove('minimized');
     winRef.style.display = 'flex';
     winRef.style.zIndex = Window.nextZ();
-    // Siempre centrada
-    winRef.style.left = '50%';
-    winRef.style.top = '50%';
-    winRef.style.transform = 'translate(-50%, -50%)';
+    // Restaurar posición: última guardada, o centrada
+    if (winRef.dataset.lastLeft && !winRef.dataset.lastLeft.includes('%')) {
+      winRef.style.left = winRef.dataset.lastLeft;
+      winRef.style.top = winRef.dataset.lastTop;
+      winRef.style.transform = 'none';
+    } else {
+      // Centrar si no hay posición guardada válida
+      winRef.style.left = '50%';
+      winRef.style.top = '50%';
+      winRef.style.transform = 'translate(-50%, -50%)';
+    }
   });
 
   // ─── Cerrar ──────────────────────────────────────────────────────
@@ -511,14 +529,17 @@ export const Contact = {
     const isMobile = window.innerWidth <= 900;
 
     if (!isMobile) {
-      // Desktop: ícono fijo en esquina inferior izquierda
+      // Desktop: ícono dentro de .main-column (sección carpetas), abajo a la derecha
       contactIconEl = createContactFolder();
-      contactIconEl.style.position = 'fixed';
-      contactIconEl.style.bottom = '40px';
-      contactIconEl.style.right = '16px';
+      contactIconEl.style.position = 'absolute';
+      contactIconEl.style.bottom = '24px';
+      contactIconEl.style.right = '24px';
       contactIconEl.style.left = 'auto';
       contactIconEl.style.zIndex = '350';
-      document.getElementById('desktop').appendChild(contactIconEl);
+      const mainCol = document.querySelector('.main-column');
+      if (mainCol) {
+        mainCol.appendChild(contactIconEl);
+      }
     } else {
       // Mobile: agregar al final de .main-column (dentro del flujo)
       const mainCol = document.querySelector('.main-column');

@@ -19,6 +19,50 @@ export const Window = {
     return this._zc;
   },
 
+  /** Posiciona una ventana: última posición, centrada, o offset de otra ventana */
+  _positionWindow(win, exp, folderEl) {
+    const isMobile = this._isMobile();
+    if (isMobile) {
+      win.style.left = '50%';
+      win.style.top = '50%';
+      win.style.transform = 'translate(-50%, -50%)';
+      return;
+    }
+
+    // Buscar la ventana más arriba a la derecha (la que tiene menor top, y dentro de esa menor left)
+    const openWins = Array.from(document.querySelectorAll('.win:not(.minimized):not([data-id=""])'));
+    let refWin = null;
+    for (const w of openWins) {
+      if (!refWin || 
+          (parseInt(w.style.top) < parseInt(refWin.style.top)) ||
+          (parseInt(w.style.top) === parseInt(refWin.style.top) && parseInt(w.style.left) < parseInt(refWin.style.left))) {
+        refWin = w;
+      }
+    }
+
+    let winLeft, winTop;
+    if (folderEl) {
+      const rect = folderEl.getBoundingClientRect();
+      winLeft = Math.max(40, rect.left - 300);
+      winTop = Math.max(40, rect.bottom + 24);
+    } else if (refWin) {
+      // Offset 24px derecha y 24px abajo de la ventana más arriba a la derecha
+      winLeft = parseInt(refWin.style.left) + 24;
+      winTop = parseInt(refWin.style.top) + 24;
+    } else {
+      // Centrar horizontalmente, dejar margen arriba
+      const baseLeft = Math.max(40, (window.innerWidth - 600) / 2);
+      winLeft = baseLeft;
+      winTop = 40;
+    }
+
+    win.style.left = winLeft + 'px';
+    win.style.top = winTop + 'px';
+    win.style.transform = 'none';
+    win.dataset.lastLeft = win.style.left;
+    win.dataset.lastTop = win.style.top;
+  },
+
   /** Detecta si estamos en mobile */
   _isMobile() {
     return window.innerWidth <= 900;
@@ -225,6 +269,7 @@ export const Window = {
       offsetXDrag = clientX - win.offsetLeft;
       offsetYDrag = clientY - win.offsetTop;
       titleBar.classList.add('dg');
+      win.classList.add('dragging');
       win.style.zIndex = self.nextZ();
       // Guardar posición actual como última visible
       win.dataset.lastLeft = win.style.left;
@@ -244,10 +289,12 @@ export const Window = {
     function endDrag() {
       dragging = false;
       titleBar.classList.remove('dg');
+      win.classList.remove('dragging');
     }
 
     // Mouse events
     titleBar.addEventListener('mousedown', e => {
+      e.preventDefault(); // Prevent text selection during drag
       startDrag(e.clientX, e.clientY);
     });
 
@@ -301,14 +348,17 @@ export const Window = {
         win.classList.remove('minimized');
         win.style.display = 'flex';
         win.style.zIndex = Window.nextZ();
-        // Restaurar última posición
-        if (win.dataset.lastLeft) win.style.left = win.dataset.lastLeft;
-        if (win.dataset.lastTop) win.style.top = win.dataset.lastTop;
-        // En mobile, restaurar centrado
+        // Restaurar posición: última guardada, o usar _positionWindow
         if (Window._isMobile()) {
           win.style.left = '50%';
           win.style.top = '50%';
           win.style.transform = 'translate(-50%, -50%)';
+        } else if (win.dataset.lastLeft) {
+          win.style.left = win.dataset.lastLeft;
+          win.style.top = win.dataset.lastTop;
+          win.style.transform = 'none';
+        } else {
+          Window._positionWindow(win, exp, folderEl);
         }
       }
     });
