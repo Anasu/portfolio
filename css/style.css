@@ -47,19 +47,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .grid{flex:1;padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-rows:minmax(160px,max-content);gap:24px;justify-content:center;overflow-y:auto;position:relative}
 /* ===== CONTACT FOLDER (icono fijo desktop) ===== */
 .contact-folder .ico {
-  font-size: 2.8rem;
-}
-
-@media(max-width:500px) {
-  .contact-folder .ico {
-    font-size: 2.2rem;
-  }
-  .contact-folder .lbl {
-    font-size: .75rem;
-  }
-  .contact-folder .cat {
-    font-size: .6rem;
-  }
+  font-size: 3rem;
+  line-height: 1;
 }
 
 /* ===== EMAIL TERMINAL — Formulario retro ===== */
@@ -293,7 +282,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   background:transparent;
   transition:background .25s ease, transform .2s ease, color .25s ease
 }
-.folder .ico{font-size:3rem;line-height:1;transition:transform .2s ease}
+.folder .ico{
+  font-size:3rem;
+  line-height:1;
+  transition:transform .2s ease
+}
 .folder .lbl{
   font-family:var(--mono);font-size:.85rem;color:#ffffff;
   text-align:center;letter-spacing:1px;
@@ -534,4 +527,4 @@ width:260px;background:var(--panel);border-left:2px solid var(--brd);padding:0;o
 .scanlines{position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.12) 1px,rgba(0,0,0,.12) 2px)}
 .vignette{position:fixed;inset:0;z-index:9997;pointer-events:none;box-shadow:inset 0 0 150px rgba(0,0,0,.5)}
 @media(max-width:900px){.panel{display:none!important}.desktop-body{flex-direction:column}.grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));grid-template-rows:auto;max-width:80vw;margin:0 auto;width:100%}.win{width:min(90vw, 80vw)!important;min-width:0!important;max-width:min(90vw, 80vw)!important;max-height:70vh!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}.wct .img-ph{width:140px!important}.win .wti{font-size:.8rem}.quake-terminal{height:60px}.console-bar{flex-wrap:wrap;padding:8px}.console-bar .cp{width:100%;margin-bottom:4px}.console-bar input{min-width:100%}}
-@media(max-width:500px){.taskbar-top{flex-direction:column;padding:4px 8px;gap:4px}.grid{padding:8px;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));max-width:90vw;gap:16px}.folder .ico{font-size:2.2rem}.folder .lbl{font-size:.75rem}.folder .cat{font-size:.6rem}.breadcrumb{padding:8px 16px 4px;font-size:.7rem}.win{width:95vw!important;max-width:95vw!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}}
+@media(max-width:500px){.taskbar-top{flex-direction:column;padding:4px 8px;gap:4px}.grid{padding:8px;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));max-width:90vw;gap:16px}.breadcrumb{padding:8px 16px 4px;font-size:.7rem}.win{width:95vw!important;max-width:95vw!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important}}
