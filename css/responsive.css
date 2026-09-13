@@ -1,0 +1,157 @@
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Todas las media queries centralizadas
+   ═══════════════════════════════════════════════════ */
+
+/* ── Mobile: ventanas ────────────────────────────── */
+@media (max-width: 768px) {
+  .win .wb button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 1rem;
+  }
+
+  .win .wb {
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .folder {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 16px 8px;
+  }
+
+  .win .wtb {
+    min-height: 48px;
+  }
+
+  .wct .frow {
+    min-height: 40px;
+    padding: 10px 8px;
+  }
+
+  .wct .img-ph {
+    min-height: 40px;
+  }
+
+  .kpi-item {
+    min-height: 40px;
+  }
+
+  .strategy-item {
+    min-height: 40px;
+  }
+}
+
+/* ── Tablet / Mobile pequeño ─────────────────────── */
+@media (max-width: 900px) {
+  /* Panel lateral oculto */
+  .panel {
+    display: none;
+  }
+
+  /* Grid más compacto */
+  .grid {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  /* Ventana centrada en mobile */
+  .win {
+    width: min(90vw, 80vw);
+    min-width: 0;
+    max-width: min(90vw, 80vw);
+    max-height: 70vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .wct .img-ph {
+    width: 140px;
+  }
+
+  .win .wti {
+    font-size: .8rem;
+  }
+
+  .quake-terminal {
+    height: 60px;
+  }
+
+  .console-bar {
+    flex-wrap: wrap;
+    padding: 8px;
+  }
+
+  .console-bar .cp {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .console-bar input {
+    min-width: 100%;
+  }
+
+  /* Contacto en mobile dentro del flujo */
+  .main-column .contact-folder {
+    position: static;
+  }
+
+  /* Quake toggle visible */
+  .quake-toggle {
+    display: flex !important;
+  }
+
+  /* Ajustes email form mobile */
+  .email-content {
+    padding: .8rem;
+  }
+
+  .em-banner {
+    font-size: .55rem;
+  }
+
+  .rinput,
+  .rta {
+    font-size: .85rem;
+    padding: 10px 8px;
+  }
+
+  .ascii-art {
+    font-size: .55rem;
+  }
+
+  .success-msg {
+    font-size: .95rem;
+  }
+}
+
+/* ── Mobile pequeño ──────────────────────────────── */
+@media (max-width: 500px) {
+  .taskbar-top {
+    flex-direction: column;
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .grid {
+    padding: 8px;
+    gap: 12px;
+  }
+
+  .breadcrumb {
+    padding: 8px 16px 4px;
+    font-size: .7rem;
+  }
+
+  .win {
+    width: 95vw;
+    max-width: 95vw;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

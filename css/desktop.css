@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════════════════
+   DESKTOP — Layout principal, taskbar, grid, panel
+   ═══════════════════════════════════════════════════ */
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+#desktop {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Taskbar superior ────────────────────────────── */
+.taskbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 16px;
+  background: var(--blue);
+  border-bottom: 2px solid var(--brd);
+  min-height: 34px;
+  flex-shrink: 0;
+}
+
+.tbar-left,
+.tbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: #ccc;
+  letter-spacing: 1px;
+}
+
+.tbar-brand {
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 1rem;
+  letter-spacing: 3px;
+}
+
+/* ── Cuerpo del escritorio ───────────────────────── */
+.desktop-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 100%;
+  padding: 0;
+}
+
+.desktop-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  gap: 0;
+}
+
+/* ── Columna principal (breadcrumb + carpetas) ───── */
+.main-column {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.breadcrumb {
+  padding: 12px 24px 6px;
+  font-size: .8rem;
+  color: #3a4a5a;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.bc-prompt {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ── Grid de carpetas ────────────────────────────── */
+.grid {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 24px;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+/* ── Panel lateral ───────────────────────────────── */
+.panel {
+  width: 260px;
+  background: var(--panel);
+  border-left: 2px solid var(--brd);
+  padding: 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.ps {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--brd-lt);
+}
+
+.ps h3 {
+  font-family: var(--mono);
+  font-size: 1rem;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.ps .ul {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin-bottom: 8px;
+}
+
+.ps .pl {
+  font-size: 1rem;
+  color: var(--dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.ps .pv {
+  font-size: 1rem;
+}
+
+.ps .pv.status-ok {
+  color: #fde68a;
+}
+
+.ps .pv.num {
+  font-size: 3.5rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  color: #fde68a;
+  text-shadow: 0 0 15px rgba(253, 230, 138, .25);
+}
+
+.plog {
+  font-size: 1rem;
+  color: #3a4a5a;
+  line-height: 1.6;
+  min-height: 120px;
+}
+
+.plog div {
+  padding: 1px 0;
+}
+
+/* ── Contacto fijo en desktop ────────────────────── */
+.main-column .contact-folder {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 350;
+}

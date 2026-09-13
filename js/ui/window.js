@@ -1,9 +1,15 @@
-/* WINDOW — Ventanas modales arrastrables con minimizar/apilar */
-import { makeEl } from './utils.js';
+/**
+ * WINDOW — Ventanas modales arrastrables con minimizar/apilar.
+ *
+ * Exp: Window.open(exp, folderEl) → abre expediente con layout completo
+ * Gen: Window.create(titulo, ico, contentHtml, opts) → ventana genérica
+ */
+
+import { makeDraggable } from './drag.js';
 
 /** @returns {HTMLElement} */
 function metaLabel(label, value) {
-  const part = makeEl('span', '', {});
+  const part = document.createElement('span');
   part.appendChild(document.createTextNode(label + ': '));
   part.appendChild(document.createTextNode(value));
   return part;
@@ -13,72 +19,115 @@ export const Window = {
   _zc: 100,
   _openCount: 0,
 
-  /** Incrementa z-index con límite de seguridad */
   nextZ() {
     this._zc = (this._zc % 9000) + 1000;
     return this._zc;
   },
 
-  /** Posiciona una ventana: última posición, centrada, o offset de otra ventana */
-  _positionWindow(win, exp, folderEl) {
-    const isMobile = this._isMobile();
-    if (isMobile) {
-      win.style.left = '50%';
-      win.style.top = '50%';
-      win.style.transform = 'translate(-50%, -50%)';
-      return;
-    }
-
-    // Buscar la ventana más arriba a la derecha (la que tiene menor top, y dentro de esa menor left)
-    const openWins = Array.from(document.querySelectorAll('.win:not(.minimized):not([data-id=""])'));
-    let refWin = null;
-    for (const w of openWins) {
-      if (!refWin || 
-          (parseInt(w.style.top) < parseInt(refWin.style.top)) ||
-          (parseInt(w.style.top) === parseInt(refWin.style.top) && parseInt(w.style.left) < parseInt(refWin.style.left))) {
-        refWin = w;
-      }
-    }
-
-    let winLeft, winTop;
-    if (folderEl) {
-      const rect = folderEl.getBoundingClientRect();
-      winLeft = Math.max(40, rect.left - 300);
-      winTop = Math.max(40, rect.bottom + 24);
-    } else if (refWin) {
-      // Offset 24px derecha y 24px abajo de la ventana más arriba a la derecha
-      winLeft = parseInt(refWin.style.left) + 24;
-      winTop = parseInt(refWin.style.top) + 24;
-    } else {
-      // Centrar horizontalmente, dejar margen arriba
-      const baseLeft = Math.max(40, (window.innerWidth - 600) / 2);
-      winLeft = baseLeft;
-      winTop = 40;
-    }
-
-    win.style.left = winLeft + 'px';
-    win.style.top = winTop + 'px';
-    win.style.transform = 'none';
-    win.dataset.lastLeft = win.style.left;
-    win.dataset.lastTop = win.style.top;
-  },
-
-  /** Detecta si estamos en mobile */
   _isMobile() {
     return window.innerWidth <= 900;
   },
 
-  /** Abre una ventana con desplazamiento acumulativo (12px abajo + 12px derecha) */
+  /**
+   * Crea una ventana genérica con titlebar + content.
+   * @param {string} titulo - Texto de la barra de título
+   * @param {string} ico    - Emoji/icono
+   * @param {string} html   - HTML del contenido (opcional)
+   * @param {object} opts   - Opciones: { id, zIndex }
+   * @returns {HTMLElement} La ventana DOM
+   */
+  create(titulo, ico, html = '', opts = {}) {
+    const container = document.getElementById('windows-container');
+    const win = document.createElement('div');
+    win.className = 'win active';
+    win.style.zIndex = this.nextZ();
+
+    if (opts.id) win.dataset.id = opts.id;
+    win.setAttribute('role', 'dialog');
+    win.setAttribute('aria-modal', 'true');
+
+    // Titlebar
+    const titleBar = document.createElement('div');
+    titleBar.className = 'wtb';
+    const titleInner = document.createElement('span');
+    titleInner.className = 'wti';
+    titleInner.appendChild(document.createTextNode(ico + ' ' + titulo));
+    titleBar.appendChild(titleInner);
+
+    // Botones
+    const winBtns = document.createElement('div');
+    winBtns.className = 'wb';
+
+    const minBtn = document.createElement('button');
+    minBtn.textContent = '\u2796';
+    minBtn.setAttribute('aria-label', 'Minimizar ventana');
+    winBtns.appendChild(minBtn);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'cl';
+    closeBtn.textContent = '\u00D7';
+    closeBtn.setAttribute('aria-label', 'Cerrar ventana');
+    winBtns.appendChild(closeBtn);
+
+    titleBar.appendChild(winBtns);
+
+    // Content
+    const content = document.createElement('div');
+    content.className = 'wct';
+    if (html) {
+      content.innerHTML = html;
+    }
+
+    win.appendChild(titleBar);
+    win.appendChild(content);
+    container.appendChild(win);
+
+    // Drag
+    makeDraggable(win, titleBar);
+    win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
+
+    // Minimizar
+    minBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      win.classList.add('minimized');
+      win.style.zIndex = 600;
+      Window._repositionMinimized();
+    });
+
+    // Click en minimizada → restaurar
+    win.addEventListener('click', (e) => {
+      if (!win.classList.contains('minimized')) return;
+      e.stopPropagation();
+      win.classList.remove('minimized');
+      win.style.display = 'flex';
+      win.style.zIndex = Window.nextZ();
+      if (Window._isMobile()) {
+        win.style.left = '50%';
+        win.style.top = '50%';
+        win.style.transform = 'translate(-50%, -50%)';
+      } else if (win.dataset.lastLeft) {
+        win.style.left = win.dataset.lastLeft;
+        win.style.top = win.dataset.lastTop;
+        win.style.transform = 'none';
+      }
+    });
+
+    // Cerrar
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      win.remove();
+    });
+
+    return win;
+  },
+
+  /** Abre ventana de expediente */
   open(exp, folderEl) {
-    // Si ya existe y está minimizada, restaurarla
     const existing = document.querySelector('.win[data-id="' + exp.id + '"]');
     if (existing) {
-      if (existing.classList.contains('minimized')) {
-        existing.classList.remove('minimized');
-      }
+      if (existing.classList.contains('minimized')) existing.classList.remove('minimized');
       existing.style.display = 'flex';
       existing.style.zIndex = this.nextZ();
-      // En mobile, restaurar posición centrada
       if (this._isMobile()) {
         existing.style.left = '50%';
         existing.style.top = '50%';
@@ -87,72 +136,94 @@ export const Window = {
       return;
     }
 
-    const container = document.getElementById('windows-container');
-    const fragment = document.createDocumentFragment();
     this._openCount++;
+    const fragment = document.createDocumentFragment();
 
-    // === Barra de título ===
-    const titleBar = makeEl('div', '', { class: 'wtb' });
-    const titleInner = makeEl('span', '', { class: 'wti' });
-    titleInner.appendChild(makeEl('span', '\u{1F4DC}'));
-    titleInner.appendChild(document.createTextNode(' ' + exp.titulo));
+    // === Titlebar ===
+    const titleBar = document.createElement('div');
+    titleBar.className = 'wtb';
+    const titleInner = document.createElement('span');
+    titleInner.className = 'wti';
+    titleInner.appendChild(document.createTextNode('\u{1F4DC} ' + exp.titulo));
     titleBar.appendChild(titleInner);
 
-    const winBtns = makeEl('div', '', { class: 'wb' });
+    const winBtns = document.createElement('div');
+    winBtns.className = 'wb';
 
-    // Botón minimizar (➖)
-    const minBtn = makeEl('button', '\u2796', {
-      'aria-label': 'Minimizar ventana'
-    });
+    const minBtn = document.createElement('button');
+    minBtn.textContent = '\u2796';
+    minBtn.setAttribute('aria-label', 'Minimizar ventana');
     winBtns.appendChild(minBtn);
 
-    // Botón cerrar (×)
-    const closeBtn = makeEl('button', '\u00D7', { class: 'cl', 'aria-label': 'Cerrar ventana' });
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'cl';
+    closeBtn.textContent = '\u00D7';
+    closeBtn.setAttribute('aria-label', 'Cerrar ventana');
     winBtns.appendChild(closeBtn);
+
     titleBar.appendChild(winBtns);
     fragment.appendChild(titleBar);
 
-    // === Contenido ===
-    const content = makeEl('div', '', { class: 'wct' });
+    // === Content ===
+    const content = document.createElement('div');
+    content.className = 'wct';
 
     // Título H2
-    const h2 = makeEl('h2', exp.titulo, {
-      style: 'font-family:var(--mono);color:var(--gold);font-size:2rem;margin-bottom:8px;text-shadow:0 0 10px rgba(201,168,76,.2)'
-    });
+    const h2 = document.createElement('h2');
+    h2.textContent = exp.titulo;
     content.appendChild(h2);
 
     // Meta info
-    const meta = makeEl('div', '', { class: 'meta' });
-    const statusClass = exp.st === 'solved' ? 'tag-solved' : 'tag-open';
-    const tagLabel = exp.st === 'solved' ? 'RESUELTOS ✓' : 'ABIERTO →';
-
+    const meta = document.createElement('div');
+    meta.className = 'meta';
     meta.appendChild(metaLabel('CATEGORÍA', exp.cat));
     meta.appendChild(metaLabel('AÑO', exp.ano));
     meta.appendChild(metaLabel('NIVEL', exp.niv));
 
-    const statusTag = makeEl('span', tagLabel, { class: 'ftag ' + statusClass });
+    const statusClass = exp.st === 'solved' ? 'tag-solved' : 'tag-open';
+    const tagLabel = exp.st === 'solved' ? 'RESUELTOS ✓' : 'ABIERTO →';
+    const statusTag = document.createElement('span');
+    statusTag.className = 'ftag ' + statusClass;
+    statusTag.textContent = tagLabel;
     meta.appendChild(statusTag);
 
     exp.tech.split(',').forEach(t => {
-      meta.appendChild(makeEl('span', t.trim(), { class: 'ftag' }));
+      const tag = document.createElement('span');
+      tag.className = 'ftag';
+      tag.textContent = t.trim();
+      meta.appendChild(tag);
     });
     content.appendChild(meta);
 
     // Brief
-    const brief = makeEl('p', exp.det, { class: 'brief' });
+    const brief = document.createElement('p');
+    brief.className = 'brief';
+    brief.textContent = exp.det;
     content.appendChild(brief);
 
     // Impacto
     if (exp.impacto && exp.impacto.length) {
-      content.appendChild(makeEl('h4', 'RESUMEN DE IMPACTO', {
-        style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
-      }));
-      const grid = makeEl('div', '', { class: 'impact-grid' });
+      const impactH4 = document.createElement('h4');
+      impactH4.textContent = 'RESUMEN DE IMPACTO';
+      content.appendChild(impactH4);
+
+      const grid = document.createElement('div');
+      grid.className = 'impact-grid';
       exp.impacto.forEach(k => {
-        const item = makeEl('div', '', { class: 'kpi-item' });
-        item.appendChild(makeEl('div', k.val, { class: 'kpi-val' }));
-        item.appendChild(makeEl('div', k.lab, { class: 'kpi-lab' }));
-        item.appendChild(makeEl('div', k.desc, { class: 'kpi-desc' }));
+        const item = document.createElement('div');
+        item.className = 'kpi-item';
+        const val = document.createElement('div');
+        val.className = 'kpi-val';
+        val.textContent = k.val;
+        item.appendChild(val);
+        const lab = document.createElement('div');
+        lab.className = 'kpi-lab';
+        lab.textContent = k.lab;
+        item.appendChild(lab);
+        const desc = document.createElement('div');
+        desc.className = 'kpi-desc';
+        desc.textContent = k.desc;
+        item.appendChild(desc);
         grid.appendChild(item);
       });
       content.appendChild(grid);
@@ -160,44 +231,60 @@ export const Window = {
 
     // Desafío
     if (exp.desafio) {
-      content.appendChild(makeEl('h4', 'EL DESAFÍO', {
-        style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
-      }));
-      content.appendChild(makeEl('p', exp.desafio, { class: 'section-text' }));
+      const desafioH4 = document.createElement('h4');
+      desafioH4.textContent = 'EL DESAFÍO';
+      content.appendChild(desafioH4);
+      const desafioP = document.createElement('p');
+      desafioP.className = 'section-text';
+      desafioP.textContent = exp.desafio;
+      content.appendChild(desafioP);
     }
 
     // Estrategia
     if (exp.estrategia && exp.estrategia.length) {
-      content.appendChild(makeEl('h4', 'ESTRATEGIA Y ACCIÓN', {
-        style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
-      }));
+      const estratH4 = document.createElement('h4');
+      estratH4.textContent = 'ESTRATEGIA Y ACCIÓN';
+      content.appendChild(estratH4);
       exp.estrategia.forEach(s => {
-        const item = makeEl('div', '', { class: 'strategy-item' });
-        item.appendChild(makeEl('div', s.tit, { class: 'strategy-title' }));
-        item.appendChild(makeEl('div', s.txt, { class: 'strategy-text' }));
+        const item = document.createElement('div');
+        item.className = 'strategy-item';
+        const titEl = document.createElement('div');
+        titEl.className = 'strategy-title';
+        titEl.textContent = s.tit;
+        item.appendChild(titEl);
+        const txtEl = document.createElement('div');
+        txtEl.className = 'strategy-text';
+        txtEl.textContent = s.txt;
+        item.appendChild(txtEl);
         content.appendChild(item);
       });
     }
 
     // Archivos
-    content.appendChild(makeEl('h4', 'ARCHIVOS DEL SISTEMA', {
-      style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
-    }));
-    const filesDiv = makeEl('div', '', { class: 'files' });
+    const filesH4 = document.createElement('h4');
+    filesH4.textContent = 'ARCHIVOS DEL SISTEMA';
+    content.appendChild(filesH4);
+    const filesDiv = document.createElement('div');
+    filesDiv.className = 'files';
     exp.arc.forEach(f => {
-      const row = makeEl('div', '', { class: 'frow' });
-      row.appendChild(document.createTextNode('\u{1F4C4} ' + f));
+      const row = document.createElement('div');
+      row.className = 'frow';
+      row.textContent = '\u{1F4C4} ' + f;
       filesDiv.appendChild(row);
     });
     content.appendChild(filesDiv);
 
     // Entregables dummy
-    content.appendChild(makeEl('h4', 'ENTREGABLES', {
-      style: 'font-family:var(--mono);color:var(--gold);font-size:1rem;letter-spacing:2px;margin:20px 0 8px;text-transform:uppercase'
-    }));
-    const imgRow = makeEl('div', '', { class: 'img-row' });
+    const delivH4 = document.createElement('h4');
+    delivH4.textContent = 'ENTREGABLES';
+    content.appendChild(delivH4);
+    const imgRow = document.createElement('div');
+    imgRow.className = 'img-row';
     for (let i = 0; i < 4; i++) {
-      imgRow.appendChild(makeEl('div', 'IMG_' + (i + 1), { class: 'img-ph' }));
+      const ph = document.createElement('div');
+      ph.className = 'img-ph';
+      ph.textContent = 'IMG_' + (i + 1);
+      imgRow.appendChild(ph);
     }
     content.appendChild(imgRow);
 
@@ -212,118 +299,43 @@ export const Window = {
     win.setAttribute('aria-modal', 'true');
     win.setAttribute('aria-label', 'Expediente: ' + exp.titulo);
 
-    // Posición: apilada 12px abajo + 12px derecha de la anterior (desktop)
-    // En mobile, centrar la ventana
+    // Posición
     const isMobile = this._isMobile();
-
-    let winLeft, winTop;
     if (isMobile) {
-      winLeft = 50;
-      winTop = 50;
-      win.style.left = winLeft + '%';
-      win.style.top = winTop + '%';
+      win.style.left = '50%';
+      win.style.top = '50%';
       win.style.transform = 'translate(-50%, -50%)';
       win.style.maxWidth = '95vw';
+      win.dataset.lastLeft = '50%';
+      win.dataset.lastTop = '50%';
     } else {
       const baseLeft = Math.max(40, window.innerWidth * 0.1);
       const baseTop = 40;
       const offsetX = (this._openCount - 1) * 12;
       const offsetY = (this._openCount - 1) * 12;
 
-      // Si hay folderEl, usa su posición como base para el top
-      winLeft = baseLeft + offsetX;
-      winTop = baseTop + offsetY;
+      let winLeft, winTop;
       if (folderEl) {
         const rect = folderEl.getBoundingClientRect();
-        winTop = Math.max(baseTop + offsetY, rect.bottom + 24);
         winLeft = Math.max(baseLeft + offsetX, rect.left - 300);
+        winTop = Math.max(baseTop + offsetY, rect.bottom + 24);
+      } else {
+        winLeft = baseLeft + offsetX;
+        winTop = baseTop + offsetY;
       }
 
       win.style.left = winLeft + 'px';
       win.style.top = winTop + 'px';
       win.style.transform = 'none';
-    }
-
-    // Guardamos la última posición visible para restaurar
-    if (isMobile) {
-      win.dataset.lastLeft = '50%';
-      win.dataset.lastTop = '50%';
-    } else {
       win.dataset.lastLeft = winLeft + 'px';
       win.dataset.lastTop = winTop + 'px';
     }
 
-    container.appendChild(win);
+    document.getElementById('windows-container').appendChild(win);
     while (fragment.firstChild) win.appendChild(fragment.firstChild);
 
-    // === Drag con cleanup (mouse + touch) ===
-    let dragging = false, offsetXDrag, offsetYDrag, clickStartX, clickStartY;
-    let handlers = null;
-    let touchHandlers = null;
-    const self = this;
-
-    function startDrag(clientX, clientY) {
-      dragging = true;
-      clickStartX = clientX;
-      clickStartY = clientY;
-      offsetXDrag = clientX - win.offsetLeft;
-      offsetYDrag = clientY - win.offsetTop;
-      titleBar.classList.add('dg');
-      win.classList.add('dragging');
-      win.style.zIndex = self.nextZ();
-      // Guardar posición actual como última visible
-      win.dataset.lastLeft = win.style.left;
-      win.dataset.lastTop = win.style.top;
-    }
-
-    function moveDrag(clientX, clientY) {
-      if (dragging) {
-        win.style.left = (clientX - offsetXDrag) + 'px';
-        win.style.top = (clientY - offsetYDrag) + 'px';
-        win.style.transform = 'none';
-        win.dataset.lastLeft = win.style.left;
-        win.dataset.lastTop = win.style.top;
-      }
-    }
-
-    function endDrag() {
-      dragging = false;
-      titleBar.classList.remove('dg');
-      win.classList.remove('dragging');
-    }
-
-    // Mouse events
-    titleBar.addEventListener('mousedown', e => {
-      e.preventDefault(); // Prevent text selection during drag
-      startDrag(e.clientX, e.clientY);
-    });
-
-    handlers = {
-      mousemove: e => moveDrag(e.clientX, e.clientY),
-      mouseup: endDrag
-    };
-    document.addEventListener('mousemove', handlers.mousemove);
-    document.addEventListener('mouseup', handlers.mouseup);
-
-    // Touch events for mobile
-    titleBar.addEventListener('touchstart', e => {
-      const touch = e.touches[0];
-      startDrag(touch.clientX, touch.clientY);
-    }, { passive: true });
-
-    touchHandlers = {
-      touchmove: e => {
-        if (dragging) {
-          e.preventDefault();
-          const touch = e.touches[0];
-          moveDrag(touch.clientX, touch.clientY);
-        }
-      },
-      touchend: endDrag
-    };
-    document.addEventListener('touchmove', touchHandlers.touchmove, { passive: false });
-    document.addEventListener('touchend', touchHandlers.touchend);
-
+    // === Drag ===
+    makeDraggable(win, titleBar);
     win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
 
     // === Minimizar ===
@@ -334,7 +346,7 @@ export const Window = {
       Window._repositionMinimized();
     });
 
-    // Click en ventana minimizada → restaurar
+    // Click en minimizada → restaurar
     win.addEventListener('mousedown', (e) => {
       if (win.classList.contains('minimized')) {
         e.stopPropagation();
@@ -343,97 +355,71 @@ export const Window = {
     });
 
     win.addEventListener('click', (e) => {
-      if (win.classList.contains('minimized')) {
-        e.stopPropagation();
-        win.classList.remove('minimized');
-        win.style.display = 'flex';
-        win.style.zIndex = Window.nextZ();
-        // Restaurar posición: última guardada, o usar _positionWindow
-        if (Window._isMobile()) {
-          win.style.left = '50%';
-          win.style.top = '50%';
-          win.style.transform = 'translate(-50%, -50%)';
-        } else if (win.dataset.lastLeft) {
-          win.style.left = win.dataset.lastLeft;
-          win.style.top = win.dataset.lastTop;
-          win.style.transform = 'none';
-        } else {
-          Window._positionWindow(win, exp, folderEl);
-        }
+      if (!win.classList.contains('minimized')) return;
+      e.stopPropagation();
+      win.classList.remove('minimized');
+      win.style.display = 'flex';
+      win.style.zIndex = Window.nextZ();
+      if (Window._isMobile()) {
+        win.style.left = '50%';
+        win.style.top = '50%';
+        win.style.transform = 'translate(-50%, -50%)';
+      } else if (win.dataset.lastLeft) {
+        win.style.left = win.dataset.lastLeft;
+        win.style.top = win.dataset.lastTop;
+        win.style.transform = 'none';
       }
     });
 
     // === Cerrar ===
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (handlers) {
-        document.removeEventListener('mousemove', handlers.mousemove);
-        document.removeEventListener('mouseup', handlers.mouseup);
-      }
-      if (touchHandlers) {
-        document.removeEventListener('touchmove', touchHandlers.touchmove);
-        document.removeEventListener('touchend', touchHandlers.touchend);
-      }
-      // Deseleccionar carpeta al cerrar ventana
       if (folderEl) {
         folderEl.classList.remove('sel');
-        folderEl.querySelector('.ico').textContent = '\u{1F4C1}'; // 📁
+        folderEl.querySelector('.ico').textContent = '\u{1F4C1}';
       }
       win.remove();
     });
-  }
-};
+  },
 
-/** Reposiciona dinámicamente las ventanas minimizadas */
-Window._repositionMinimized = function () {
-  const minimized = Array.from(document.querySelectorAll('.win.minimized'));
-  const count = minimized.length;
-  if (count === 0) return;
+  /** Reposiciona dinámicamente las ventanas minimizadas */
+  _repositionMinimized() {
+    const minimized = Array.from(document.querySelectorAll('.win.minimized'));
+    const count = minimized.length;
+    if (count === 0) return;
 
-  const isMobile = window.innerWidth <= 900;
-  const winWidth = 200;
-  const gap = 4;
-  const rowHeight = 32;
-  const margin = 4;
+    const isMobile = window.innerWidth <= 900;
+    const winWidth = 200;
+    const gap = 4;
+    const rowHeight = 32;
+    const margin = 4;
+    const colsPerRow = Math.floor((window.innerWidth - margin * 2) / (winWidth + gap));
+    const cols = Math.max(colsPerRow, 1);
 
-  // Calcular cuántas caben por fila
-  const colsPerRow = isMobile
-    ? Math.floor((window.innerWidth - margin * 2) / (winWidth + gap))
-    : Math.floor((window.innerWidth - margin * 2) / (winWidth + gap));
+    minimized.forEach((win, i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
 
-  const cols = Math.max(colsPerRow, 1);
-
-  minimized.forEach((win, i) => {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-
-    if (isMobile) {
-      // Mobile: abajo a la izquierda, izquierda a derecha
-      // Si no caben, segunda fila de abajo hacia arriba
-      const x = margin + col * (winWidth + gap);
-      const y = window.innerHeight - margin - rowHeight - row * (rowHeight + gap);
-      win.style.left = x + 'px';
-      win.style.top = y + 'px';
+      if (isMobile) {
+        const x = margin + col * (winWidth + gap);
+        const y = window.innerHeight - margin - rowHeight - row * (rowHeight + gap);
+        win.style.left = x + 'px';
+        win.style.top = y + 'px';
+      } else {
+        const x = window.innerWidth - margin - (cols - col) * (winWidth + gap);
+        const y = window.innerHeight - margin - rowHeight - row * (rowHeight + gap) - 32;
+        win.style.left = x + 'px';
+        win.style.top = y + 'px';
+      }
       win.style.bottom = 'auto';
       win.style.transform = 'none';
-    } else {
-      // Desktop: abajo a la derecha, izquierda a derecha
-      // 32px por encima de la console-bar para no taparla
-      // Si no caben, segunda fila de abajo hacia arriba
-      const x = window.innerWidth - margin - (cols - col) * (winWidth + gap);
-      const y = window.innerHeight - margin - rowHeight - row * (rowHeight + gap) - 32;
-      win.style.left = x + 'px';
-      win.style.top = y + 'px';
-      win.style.bottom = 'auto';
-      win.style.transform = 'none';
-    }
-  });
+    });
+  },
 };
 
 // Reposicionar al redimensionar la ventana
 window.addEventListener('resize', () => {
   Window._repositionMinimized();
-  // Recentrar ventanas abiertas al cambiar entre mobile/desktop
   const wins = document.querySelectorAll('.win:not(.minimized):not([data-id=""])');
   wins.forEach(win => {
     if (!win.dataset.id) return;
@@ -443,7 +429,6 @@ window.addEventListener('resize', () => {
       win.style.top = '50%';
       win.style.transform = 'translate(-50%, -50%)';
     } else if (!isMobile && win.style.transform && win.style.transform.includes('translate')) {
-      // Recuperar última posición guardada
       if (win.dataset.lastLeft) win.style.left = win.dataset.lastLeft;
       if (win.dataset.lastTop) win.style.top = win.dataset.lastTop;
       win.style.transform = 'none';

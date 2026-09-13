@@ -1,0 +1,200 @@
+/* ═══════════════════════════════════════════════════
+   EMAIL — Formulario de contacto (inputs, botones, success)
+   ═══════════════════════════════════════════════════ */
+
+/* ── Email terminal container ────────────────────── */
+.email-content {
+  padding: 1rem;
+}
+
+.em-header {
+  margin-bottom: 12px;
+}
+
+.em-title-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-dark));
+  margin-bottom: 8px;
+  border-radius: 1px;
+}
+
+.em-banner {
+  display: block;
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-align: center;
+  white-space: pre;
+  line-height: 1.4;
+}
+
+/* ── Formulario ──────────────────────────────────── */
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cfld {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.clbl {
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.clbl .req {
+  color: var(--red);
+  margin-left: 2px;
+}
+
+/* ── Inputs retro ────────────────────────────────── */
+.rinput,
+.rta {
+  background: #0a1418;
+  border: 1px solid var(--brd);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .9rem;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.rinput:focus,
+.rta:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(201, 168, 76, .25);
+}
+
+.rinput::placeholder,
+.rta::placeholder {
+  color: #2a4050;
+  font-style: italic;
+}
+
+/* ── Read-only input ─────────────────────────────── */
+.rro {
+  background: #060c10;
+  color: var(--dim);
+  border-color: #1a2530;
+  cursor: not-allowed;
+}
+
+.rro:focus {
+  border-color: #1a2530;
+  box-shadow: none;
+}
+
+/* ── Textarea ────────────────────────────────────── */
+.rta {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+/* ── Botones ─────────────────────────────────────── */
+.btn-row {
+  margin-top: 6px;
+}
+
+.send-btn,
+.reset-btn {
+  width: 100%;
+  background: linear-gradient(180deg, #1a2a38, #0e1a24);
+  border: 2px outset var(--brd);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .9rem;
+  letter-spacing: 2px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background .15s, transform .1s, box-shadow .2s;
+}
+
+.send-btn:hover,
+.reset-btn:hover {
+  background: linear-gradient(180deg, #243a4e, #162a3c);
+  box-shadow: 0 0 10px rgba(201, 168, 76, .2);
+}
+
+.send-btn:active,
+.reset-btn:active {
+  transform: translate(1px, 1px);
+  border-style: inset;
+}
+
+.send-btn:disabled,
+.send-btn.sending {
+  opacity: .6;
+  cursor: wait;
+}
+
+/* ── Status messages ─────────────────────────────── */
+.em-status {
+  margin-top: 8px;
+  min-height: 20px;
+}
+
+.em-status-sending {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .85rem;
+}
+
+.em-status-err {
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: .85rem;
+}
+
+/* ── Success state ───────────────────────────────── */
+.em-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  gap: 16px;
+}
+
+.ascii-art {
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--accent);
+  line-height: 1.3;
+  white-space: pre;
+  text-shadow: 0 0 8px rgba(201, 168, 76, .3);
+  margin-bottom: 4px;
+}
+
+.success-line {
+  width: 80%;
+  max-width: 280px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.success-msg {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  color: #fde68a;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(253, 230, 138, .3);
+}
+
+.sub-text {
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--dim);
+  line-height: 1.6;
+  white-space: pre-line;
+}

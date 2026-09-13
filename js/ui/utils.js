@@ -15,19 +15,4 @@ export function makeEl(tag, text, attrs) {
   return node;
 }
 
-/**
- * Crea una fila de estadística con label a la izq y valor a la der.
- * @param {string} label
- * @param {string} value
- * @param {string} [valueColor]
- * @returns {HTMLElement}
- */
-export function statRow(label, value, valueColor = '') {
-  const row = makeEl('div', '', { style: 'display:flex;justify-content:space-between' });
-  row.appendChild(document.createTextNode(label));
-  const valSpan = document.createElement('span');
-  if (valueColor) valSpan.style.color = valueColor;
-  valSpan.textContent = value;
-  row.appendChild(valSpan);
-  return row;
-}
+
