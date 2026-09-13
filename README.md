@@ -120,7 +120,7 @@ js/data/                      # Datos estáticos centralizados
 | `whoami` | Info del usuario |
 
 ### Easter Eggs 🥚
-La consola esconde varios easter eggs. Algunos comandos que podés probar:
+La consola esconde varios easter eggs. Algunos comandos que puedes probar:
 ```
 sudo
 apt-get install
