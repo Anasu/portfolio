@@ -128,7 +128,7 @@ docker run
 polySphere
 exit
 ```
-Pero hay más — sentite libre de explorar y encontrar los que no están listados aquí :)
+Pero hay más — siéntete libre de explorar y encontrar los que no están listados aquí :)
 
 ---
 
