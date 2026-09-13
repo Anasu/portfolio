@@ -1,8 +1,6 @@
 # 🖥️ System Portfolio | Console UI & Case Files 
 
-> **Live Demo:** [anasu.github.io/portfolio](https://anasu.github.io/portfolio/) 
-> **Repo (Forgejo):** [forge.sh.hl.delmal.cl/anasu/portafolio](https://forge.sh.hl.delmal.cl/anasu/portafolio)
-> **Repo (GitHub):** [github.com/Anasu/portfolio](https://github.com/Anasu/portfolio)
+> **Live Demo:** [anasu.github.io/portfolio](https://anasu.github.io/portfolio/)
 
 > **Rol:** Senior Product / UX Designer & Technical Director 
 
@@ -49,7 +47,7 @@ Uso de tipografía monoespaciada (`Fira Code`), paleta temática en tono termina
 ## 🛠️ Stack & Especificaciones Técnicas 
 
 ### Core
-- **HTML5** + **CSS3 Variables** + **Vanilla JavaScript (ES Modules)** — sin frameworks pesados para garantizar velocidad de carga.
+- **HTML5** + **CSS3 Variables** + **Vanilla JavaScript (ES Modules)** — elegido para garantizar compatibilidad nativa con GitHub Pages sin necesidad de builds ni server-side.
 - **Fira Code** (monospace) — single font family para consistencia visual.
 
 ### Arquitectura del Código
@@ -122,37 +120,22 @@ js/data/                      # Datos estáticos centralizados
 | `whoami` | Info del usuario |
 
 ### Easter Eggs 🥚
+La consola esconde varios easter eggs. Algunos comandos que podés probar:
 ```
-sudo            → Acceso denegado (obviamente)
-apt-get install → No hay repositorios aquí
-docker run      → 100% host performance
-polySphere      → Nice try, this isn't Maya
-exit            → No puedes salir. Es un bucle infinito de excelencia. 🔄
+sudo
+apt-get install
+docker run
+polySphere
+exit
 ```
+Pero hay más — sentite libre de explorar y encontrar los que no están listados aquí :)
 
 ---
 
-## 🚀 Desarrollo Local 
+## 📊 Proyecto en números 
 
-### Opción 1 — Node.js (recomendado)
-```bash
-node server.js          # → http://localhost:3000
-```
-
-### Opción 2 — Python
-```bash
-python3 -m http.server 8080   # → http://localhost:8080
-```
-
-### Opción 3 — VS Code Live Server
-Abre `index.html` con "Live Server" desde el panel de extensiones.
-
----
-
-## 📊 Métricas del Proyecto 
-
-| Metrica | Valor |
-|---------|-------|
+| Número | Valor |
+|--------|-------|
 | Archivos CSS | 8 modulares (~25 KB total) |
 | Módulos JS | 13 ES Modules (~65 KB total) |
 | Líneas de código | ~1,400 (sin contar datos) |
