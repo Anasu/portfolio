@@ -82,6 +82,10 @@
 }
 
 /* Contacto folder icon */
+.contact-folder {
+  width: auto;
+}
+
 .contact-folder .ico {
   font-size: 3rem;
   line-height: 1;
