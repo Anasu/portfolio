@@ -11,6 +11,7 @@ export const Quake = {
   handle: null,
   input: null,
   open: false,
+  _atBottom: true,
 
   /** Inicializa referencias al DOM */
   init() {
@@ -21,6 +22,13 @@ export const Quake = {
     if (toggle) {
       toggle.addEventListener('click', () => this.toggle());
     }
+
+    // Detectar si el usuario scrolleó hacia arriba
+    this.body.addEventListener('scroll', () => {
+      const b = this.body;
+      const atBottom = b.scrollHeight - b.scrollTop <= b.clientHeight + 2;
+      this._atBottom = atBottom;
+    });
   },
 
   /** Abre el quake terminal */
@@ -57,7 +65,10 @@ export const Quake = {
     while (this.body.children.length > MAX_LINES) {
       this.body.removeChild(this.body.firstChild);
     }
-    this.body.scrollTop = this.body.scrollHeight;
+    // Auto-scroll solo si el usuario está viendo el final
+    if (this._atBottom) {
+      this.body.scrollTop = this.body.scrollHeight;
+    }
   },
 
   /** Configura resize del quake terminal */
@@ -81,7 +92,12 @@ export const Quake = {
       const minH = 80;
       const maxH = Math.min(50 * window.innerHeight / 100, window.innerHeight - 28);
       newHeight = Math.max(minH, Math.min(maxH, newHeight));
+
+      // Guardar posición del scroll antes de cambiar altura
+      const scrollTop = this.body.scrollTop;
       this.el.style.height = newHeight + 'px';
+      // Restaurar scroll para que el contenido quede fijo visualmente
+      this.body.scrollTop = scrollTop;
     }
 
     function stopResize() {
