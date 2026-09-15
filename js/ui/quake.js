@@ -1,6 +1,14 @@
 /**
  * QUAKE — Terminal estilo Quake (overlay inferior).
  * Maneja resize, toggle, y logging de líneas.
+ *
+ * Apertura:
+ *   - Click en el input de la consola
+ *   - Click en el botón ^ (toggle) junto al reset
+ * Cierre:
+ *   - Click afuera de la bottom sheet
+ *   - Click en el botón v (close)
+ *   - Escape dentro del input
  */
 
 const MAX_LINES = 50;
@@ -18,16 +26,22 @@ export const Quake = {
     this.el = document.getElementById('quake-terminal');
     this.body = document.getElementById('qt-body');
     this.handle = document.getElementById('qt-resize-handle');
-    const toggle = document.getElementById('quake-toggle');
-    if (toggle) {
-      toggle.addEventListener('click', () => this.toggle());
-    }
 
     // Detectar si el usuario scrolleó hacia arriba
     this.body.addEventListener('scroll', () => {
       const b = this.body;
       const atBottom = b.scrollHeight - b.scrollTop <= b.clientHeight + 2;
       this._atBottom = atBottom;
+    });
+
+    // Click afuera cierra la bottom sheet
+    document.addEventListener('click', e => {
+      if (!this.open) return;
+      const isInsideQuake = this.el.contains(e.target);
+      const isInsideWrapper = this.el.parentElement && this.el.parentElement.contains(e.target);
+      if (!isInsideQuake && !isInsideWrapper) {
+        this.closeTerminal();
+      }
     });
   },
 
@@ -119,18 +133,6 @@ export const Quake = {
       if (isResizing && e.touches[0]) doResize.call(this, e.touches[0].clientY);
     }, { passive: false });
     window.addEventListener('touchend', stopResize.bind(this));
-
-    // Click afuera cierra quake
-    document.addEventListener('click', e => {
-      if (!this.open) return;
-      const isInsideQuake = this.el.contains(e.target);
-      const isInsideInput = this.input && this.input.contains(e.target);
-      const toggle = document.getElementById('quake-toggle');
-      const isToggleBtn = toggle && toggle.contains(e.target);
-      if (!isInsideQuake && !isInsideInput && !isToggleBtn) {
-        this.closeTerminal();
-      }
-    });
   },
 
   /** Vincula el input de la consola para abrir quake al focus */

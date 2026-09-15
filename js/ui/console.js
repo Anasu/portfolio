@@ -25,6 +25,19 @@ export function renderConsole() {
   consoleBar.appendChild(prompt);
   consoleBar.appendChild(input);
 
+  // Botón de abrir bottom sheet (^)
+  const openBtn = document.createElement('button');
+  openBtn.type = 'button';
+  openBtn.className = 'quake-toggle-btn';
+  openBtn.title = 'Abrir terminal (toggle)';
+  openBtn.textContent = '^';
+  openBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    Quake.toggle();
+    input.focus();
+  });
+  consoleBar.appendChild(openBtn);
+
   // Botón de reset para la altura del quake terminal
   const resetBtn = document.createElement('button');
   resetBtn.type = 'button';
@@ -36,6 +49,19 @@ export function renderConsole() {
     input.focus();
   });
   consoleBar.appendChild(resetBtn);
+
+  // Botón de cerrar bottom sheet (v)
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'quake-close-btn';
+  closeBtn.title = 'Cerrar terminal (close)';
+  closeBtn.textContent = 'v';
+  closeBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    Quake.closeTerminal();
+    input.focus();
+  });
+  consoleBar.appendChild(closeBtn);
 
   // Inicializar quake terminal
   Quake.init();
