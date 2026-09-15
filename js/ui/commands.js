@@ -124,6 +124,11 @@ function cmdWhoami() {
   Quake.log(msg, 'qt-gold');
 }
 
+/** Resetea la altura del quake terminal */
+function cmdReset() {
+  Quake.resetHeight();
+}
+
 /** Busca comandos parciales en los jokes */
 function tryPartialMatch(cmd) {
   for (const key of Object.keys(TERMINAL_JOKES)) {
@@ -153,6 +158,7 @@ function handleCommand(cmd) {
   if (cmd === 'contact' || cmd === 'email') { Contact.openFromCommand(); Quake.log('[MAIL] Abriendo terminal de correo electrónico...', 'qt-sys'); logToPanel('[MAIL] Terminal de correo abierta.'); return; }
   if (cmd === 'date') { cmdDate(); return; }
   if (cmd === 'whoami') { cmdWhoami(); return; }
+  if (cmd === 'reset') { cmdReset(); return; }
 
   // Jokes directos
   if (TERMINAL_JOKES[cmd]) {

@@ -138,4 +138,10 @@ export const Quake = {
     this.input = inputEl;
     inputEl.addEventListener('focus', () => this.openTerminal());
   },
+
+  /** Resetea la altura del quake terminal a su valor por defecto */
+  resetHeight() {
+    this.el.style.height = '80px';
+    Quake.log('[SYS] Terminal restaurada.', 'qt-sys');
+  },
 };

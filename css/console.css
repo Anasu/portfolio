@@ -135,6 +135,28 @@
   color: #2a4030;
 }
 
+/* ── Botón reset de altura ─────────────────────────── */
+.quake-reset {
+  width: 26px;
+  height: 24px;
+  background: transparent;
+  border: 1px solid var(--brd);
+  color: #abb2bf;
+  font-size: .95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s, color .15s, border-color .15s;
+  flex-shrink: 0;
+}
+
+.quake-reset:hover {
+  background: #2c313a;
+  color: #61afef;
+  border-color: #61afef;
+}
+
 /* ── Quake toggle button ─────────────────────────── */
 .quake-toggle {
   position: absolute;

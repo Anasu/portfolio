@@ -25,6 +25,18 @@ export function renderConsole() {
   consoleBar.appendChild(prompt);
   consoleBar.appendChild(input);
 
+  // Botón de reset para la altura del quake terminal
+  const resetBtn = document.createElement('button');
+  resetBtn.type = 'button';
+  resetBtn.className = 'quake-reset';
+  resetBtn.title = 'Restaurar tamaño de terminal (reset)';
+  resetBtn.textContent = '↕';
+  resetBtn.addEventListener('click', () => {
+    Quake.resetHeight();
+    input.focus();
+  });
+  consoleBar.appendChild(resetBtn);
+
   // Inicializar quake terminal
   Quake.init();
   Quake.initResize();
