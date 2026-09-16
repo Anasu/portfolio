@@ -50,19 +50,6 @@ export function renderConsole() {
   });
   consoleBar.appendChild(resetBtn);
 
-  // Botón de cerrar bottom sheet (v)
-  const closeBtn = document.createElement('button');
-  closeBtn.type = 'button';
-  closeBtn.className = 'quake-close-btn';
-  closeBtn.title = 'Cerrar terminal (close)';
-  closeBtn.textContent = 'v';
-  closeBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    Quake.closeTerminal();
-    input.focus();
-  });
-  consoleBar.appendChild(closeBtn);
-
   // Inicializar quake terminal
   Quake.init();
   Quake.initResize();

@@ -178,25 +178,3 @@
   color: #61afef;
   border-color: #61afef;
 }
-
-/* ── Close button (v) in console bar ─────────────── */
-.quake-close-btn {
-  width: 28px;
-  height: 24px;
-  background: transparent;
-  border: 1px solid var(--brd);
-  color: #abb2bf;
-  font-size: .95rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .15s, color .15s, border-color .15s;
-  flex-shrink: 0;
-}
-
-.quake-close-btn:hover {
-  background: #e06c75;
-  color: #ffffff;
-  border-color: #e06c75;
-}

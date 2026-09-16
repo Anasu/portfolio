@@ -7,7 +7,6 @@
  *   - Click en el botón ^ (toggle) junto al reset
  * Cierre:
  *   - Click afuera de la bottom sheet
- *   - Click en el botón v (close)
  *   - Escape dentro del input
  */
 
