@@ -9,7 +9,7 @@ import { Window } from './window.js';
 export const Bio = {
   /** Abre la ventana de biografía */
   open() {
-    const stackTags = CONFIG.user.stack.map(t => `<span class="ftag ok">${t}</span>`).join('');
+    const stackTags = CONFIG.user.stack.map(t => `<span class="ftag">${t}</span>`).join('');
 
     const content = `
       <h2>👤 ${CONFIG.user.name}</h2>
@@ -21,9 +21,9 @@ export const Bio = {
 
       <h4>🔗 Enlaces</h4>
       <div style="display:flex;gap:16px;margin:12px 0;flex-wrap:wrap">
-        <a href="${CONFIG.contact.linkedin}" target="_blank" rel="noopener" class="ftag bio-link">${'LinkedIn ↗'}</a>
-        <a href="${CONFIG.contact.github}" target="_blank" rel="noopener" class="ftag bio-link">${'GitHub ↗'}</a>
-        <a href="#" id="btn-download-cv" class="ftag tag-solved bio-link">${'Descargar CV (PDF) ↓'}</a>
+        <a href="${CONFIG.contact.linkedin}" target="_blank" rel="noopener" class="ftag">${'LinkedIn ↗'}</a>
+        <a href="${CONFIG.contact.github}" target="_blank" rel="noopener" class="ftag">${'GitHub ↗'}</a>
+        <a href="#" id="btn-download-cv" class="ftag tag-solved">${'Descargar CV (PDF) ↓'}</a>
       </div>
 
       <h4>📋 Resumen</h4>
@@ -33,7 +33,7 @@ export const Bio = {
       <div style="margin:8px 0">${stackTags}</div>
 
       <h4>📬 Contacto directo</h4>
-      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:${CONFIG.contact.email}" class="bio-link">${CONFIG.contact.email}</a></p>
+      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:${CONFIG.contact.email}">${CONFIG.contact.email}</a></p>
     `;
 
     const win = Window.create('bio — perfil profesional', '\u{1F464}', content);
