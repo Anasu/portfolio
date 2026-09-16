@@ -33,7 +33,7 @@ export const Window = {
    * @param {string} titulo - Texto de la barra de título
    * @param {string} ico    - Emoji/icono
    * @param {string} html   - HTML del contenido (opcional)
-   * @param {object} opts   - Opciones: { id, zIndex }
+   * @param {object} opts   - Opciones: { id, zIndex, centered }
    * @returns {HTMLElement} La ventana DOM
    */
   create(titulo, ico, html = '', opts = {}) {
@@ -81,6 +81,15 @@ export const Window = {
     win.appendChild(titleBar);
     win.appendChild(content);
     container.appendChild(win);
+
+    // Posición centrada (si opts.centered está activo)
+    if (opts.centered) {
+      win.style.left = '50%';
+      win.style.top = '50%';
+      win.style.transform = 'translate(-50%, -50%)';
+      win.dataset.lastLeft = '50%';
+      win.dataset.lastTop = '50%';
+    }
 
     // Drag
     makeDraggable(win, titleBar);

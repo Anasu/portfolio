@@ -333,7 +333,7 @@ function openEmailWindow(folderEl) {
   renderEmailForm(contentEl);
 
   // Usar Window.create() para la estructura base
-  const win = Window.create('MAIL TERMINAL v1.0', '\u{1F4E7}', '', { id: 'contact' });
+  const win = Window.create('MAIL TERMINAL v1.0', '\u{1F4E7}', '', { id: 'contact', centered: true });
   win.querySelector('.wct').appendChild(contentEl);
 
   // Minimizar
