@@ -424,6 +424,31 @@ export const Window = {
   },
 };
 
+// ── Auto-hide scrollbar: ocultar cuando no hay scroll ────
+function updateScrollbar(el) {
+  const canScroll = el.scrollHeight > el.clientHeight;
+  el.classList.toggle('no-scroll', !canScroll);
+}
+
+const scrollbarObserver = new MutationObserver(() => {
+  document.querySelectorAll('.wct, .qt-body, .plog').forEach(el => updateScrollbar(el));
+});
+
+function initScrollbarAutoHide() {
+  document.querySelectorAll('.wct, .qt-body, .plog').forEach(el => updateScrollbar(el));
+  scrollbarObserver.observe(document.getElementById('windows-container'), { childList: true, subtree: true });
+  const qtBody = document.getElementById('qt-body');
+  if (qtBody) scrollbarObserver.observe(qtBody, { childList: true });
+  const plog = document.querySelector('.plog');
+  if (plog) scrollbarObserver.observe(plog, { childList: true });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollbarAutoHide);
+} else {
+  initScrollbarAutoHide();
+}
+
 // Reposicionar al redimensionar la ventana
 window.addEventListener('resize', () => {
   Window._repositionMinimized();
