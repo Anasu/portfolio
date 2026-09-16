@@ -70,7 +70,7 @@ export const EXP = {
     ico: '\u2708\uFE0F',
     niv: 'CONFIDENCIAL',
     det: 'Design system integral para el área de mantenimiento aeronáutico. Centralización de componentes y optimización de flujos de alta densidad operativa.',
-    tech: 'Figma, Design Tokens, AI (MCP), Gobernanza UX, Storybook',
+    tech: 'Figma | Design Tokens | AI (MCP) | Gobernanza UX | Storybook',
     fch: '03/2024',
     st: 'solved',
     arc: ['/ds/tokens.json', '/ds/components-library.fig', '/ds/patterns-guidelines.pdf', '/ds/ai-mcp-prompts.json'],

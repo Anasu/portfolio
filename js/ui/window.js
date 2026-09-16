@@ -196,12 +196,10 @@ export const Window = {
     statusTag.textContent = tagLabel;
     meta.appendChild(statusTag);
 
-    exp.tech.split(',').forEach(t => {
-      const tag = document.createElement('span');
-      tag.className = 'ftag';
-      tag.textContent = t.trim();
-      meta.appendChild(tag);
-    });
+    const techTag = document.createElement('span');
+    techTag.className = 'ftag';
+    techTag.textContent = exp.tech;
+    meta.appendChild(techTag);
     content.appendChild(meta);
 
     // Brief
