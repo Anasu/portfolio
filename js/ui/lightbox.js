@@ -9,26 +9,92 @@
 import { makeDraggable } from './drag.js';
 
 export const Lightbox = {
-  _el: null,
+  _overlay: null,
+  _win: null,
+  _img: null,
+  _counter: null,
+  _indicator: null,
   _images: [],
   _index: 0,
+  _minimized: false,
+  _keyHandler: null,
 
   /** Abre el lightbox con un array de imágenes */
   open(images, startIndex = 0) {
     this._images = images;
     this._index = Math.max(0, Math.min(startIndex, images.length - 1));
-    if (!this._el) this._build();
-    this._show();
-    this._update();
+    this._minimized = false;
+
+    if (!this._overlay) this._build();
+
+    // Mostrar overlay y ventana
+    const container = document.getElementById('windows-container');
+    if (!this._overlay.parentNode) {
+      container.appendChild(this._overlay);
+    }
+    this._overlay.classList.add('lb-active');
+    this._win.classList.remove('lb-minimized');
+
+    // Reset posición centrada en mobile
+    const isMobile = window.innerWidth <= 900;
+    if (isMobile) {
+      this._win.style.left = '50%';
+      this._win.style.top = '50%';
+      this._win.style.transform = 'translate(-50%, -50%)';
+    }
+
     document.body.style.overflow = 'hidden';
+    this._update();
   },
 
   /** Cierra el lightbox */
   close() {
-    if (this._el) this._el.remove();
-    this._el = null;
+    if (this._overlay && this._overlay.parentNode) {
+      this._overlay.remove();
+    }
+    if (this._indicator && this._indicator.parentNode) {
+      this._indicator.remove();
+    }
+    this._overlay = null;
+    this._win = null;
+    this._img = null;
+    this._counter = null;
+    this._indicator = null;
     this._images = [];
+    this._index = 0;
+    this._minimized = false;
+
+    // Remover listener de teclado
+    if (this._keyHandler) {
+      document.removeEventListener('keydown', this._keyHandler);
+      this._keyHandler = null;
+    }
+
     document.body.style.overflow = '';
+  },
+
+  /** Minimiza/restaura el lightbox */
+  toggleMinimize() {
+    this._minimized = !this._minimized;
+    if (this._minimized) {
+      // Ocultar overlay, mostrar indicador
+      this._overlay.classList.remove('lb-active');
+      if (!this._indicator) {
+        this._indicator = document.createElement('div');
+        this._indicator.className = 'lb-minimized-indicator';
+        this._indicator.textContent = 'VISOR E-MANTTO';
+        this._indicator.addEventListener('click', () => this.toggleMinimize());
+        document.body.appendChild(this._indicator);
+      } else {
+        this._indicator.style.display = 'flex';
+      }
+    } else {
+      // Restaurar overlay, ocultar indicador
+      this._overlay.classList.add('lb-active');
+      if (this._indicator) {
+        this._indicator.style.display = 'none';
+      }
+    }
   },
 
   _prev() {
@@ -41,11 +107,6 @@ export const Lightbox = {
     if (this._images.length <= 1) return;
     this._index = (this._index + 1) % this._images.length;
     this._update();
-  },
-
-  _show() {
-    document.getElementById('windows-container').appendChild(this._el);
-    this._el.classList.add('lb-active');
   },
 
   _build() {
@@ -71,13 +132,13 @@ export const Lightbox = {
     const btns = document.createElement('div');
     btns.className = 'lb-wb';
 
-    // Botón minimizar (decorativo)
+    // Botón minimizar
     const minBtn = document.createElement('button');
     minBtn.className = 'lb-btn lb-min';
     minBtn.textContent = '_';
     minBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      win.classList.toggle('lb-minimized');
+      this.toggleMinimize();
     });
 
     // Botón cerrar
@@ -163,9 +224,10 @@ export const Lightbox = {
       if (e.key === 'ArrowLeft') this._prev();
       if (e.key === 'ArrowRight') this._next();
     };
+    this._keyHandler = onKey;
     document.addEventListener('keydown', onKey);
 
-    // Guardar referencia al overlay para cleanup
+    // Guardar referencias
     this._overlay = overlay;
     this._win = win;
     this._img = img;
@@ -175,21 +237,33 @@ export const Lightbox = {
   _update() {
     if (!this._img || !this._counter) return;
 
-    // Actualizar imagen con efecto fade
     const img = this._img;
-    img.style.opacity = '0';
+    const src = this._images[this._index];
 
-    setTimeout(() => {
-      img.src = this._images[this._index];
-      img.onload = () => {
+    // Actualizar contador inmediatamente
+    this._counter.textContent = `${this._index + 1} / ${this._images.length}`;
+
+    // Cambiar imagen con fade suave
+    if (img.src !== src) {
+      img.style.opacity = '0';
+
+      const onDone = () => {
+        img.removeEventListener('load', onDone);
+        img.removeEventListener('error', onDone);
         img.style.opacity = '1';
       };
-      // Fallback por si la imagen ya está en caché
+
+      img.addEventListener('load', onDone);
+      img.addEventListener('error', onDone);
+      img.src = src;
+
+      // Fallback: si la imagen ya está en caché (complete), fade inmediato
       if (img.complete) {
         img.style.opacity = '1';
       }
-    }, 100);
-
-    this._counter.textContent = `${this._index + 1} / ${this._images.length}`;
+    } else {
+      // Misma imagen — asegurar visibilidad
+      img.style.opacity = '1';
+    }
   }
 };
