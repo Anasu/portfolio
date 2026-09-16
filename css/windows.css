@@ -255,8 +255,8 @@
 
 /* ── Impact grid (KPIs) ─────────────────────────── */
 .impact-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min-content, fit-content(200px)));
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 20px;
 }
@@ -267,7 +267,8 @@
   padding: 12px;
   text-align: center;
   transition: border-color .2s ease;
-  min-height: 70px;
+  flex: 1 1 min-content;
+  min-width: 150px;
 }
 
 .kpi-item:hover {
