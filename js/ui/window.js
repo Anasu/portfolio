@@ -6,6 +6,7 @@
  */
 
 import { makeDraggable } from './drag.js';
+import { Lightbox } from './lightbox.js';
 
 /** @returns {HTMLElement} */
 function metaLabel(label, value) {
@@ -281,19 +282,55 @@ export const Window = {
     });
     content.appendChild(filesDiv);
 
-    // Entregables dummy
+    // Entregables — imágenes del proyecto
     const delivH4 = document.createElement('h4');
     delivH4.textContent = 'ENTREGABLES';
     content.appendChild(delivH4);
-    const imgRow = document.createElement('div');
-    imgRow.className = 'img-row';
-    for (let i = 0; i < 4; i++) {
-      const ph = document.createElement('div');
-      ph.className = 'img-ph';
-      ph.textContent = 'IMG_' + (i + 1);
-      imgRow.appendChild(ph);
+
+    if (exp.imgs && exp.imgs.length > 0) {
+      // Renderizar imágenes reales con click para lightbox
+      const imgRow = document.createElement('div');
+      imgRow.className = 'img-row';
+      exp.imgs.forEach((imgSrc, i) => {
+        const thumbWrap = document.createElement('div');
+        thumbWrap.className = 'thumb-wrap';
+
+        const thumb = document.createElement('img');
+        thumb.className = 'thumb';
+        thumb.src = imgSrc;
+        thumb.alt = exp.titulo + ' — entregable ' + (i + 1);
+        thumb.loading = 'lazy';
+        thumb.onerror = function() {
+          // Si la imagen no existe, mostrar placeholder
+          this.style.display = 'none';
+          const ph = document.createElement('div');
+          ph.className = 'img-ph';
+          ph.textContent = 'IMG_' + (i + 1);
+          thumbWrap.appendChild(ph);
+        };
+
+        // Click abre el lightbox en esta imagen
+        thumbWrap.addEventListener('click', () => {
+          Lightbox.open(exp.imgs, i);
+        });
+        thumbWrap.style.cursor = 'pointer';
+
+        thumbWrap.appendChild(thumb);
+        imgRow.appendChild(thumbWrap);
+      });
+      content.appendChild(imgRow);
+    } else {
+      // Sin imágenes — mostrar placeholders como antes
+      const imgRow = document.createElement('div');
+      imgRow.className = 'img-row';
+      for (let i = 0; i < 4; i++) {
+        const ph = document.createElement('div');
+        ph.className = 'img-ph';
+        ph.textContent = 'IMG_' + (i + 1);
+        imgRow.appendChild(ph);
+      }
+      content.appendChild(imgRow);
     }
-    content.appendChild(imgRow);
 
     fragment.appendChild(content);
 

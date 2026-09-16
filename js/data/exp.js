@@ -9,6 +9,7 @@
 
 /** @typedef {{ lab: string; val: string; desc: string }} ImpactoKPI */
 /** @typedef {{ tit: string; txt: string }} EstrategiaPaso */
+/** @typedef {string} RutaImagen */
 
 /**
  * @typedef {Object} Expediente
@@ -23,6 +24,7 @@
  * @property {string} [fch]        — Fecha opcional (formato MM/YYYY)
  * @property {'solved'|'abierto'} st — Estado: resuelto o abierto
  * @property {string[]} arc        — Lista de archivos del sistema (paths)
+ * @property {RutaImagen[]} [imgs] — Screenshots/imágenes del proyecto, opcionales
  * @property {ImpactoKPI[]} [impacto] — KPIs de impacto, opcionales
  * @property {string} [desafio]    — Descripción del desafío, opcional
  * @property {EstrategiaPaso[]} [estrategia] — Pasos de estrategia, opcionales
@@ -74,6 +76,12 @@ export const EXP = {
     fch: '03/2024',
     st: 'solved',
     arc: ['/ds/tokens.json', '/ds/components-library.fig', '/ds/patterns-guidelines.pdf', '/ds/ai-mcp-prompts.json'],
+    imgs: [
+      'assets/emantto/screenshot-01.png',
+      'assets/emantto/screenshot-02.png',
+      'assets/emantto/screenshot-03.png',
+      'assets/emantto/screenshot-04.png'
+    ],
     impacto: [
       { lab: 'TTM', val: '7 → 1 mes', desc: '+IA en fase 2' },
       { lab: 'Adopción', val: '+90%', desc: 'reutilización en células activas' },
