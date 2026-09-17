@@ -10,11 +10,12 @@ import { Window } from './window.js';
 
 export const Lightbox = {
   _win: null,         // elemento DOM de la ventana
-  _overlay: null,     // fondo oscuro (se oculta al minimizar)
+  _overlay: null,     // fondo oscuro (display:none al minimizar/cerrar)
   _img: null,
   _counter: null,
   _images: [],
   _index: 0,
+  _minimized: false,
 
   /** Abre el visor */
   open(images, startIndex = 0) {
@@ -23,6 +24,7 @@ export const Lightbox = {
 
     if (this._win && this._win.parentNode) {
       // Ya existe — restaurar y actualizar imagen
+      this._minimized = false;
       this._win.classList.remove('minimized');
       this._win.style.display = 'flex';
       this._win.style.zIndex = Window.nextZ();
@@ -97,9 +99,17 @@ export const Lightbox = {
     minBtn.setAttribute('aria-label', 'Minimizar visor');
     minBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      win.classList.add('minimized');
+      this._minimized = true;
+      win.classList.add('lb-minimized');
       overlay.style.display = 'none';
-      Window._repositionMinimized();
+      // Posicionar siempre abajo a la izquierda, visible
+      win.style.position = 'fixed';
+      win.style.bottom = '12px';
+      win.style.left = '12px';
+      win.style.top = 'auto';
+      win.style.right = 'auto';
+      win.style.transform = 'none';
+      win.style.zIndex = '9997';
     });
 
     const closeBtn = document.createElement('button');
@@ -190,9 +200,16 @@ export const Lightbox = {
 
     // ── Click en ventana minimizada → restaurar ──
     win.addEventListener('click', (e) => {
-      if (!win.classList.contains('minimized')) return;
+      if (!this._minimized) return;
       e.stopPropagation();
-      win.classList.remove('minimized');
+      this._minimized = false;
+      win.classList.remove('lb-minimized');
+      win.style.position = 'absolute';
+      win.style.bottom = 'auto';
+      win.style.left = 'auto';
+      win.style.top = 'auto';
+      win.style.right = 'auto';
+      win.style.transform = 'none';
       win.style.display = 'flex';
       win.style.zIndex = Window.nextZ();
       overlay.style.display = 'flex';

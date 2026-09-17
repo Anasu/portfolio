@@ -407,6 +407,22 @@
   max-height: 85vh;
 }
 
+/* Estado minimizado — solo titlebar visible, sin conflicto con .win.minimized */
+.lb-win.lb-minimized {
+  width: 280px;
+  height: 32px;
+  min-width: 0;
+  max-width: none;
+  overflow: hidden;
+}
+
+.lb-win.lb-minimized .lb-nav,
+.lb-win.lb-minimized .lb-imgwrap,
+.lb-win.lb-minimized .lb-counter,
+.lb-win.lb-minimized .lb-footer {
+  display: none !important;
+}
+
 
 
 /* Navegación de flechas */
