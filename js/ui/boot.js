@@ -74,7 +74,11 @@ export class Boot {
         ev.stopPropagation();
         document.querySelectorAll('.folder').forEach(x => {
           x.classList.remove('sel');
-          x.querySelector('.ico').textContent = '\u{1F4C1}'; // 📁 cerrado
+          // Solo resetear iconos de carpetas de expedientes (no Contacto 📧)
+          const ico = x.querySelector('.ico');
+          if (ico && x.dataset.id !== 'contact') {
+            ico.textContent = '\u{1F4C1}'; // 📁 cerrado
+          }
         });
         folder.classList.add('sel');
         folder.querySelector('.ico').textContent = '\u{1F4C2}'; // 📂 abierto

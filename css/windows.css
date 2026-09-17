@@ -377,7 +377,7 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   LIGHTBOX — Visor de imágenes retro Windows 95
+   LIGHTBOX — Visor de imágenes (estilo ventana Win95)
    ═══════════════════════════════════════════════════ */
 
 .lightbox-overlay {
@@ -400,130 +400,14 @@
   display: flex;
 }
 
-/* Indicador de minimizado (barra estilo taskbar) */
-.lb-minimized-indicator {
-  position: fixed;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9998;
-  background: #c0c0c0;
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #404040;
-  border-bottom: 2px solid #404040;
-  padding: 3px 12px;
-  font-family: var(--mono);
-  font-size: .7rem;
-  color: #000;
-  cursor: pointer;
-  display: none;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  user-select: none;
-}
-
-.lb-minimized-indicator:hover {
-  background: #d0d0d0;
-}
-
-.lb-minimized-indicator::before {
-  content: '🖼️';
-}
-
-/* Ventana retro */
+/* La ventana usa las clases estándar .win + .wtb, solo ajustamos tamaño */
 .lb-win {
   position: relative;
-  width: min(90vw, 960px);
+  width: min(90vw, 860px);
   max-height: 85vh;
-  background: #c0c0c0;
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #404040;
-  border-bottom: 2px solid #404040;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, .5);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
-.lb-win.lb-minimized {
-  max-height: 28px;
-  min-width: 200px;
-}
 
-.lb-win.lb-minimized .lb-nav,
-.lb-win.lb-minimized .lb-imgwrap,
-.lb-win.lb-minimized .lb-counter,
-.lb-win.lb-minimized .lb-footer {
-  display: none;
-}
-
-/* Titlebar retro */
-.lb-wtb {
-  background: linear-gradient(90deg, #000080, #1084d0);
-  padding: 3px 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: grab;
-  flex-shrink: 0;
-  user-select: none;
-}
-
-.lb-wtb:active {
-  cursor: grabbing;
-}
-
-.lb-wti {
-  color: #ffffff;
-  font-family: var(--mono);
-  font-size: .85rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.lb-wb {
-  display: flex;
-  gap: 3px;
-}
-
-.lb-btn {
-  width: 20px;
-  height: 20px;
-  background: #c0c0c0;
-  border-top: 1px solid #ffffff;
-  border-left: 1px solid #ffffff;
-  border-right: 1px solid #404040;
-  border-bottom: 1px solid #404040;
-  font-family: var(--mono);
-  font-size: .85rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  line-height: 1;
-}
-
-.lb-btn:active {
-  border-top: 1px solid #404040;
-  border-left: 1px solid #404040;
-  border-right: 1px solid #ffffff;
-  border-bottom: 1px solid #ffffff;
-}
-
-.lb-btn.lb-cl {
-  font-size: 1rem;
-  color: #000;
-}
-
-.lb-btn.lb-cl:hover {
-  background: #e04040;
-  color: #fff;
-}
 
 /* Navegación de flechas */
 .lb-nav {
@@ -630,10 +514,6 @@
     max-height: 90vh;
   }
 
-  .lb-wti {
-    font-size: .7rem;
-  }
-
   .lb-img {
     max-height: 55vh;
   }
@@ -649,10 +529,6 @@
   .lb-win {
     width: 98vw;
     max-height: 92vh;
-  }
-
-  .lb-wti {
-    font-size: .6rem;
   }
 
   .lb-img {
