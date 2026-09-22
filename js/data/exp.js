@@ -108,6 +108,12 @@ export const EXP = {
     fch: '2021',
     st: 'solved',
     arc: ['/fintech/ios-design-system.fig', '/fintech/android-design-system.fig', '/fintech/flow-map-and-paths.pdf', '/fintech/wcag-compliance-specs.json'],
+    imgs: [
+      'assets/flujo/flujo-01.png',
+      'assets/flujo/flujo-02.png',
+      'assets/flujo/flujo-03.png',
+      'assets/flujo/flujo-04.png'
+    ],
     impacto: [
       { lab: 'Migración', val: '→ 1 año', desc: 'transición integral completa de la app' },
       { lab: 'Handoff', val: '→ 0 ambig.', desc: 'fuente única de verdad diseño/dev/QA' },
@@ -135,6 +141,13 @@ export const EXP = {
     fch: '05/2024',
     st: 'solved',
     arc: ['/edtech/parent-app-wireframes.fig', '/edtech/school-dashboard-desktop.fig', '/edtech/fallback-sms-flow.pdf', '/edtech/accessibility-quilicura-specs.json'],
+    imgs: [
+      'assets/puente/01 - Inicio.png',
+      'assets/puente/03 - Educacion - Preguntas.png',
+      'assets/puente/04 - Educacion - Preguntas – 2.png',
+      'assets/puente/05 - Inicio Menú.png',
+      'assets/puente/Myre.png'
+    ],
     impacto: [
       { lab: 'Omnicanalidad', val: '→ 0% dep.', desc: 'contingencia SMS/Push sin datos móviles' },
       { lab: 'Accesible', val: '→ Base', desc: 'contrastes optimizados + zonas táctiles aumentadas' },
