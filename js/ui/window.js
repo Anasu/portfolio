@@ -94,7 +94,11 @@ export const Window = {
 
     // Drag (guardar cleanup para remover listeners de document al cerrar)
     const dragCleanup = makeDraggable(win, titleBar);
-    win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
+
+    // Traer ventana al frente con mousedown en fase de captura
+    // (dispara ANTES que cualquier child haga stopPropagation())
+    const zIdxOnMouseDown = () => { win.style.zIndex = this.nextZ(); };
+    win.addEventListener('mousedown', zIdxOnMouseDown, true);
 
     // Minimizar
     minBtn.addEventListener('click', (e) => {
@@ -122,10 +126,11 @@ export const Window = {
       }
     });
 
-    // Cerrar — limpiar drag listeners al cerrar ventana
+    // Cerrar — limpiar todos los listeners al cerrar ventana
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (dragCleanup) dragCleanup();
+      win.removeEventListener('mousedown', zIdxOnMouseDown, true);
       win.remove();
     });
 
@@ -381,7 +386,10 @@ export const Window = {
 
     // === Drag (guardar cleanup para remover listeners de document al cerrar) ===
     const dragCleanup = makeDraggable(win, titleBar);
-    win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
+
+    // === Traer ventana al frente con mousedown en fase de captura ===
+    const zIdxOnMouseDown = () => { win.style.zIndex = this.nextZ(); };
+    win.addEventListener('mousedown', zIdxOnMouseDown, true);
 
     // === Minimizar ===
     minBtn.addEventListener('click', (e) => {
@@ -408,7 +416,7 @@ export const Window = {
       }
     });
 
-    // === Cerrar — limpiar drag listeners al cerrar ventana ===
+    // === Cerrar — limpiar todos los listeners al cerrar ventana ===
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (folderEl) {
@@ -416,6 +424,7 @@ export const Window = {
         folderEl.querySelector('.ico').textContent = '\u{1F4C1}';
       }
       if (dragCleanup) dragCleanup();
+      win.removeEventListener('mousedown', zIdxOnMouseDown, true);
       win.remove();
     });
   },
