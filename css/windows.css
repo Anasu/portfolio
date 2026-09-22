@@ -461,18 +461,3 @@
   border-bottom: 1px solid #ffffff;
   margin-top: 8px;
 }
-
-/* Footer */
-.lb-footer {
-  background: #d4d4d4;
-  padding: 3px 8px;
-  font-family: var(--mono);
-  font-size: .65rem;
-  color: #404040;
-  border-top: 1px solid #ffffff;
-  margin-top: 4px;
-}
-
-.lb-footer span {
-  letter-spacing: .5px;
-}

@@ -93,12 +93,6 @@ export const Lightbox = {
     counter.textContent = `1 / ${this._images.length}`;
     wct.appendChild(counter);
 
-    // Footer con instrucciones
-    const footer = document.createElement('div');
-    footer.className = 'lb-footer';
-    footer.innerHTML = '<span>◀ ▶ para navegar · Click fuera para cerrar</span>';
-    wct.appendChild(footer);
-
     // Teclado: Escape cierra, ← → navega
     const onKey = (e) => {
       if (!win.parentNode) {
