@@ -115,8 +115,7 @@ export const Lightbox = {
     };
     document.addEventListener('keydown', onKey);
 
-    // Guardar handler para cleanup
-    win.dataset.lbKeyHandler = 'true';
+    // Guardar referencia al handler para cleanup desde fuera
     win._lbKeyHandler = onKey;
 
     // Sobrescribir botón de cerrar para limpiar listeners

@@ -92,8 +92,8 @@ export const Window = {
       win.dataset.lastTop = '50%';
     }
 
-    // Drag
-    makeDraggable(win, titleBar);
+    // Drag (guardar cleanup para remover listeners de document al cerrar)
+    const dragCleanup = makeDraggable(win, titleBar);
     win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
 
     // Minimizar
@@ -122,9 +122,10 @@ export const Window = {
       }
     });
 
-    // Cerrar
+    // Cerrar — limpiar drag listeners al cerrar ventana
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (dragCleanup) dragCleanup();
       win.remove();
     });
 
@@ -378,8 +379,8 @@ export const Window = {
     document.getElementById('windows-container').appendChild(win);
     while (fragment.firstChild) win.appendChild(fragment.firstChild);
 
-    // === Drag ===
-    makeDraggable(win, titleBar);
+    // === Drag (guardar cleanup para remover listeners de document al cerrar) ===
+    const dragCleanup = makeDraggable(win, titleBar);
     win.addEventListener('mousedown', () => { win.style.zIndex = this.nextZ(); });
 
     // === Minimizar ===
@@ -388,14 +389,6 @@ export const Window = {
       win.classList.add('minimized');
       win.style.zIndex = 600;
       Window._repositionMinimized();
-    });
-
-    // Click en minimizada → restaurar
-    win.addEventListener('mousedown', (e) => {
-      if (win.classList.contains('minimized')) {
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-      }
     });
 
     win.addEventListener('click', (e) => {
@@ -415,13 +408,14 @@ export const Window = {
       }
     });
 
-    // === Cerrar ===
+    // === Cerrar — limpiar drag listeners al cerrar ventana ===
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (folderEl) {
         folderEl.classList.remove('sel');
         folderEl.querySelector('.ico').textContent = '\u{1F4C1}';
       }
+      if (dragCleanup) dragCleanup();
       win.remove();
     });
   },
