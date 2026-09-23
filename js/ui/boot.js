@@ -1,17 +1,22 @@
 /* BOOT — Secuencia de arranque estilo terminal CRT */
 import { CONFIG } from '../data/config.js';
-import { t } from '../i18n.js';
 import { EXP_LIST } from '../data/exp.js';
 import { Window } from './window.js';
 import { Contact } from './contact.js';
 import { makeEl } from './utils.js';
+import { t } from '../i18n.js';
 
 export class Boot {
   async go() {
     const bootText = document.getElementById('boot-text');
     const bootBar = document.getElementById('boot-bar');
+
+    // Construir mensajes de boot usando i18n
     const messages = [
-      ...CONFIG.bootMessages.map(fn => fn(CONFIG)),
+      t('boot_bios')(CONFIG.system.biosVersion),
+      t('boot_ram')(String(CONFIG.system.ramSize)),
+      t('boot_crypt'),
+      t('boot_clearance'),
       `> ARCHIVOS: ${EXP_LIST.length} expedientes`,
       '> UI: escritorio listo...'
     ];

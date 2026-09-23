@@ -7,7 +7,56 @@
 
 import { makeDraggable } from './drag.js';
 import { Lightbox } from './lightbox.js';
-import { t } from '../i18n.js';
+import { t, getLang } from '../i18n.js';
+
+/** Traduce los campos de un expediente según el idioma actual */
+function translateExp(exp) {
+  if (getLang() === 'es') return exp;
+  const id = exp.id;
+  const tr = {};
+  // Campos que se traducen
+  const fields = ['cat', 'niv', 'det', 'tech'];
+  fields.forEach(f => {
+    const key = id + '_' + f;
+    tr[f] = t(key) !== key ? t(key) : exp[f];
+  });
+  // Impacto KPIs
+  if (exp.impacto) {
+    tr.impacto = exp.impacto.map((k, i) => {
+      const prefix = id + '_impacto_' + i;
+      return {
+        lab: t(prefix + '_lab') !== prefix + '_lab' ? t(prefix + '_lab') : k.lab,
+        val: t(prefix + '_val') !== prefix + '_val' ? t(prefix + '_val') : k.val,
+        desc: t(prefix + '_desc') !== prefix + '_desc' ? t(prefix + '_desc') : k.desc,
+      };
+    });
+  }
+  // Desafío
+  if (exp.desafio) {
+    const dKey = id + '_desafio';
+    tr.desafio = t(dKey) !== dKey ? t(dKey) : exp.desafio;
+  }
+  // Estrategia
+  if (exp.estrategia) {
+    tr.estrategia = exp.estrategia.map((s, i) => {
+      const prefix = id + '_estrategia_' + i;
+      return {
+        tit: t(prefix + '_tit') !== prefix + '_tit' ? t(prefix + '_tit') : s.tit,
+        txt: t(prefix + '_txt') !== prefix + '_txt' ? t(prefix + '_txt') : s.txt,
+      };
+    });
+  }
+  // Campos que no se traducen
+  tr.id = exp.id;
+  tr.titulo = exp.titulo;
+  tr.ano = exp.ano;
+  tr.ico = exp.ico;
+  tr.tech = tr.tech || exp.tech;
+  tr.arc = exp.arc;
+  tr.imgs = exp.imgs;
+  tr.st = exp.st;
+  return tr;
+}
 
 /** @returns {HTMLElement} */
 function metaLabel(label, value) {
@@ -134,6 +183,8 @@ export const Window = {
 
   /** Abre ventana de expediente */
   open(exp, folderEl) {
+    // Traducir campos del expediente según idioma
+    const trExp = translateExp(exp);
     const existing = document.querySelector('.win[data-id="' + exp.id + '"]');
     if (existing) {
       if (existing.classList.contains('minimized')) existing.classList.remove('minimized');
@@ -187,12 +238,12 @@ export const Window = {
     // Meta info
     const meta = document.createElement('div');
     meta.className = 'meta';
-    meta.appendChild(metaLabel(t('win_cat_label'), exp.cat));
-    meta.appendChild(metaLabel(t('win_year_label'), exp.ano));
-    meta.appendChild(metaLabel(t('win_level_label'), exp.niv));
+    meta.appendChild(metaLabel(t('win_cat_label'), trExp.cat));
+    meta.appendChild(metaLabel(t('win_year_label'), trExp.ano));
+    meta.appendChild(metaLabel(t('win_level_label'), trExp.niv));
 
-    const statusClass = exp.st === 'solved' ? 'tag-solved' : 'tag-open';
-    const tagLabel = exp.st === 'solved' ? t('win_solved_tag') : t('win_open_tag');
+    const statusClass = trExp.st === 'solved' ? 'tag-solved' : 'tag-open';
+    const tagLabel = trExp.st === 'solved' ? t('win_solved_tag') : t('win_open_tag');
     const statusTag = document.createElement('span');
     statusTag.className = 'ftag ' + statusClass;
     statusTag.textContent = tagLabel;
@@ -200,25 +251,25 @@ export const Window = {
 
     const techTag = document.createElement('span');
     techTag.className = 'ftag';
-    techTag.textContent = exp.tech;
+    techTag.textContent = trExp.tech;
     meta.appendChild(techTag);
     content.appendChild(meta);
 
     // Brief
     const brief = document.createElement('p');
     brief.className = 'brief';
-    brief.textContent = exp.det;
+    brief.textContent = trExp.det;
     content.appendChild(brief);
 
     // Impacto
-    if (exp.impacto && exp.impacto.length) {
+    if (trExp.impacto && trExp.impacto.length) {
       const impactH4 = document.createElement('h4');
       impactH4.textContent = t('win_impact_title');
       content.appendChild(impactH4);
 
       const grid = document.createElement('div');
       grid.className = 'impact-grid';
-      exp.impacto.forEach(k => {
+      trExp.impacto.forEach(k => {
         const item = document.createElement('div');
         item.className = 'kpi-item';
         const val = document.createElement('div');
@@ -239,22 +290,22 @@ export const Window = {
     }
 
     // Desafío
-    if (exp.desafio) {
+    if (trExp.desafio) {
       const desafioH4 = document.createElement('h4');
       desafioH4.textContent = t('win_challenge_title');
       content.appendChild(desafioH4);
       const desafioP = document.createElement('p');
       desafioP.className = 'section-text';
-      desafioP.textContent = exp.desafio;
+      desafioP.textContent = trExp.desafio;
       content.appendChild(desafioP);
     }
 
     // Estrategia
-    if (exp.estrategia && exp.estrategia.length) {
+    if (trExp.estrategia && trExp.estrategia.length) {
       const estratH4 = document.createElement('h4');
       estratH4.textContent = t('win_strategy_title');
       content.appendChild(estratH4);
-      exp.estrategia.forEach(s => {
+      trExp.estrategia.forEach(s => {
         const item = document.createElement('div');
         item.className = 'strategy-item';
         const titEl = document.createElement('div');
@@ -275,7 +326,7 @@ export const Window = {
     content.appendChild(filesH4);
     const filesDiv = document.createElement('div');
     filesDiv.className = 'files';
-    exp.arc.forEach(f => {
+    trExp.arc.forEach(f => {
       const row = document.createElement('div');
       row.className = 'frow';
       row.textContent = '\u{1F4C4} ' + f;
@@ -288,11 +339,11 @@ export const Window = {
     evdH4.textContent = t('win_evidence_title');
     content.appendChild(evdH4);
 
-    if (exp.imgs && exp.imgs.length > 0) {
+    if (trExp.imgs && trExp.imgs.length > 0) {
       // Renderizar imágenes reales con click para lightbox
       const imgRow = document.createElement('div');
       imgRow.className = 'img-row';
-      exp.imgs.forEach((imgSrc, i) => {
+      trExp.imgs.forEach((imgSrc, i) => {
         const thumbWrap = document.createElement('div');
         thumbWrap.className = 'thumb-wrap';
 
@@ -312,7 +363,7 @@ export const Window = {
 
         // Click abre el lightbox en esta imagen
         thumbWrap.addEventListener('click', () => {
-          Lightbox.open(exp.imgs, i);
+          Lightbox.open(trExp.imgs, i);
         });
         thumbWrap.style.cursor = 'pointer';
 
