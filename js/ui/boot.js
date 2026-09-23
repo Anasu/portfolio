@@ -1,5 +1,6 @@
 /* BOOT — Secuencia de arranque estilo terminal CRT */
 import { CONFIG } from '../data/config.js';
+import { t } from '../i18n.js';
 import { EXP_LIST } from '../data/exp.js';
 import { Window } from './window.js';
 import { Contact } from './contact.js';
@@ -91,9 +92,9 @@ export class Boot {
     // Barra de navegación / breadcrumbs arriba a la izquierda
     const bc = document.getElementById('breadcrumb');
     const prompt = makeEl('span', '', { class: 'bc-prompt' });
-    prompt.textContent = '> C:\\EXPEDIENTES> ';
+    prompt.textContent = t('bc_prompt');
     bc.appendChild(prompt);
-    bc.appendChild(document.createTextNode('selecciona una carpeta para abrir expediente'));
+    bc.appendChild(document.createTextNode(t('bc_hint')));
 
     grid.appendChild(fragment);
   }

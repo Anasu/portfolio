@@ -10,6 +10,8 @@
  *   - Escape dentro del input
  */
 
+import { t } from '../i18n.js';
+
 const MAX_LINES = 50;
 
 export const Quake = {
@@ -143,6 +145,6 @@ export const Quake = {
   /** Resetea la altura del quake terminal a su valor por defecto */
   resetHeight() {
     this.el.style.height = '80px';
-    Quake.log('[SYS] Terminal restaurada.', 'qt-sys');
+    Quake.log(t('msg_terminal_reset'), 'qt-sys');
   },
 };

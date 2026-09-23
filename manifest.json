@@ -1,11 +1,11 @@
 {
-  "name": "El Panel del Investigador — Portafolio",
-  "short_name": "PanelInvestigador",
-  "description": "Portafolio personal con estética Cyber-Noir / Terminal Retro",
+  "name": "The Investigator's Panel — Portfolio",
+  "short_name": "InvestigatorsPanel",
+  "description": "Personal portfolio with Cyber-Noir / Retro Terminal aesthetic",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#070912",
-  "theme_color": "#7036E7",
+  "theme_color": "#c9a84c",
   "icons": [
     {
       "src": "favicon.svg",

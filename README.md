@@ -2,125 +2,125 @@
 
 > **Live Demo:** [anasu.github.io/portfolio](https://anasu.github.io/portfolio/)
 
-> **Rol:** Senior Product / UX Designer & Technical Director 
+> **Role:** Senior Product / UX Designer & Technical Director 
 
 ---
 
-## 🎯 ¿Por qué este portafolio está diseñado así? 
+## 🎯 Why is this portfolio designed this way? 
 
-Este portafolio no es una plantilla corporativa ni una galería estática de pantallas. Fue diseñado desde cero aplicando **pensamiento de producto** para resolver dos necesidades clave: 
+This portfolio is not a corporate template nor a static gallery of screens. It was designed from scratch applying **product thinking** to solve two key needs: 
 
-1. **Expresar mi mentalidad y estilo de trabajo:** Mi background integra el diseño de sistemas complejos (UX/UI, Design Systems) con la Dirección Técnica y Arte 3D. El concepto de **interfaz de comando / consola retro-futurista** refleja mi enfoque sistémico, metódico y orientado a la infraestructura digital. 
+1. **Express my mindset and work style:** My background integrates the design of complex systems (UX/UI, Design Systems) with Technical Direction and 3D Art. The concept of a **retro-futuristic command / console interface** reflects my systemic, methodical approach oriented toward digital infrastructure. 
 
-2. **Acceso ultrarrápido a la data relevante:** Entendiendo que los recruiters y hiring managers disponen de tiempo limitado (evaluación inicial en < 60 segundos), la arquitectura prioriza la **escaneabilidad**, mostrando métricas de impacto, etiquetas claras y archivos del sistema de forma inmediata. 
-
----
-
-## 📐 Principios de Arquitectura & UX del Portafolio 
-
-### Diseño en Capas (Layered UX)
-
-- **Nivel 1 (Scanner):** Resumen de impacto, datos cuantitativos (+90% adopción, TTM 7→1 mes) y tags tecnológicos visibles de un vistazo.
-- **Nivel 2 (Reader):** Desglose completo de desafíos, estrategia, trade-offs y decisiones de arquitectura para evaluaciones en profundidad.
-
-### Coexistencia Multisectorial
-
-Demuestra la convergencia entre la gestión de pipelines 3D y el diseño de software complejo (Fintech, EdTech, Aeronáutica).
-
-### Jerarquía e Inmersión
-
-Uso de tipografía monoespaciada (`Fira Code`), paleta temática en tono terminal/fósforo y modales de inspección interactivos.
+2. **Ultra-fast access to relevant data:** Understanding that recruiters and hiring managers have limited time (initial evaluation in < 60 seconds), the architecture prioritizes **scannability**, showing impact metrics, clear tags and system files immediately. 
 
 ---
 
-## 📁 Expedientes Incluidos (Casos de Estudio) 
+## 📐 Architecture & UX Principles 
 
-| Expediente | Sector | Impacto Clave |
-|------------|--------|---------------|
-| **`E-MANTTO`** \| Design System Aeronáutico | Aeronáutica · IA | Reducción de TTM de 7 a 1 mes (+IA/MCP). +90% adopción en células activas. |
-| **`FLUJO`** \| App Fintech Masiva | Fintech · Inclusión | Migración completa a nativo (iOS/Android) y Figma. Estándares WCAG, handoff sin ambigüedad. |
-| **`PUENTE`** \| Plataforma EdTech e Inclusión | EdTech · Resiliencia | Diseño resiliente con contingencia SMS (0% dependencia de datos móviles). |
-| **`NEXUS`** \| Dirección Técnica & Pipeline 3D | Animación 3D · CNTV | Optimización de render equivalente a 4 meses de ahorro. 100% aprobación en auditoría. |
+### Layered UX Design
+
+- **Level 1 (Scanner):** Impact summary, quantitative data (+90% adoption, TTM 7→1 month) and technology tags visible at a glance.
+- **Level 2 (Reader):** Complete breakdown of challenges, strategy, trade-offs and architecture decisions for in-depth evaluations.
+
+### Multi-sector Coexistence
+
+Demonstrates the convergence between 3D pipeline management and complex software design (Fintech, EdTech, Aviation).
+
+### Hierarchy & Immersion
+
+Use of monospace typography (`Fira Code`), thematic palette in terminal/phosphor tone and interactive inspection modals.
 
 ---
 
-## 🛠️ Stack & Especificaciones Técnicas 
+## 📁 Included Case Files 
+
+| File | Sector | Key Impact |
+|------|--------|------------|
+| **`E-MANTTO`** \| Aviation Design System | Aviation · AI | TTM reduction from 7 to 1 month (+AI/MCP). +90% adoption in active cells. |
+| **`FLUJO`** \| Mass Fintech App | Fintech · Inclusion | Complete migration to native (iOS/Android) and Figma. WCAG standards, unambiguous handoff. |
+| **`PUENTE`** \| EdTech & Inclusion Platform | EdTech · Resilience | Resilient design with SMS contingency (0% mobile data dependency). |
+| **`NEXUS`** \| Technical Direction & 3D Pipeline | 3D Animation · CNTV | Render optimization equivalent to 4 months savings. 100% audit approval. |
+
+---
+
+## 🛠️ Tech Stack & Specifications 
 
 ### Core
-- **HTML5** + **CSS3 Variables** + **Vanilla JavaScript (ES Modules)** — elegido para garantizar compatibilidad nativa con GitHub Pages sin necesidad de builds ni server-side.
-- **Fira Code** (monospace) — single font family para consistencia visual.
+- **HTML5** + **CSS3 Variables** + **Vanilla JavaScript (ES Modules)** — chosen to guarantee native compatibility with GitHub Pages without requiring builds or server-side processing.
+- **Fira Code** (monospace) — single font family for visual consistency.
 
-### Arquitectura del Código
+### Code Architecture
 
 ```
-css/                          # 8 archivos modulares por componente
-├── variables.css             # :root tokens, resets, scrollbar retro
-├── boot.css                  # Pantalla de arranque CRT
-├── desktop.css               # Layout principal, taskbar, grid, panel
-├── cards.css                 # Carpetas del grid (normal/hover/selected)
-├── windows.css               # Ventanas, titlebar, drag, minimizado
-├── email.css                 # Formulario de contacto completo
-├── console.css               # Quake terminal, barra de comandos
-└── responsive.css            # Todas las @media queries centralizadas
+css/                          # 8 modular files per component
+├── variables.css             # :root tokens, resets, retro scrollbar
+├── boot.css                  # CRT boot screen
+├── desktop.css               # Main layout, taskbar, grid, panel
+├── cards.css                 # Grid folders (normal/hover/selected)
+├── windows.css               # Windows, titlebar, drag, minimize
+├── email.css                 # Complete contact form
+├── console.css               # Quake terminal, command bar
+└── responsive.css            # All @media queries centralized
 
-js/ui/                        # 13 módulos ES independientes
-├── utils.js                  # Helpers DOM (makeEl)
-├── drag.js                   # makeDraggable() reutilizable (mouse + touch)
-├── quake.js                  # Toggle, resize y logging del quake terminal
-├── commands.js               # Dispatcher de comandos → funciones separadas
-├── bio.js                    # Ventana de biografía genérica
-├── jokes.js                  # Datos puros de respuestas de terminal
-├── console.js                # Render de input + conexión a dispatcher
-├── contact.js                # Formulario email con envío Formspree
-├── window.js                 # Creación y gestión de ventanas modales
-├── boot.js                   # Secuencia de arranque CRT
-├── panel.js                  # Panel lateral (stats, uptime, log)
-├── taskbar.js                # Barra superior con reloj en tiempo real
-└── keyboard.js               # Navegación por teclado (Enter/Escape)
+js/ui/                        # 13 independent ES modules
+├── utils.js                  # DOM helpers (makeEl)
+├── drag.js                   # Reusable makeDraggable() (mouse + touch)
+├── quake.js                  # Toggle, resize and logging of quake terminal
+├── commands.js               # Command dispatcher → separate functions
+├── bio.js                    # Generic biography window
+├── jokes.js                  # Pure data for terminal responses
+├── console.js                # Input rendering + dispatcher connection
+├── contact.js                # Email form with Formspree submission
+├── window.js                 # Modal window creation and management
+├── boot.js                   # CRT boot sequence
+├── panel.js                  # Sidebar panel (stats, uptime, log)
+├── taskbar.js                # Top bar with real-time clock
+└── keyboard.js               # Keyboard navigation (Enter/Escape)
 
-js/data/                      # Datos estáticos centralizados
-├── config.js                 # Configuración global (freeze)
-└── exp.js                    # Expedientes + tipado JSDoc
+js/data/                      # Centralized static data
+├── config.js                 # Global configuration (freeze)
+└── exp.js                    # Case files + JSDoc typing
 ```
 
-### Interacción
-- **Consola Quake** interactiva (`↑↓` resize, `^` toggle, comandos con easter eggs).
-- **Ventanas arrastrables** con minimizar, apilar y restaurar posición.
-- **Sistema de archivos** dinámico con breadcrumbs.
+### Interaction
+- **Interactive Quake Console** (`↑↓` resize, `^` toggle, commands with easter eggs).
+- **Draggable Windows** with minimize, stack and restore position.
+- **Dynamic file system** with breadcrumbs.
 
-### Performance & Accesibilidad
-- Scanlines y efectos CRT optimizados mediante CSS nativo sin impacto en render.
-- Zero `!important` (excepto 3 casos legítimos: drag block, mobile toggle).
-- Sin inline styles — toda la presentación declarada en CSS.
-- Atributos ARIA, roles semánticos, navegación por teclado completa.
+### Performance & Accessibility
+- Scanlines and CRT effects optimized via native CSS with no render impact.
+- Zero `!important` (except 3 legitimate cases: drag block, mobile toggle).
+- No inline styles — all presentation declared in CSS.
+- ARIA attributes, semantic roles, complete keyboard navigation.
 
 ---
 
-## 🖱️ Guía de Interacción 
+## 🖱️ Interaction Guide 
 
-### Escritorio
-| Acción | Cómo |
-|--------|------|
-| Abrir expediente | Click o Enter en una carpeta |
-| Cerrar ventana | Botón × (×) en titlebar |
-| Minimizar | Botón ➖ en titlebar |
-| Mover ventana | Arrastrar desde la barra de título |
+### Desktop
+| Action | How |
+|--------|-----|
+| Open file | Click or Enter on a folder |
+| Close window | × button in titlebar |
+| Minimize | ➖ button in titlebar |
+| Move window | Drag from the title bar |
 
-### Consola (`Enter` para ejecutar)
-| Comando | Descripción |
+### Console (`Enter` to execute)
+| Command | Description |
 |---------|-------------|
-| `help` / `ayuda` | Lista todos los comandos |
-| `ls` / `dir` | Lista expedientes disponibles |
-| `open [id]` | Abre expediente por ID (ej: `open exp001`) |
-| `open [nombre]` | Abre por nombre (ej: `open e-mantto`) |
-| `bio` / `about` / `cv` | Abre perfil profesional |
-| `contact` / `email` | Abre terminal de correo |
-| `clear` / `cls` | Limpia el registro lateral |
-| `date` | Fecha y hora actual |
-| `whoami` | Info del usuario |
+| `help` | Lists all commands |
+| `ls` / `dir` | Lists available files |
+| `open [id]` | Opens file by ID (e.g.: `open exp001`) |
+| `open [name]` | Opens by name (e.g.: `open e-mantto`) |
+| `bio` / `about` / `cv` | Opens professional profile |
+| `contact` / `email` | Opens email terminal |
+| `clear` / `cls` | Clears sidebar log |
+| `date` | Current date and time |
+| `whoami` | User info |
 
 ### Easter Eggs 🥚
-La consola esconde varios easter eggs. Algunos comandos que puedes probar:
+The console hides several easter eggs. Some commands you can try:
 ```
 sudo
 apt-get install
@@ -128,24 +128,24 @@ docker run
 polySphere
 exit
 ```
-Pero hay más — siéntete libre de explorar y encontrar los que no están listados aquí :)
+But there are more — feel free to explore and find the ones not listed here :)
 
 ---
 
-## 📊 Proyecto en números 
+## 📊 Project in Numbers 
 
-| Número | Valor |
+| Number | Value |
 |--------|-------|
-| Archivos CSS | 8 modulares (~25 KB total) |
-| Módulos JS | 13 ES Modules (~65 KB total) |
-| Líneas de código | ~1,400 (sin contar datos) |
-| `!important` | 3 (todos legítimos) |
-| Inline styles | ~3 (solo valores dinámicos) |
-| Dependencias externas | 0 (Fira Code via CDN) |
-| Tiempo de carga | < 1s en conexión estándar |
+| CSS Files | 8 modular (~25 KB total) |
+| JS Modules | 13 ES Modules (~65 KB total) |
+| Lines of Code | ~1,400 (excluding data) |
+| `!important` | 3 (all legitimate) |
+| Inline styles | ~3 (only dynamic values) |
+| External Dependencies | 0 (Fira Code via CDN) |
+| Load Time | < 1s on standard connection |
 
 ---
 
-## 📄 Licencia 
+## 📄 License 
 
-MIT — Código abierto para inspiración y referencia.
+MIT — Open source for inspiration and reference.

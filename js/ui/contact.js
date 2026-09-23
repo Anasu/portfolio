@@ -6,6 +6,7 @@
 import { CONFIG } from '../data/config.js';
 import { Window } from './window.js';
 import { Quake } from './quake.js';
+import { t } from '../i18n.js';
 
 // ─── Sonido beep retro (base64 WAV, ~0.3s) ──────────────────────────
 const SEND_SOUND_BEEP = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
@@ -24,7 +25,7 @@ function makeRetroInput(id, label, opts = {}) {
   const lbl = document.createElement('label');
   lbl.setAttribute('for', id);
   lbl.className = 'clbl';
-  lbl.textContent = label + ': ';
+  lbl.textContent = t(label) + ': ';
   if (opts.required) {
     const req = document.createElement('span');
     req.className = 'req';
@@ -57,7 +58,7 @@ function makeRetroTextarea(id, label, opts = {}) {
   const lbl = document.createElement('label');
   lbl.setAttribute('for', id);
   lbl.className = 'clbl';
-  lbl.textContent = label + ': ';
+  lbl.textContent = t(label) + ': ';
   if (opts.required) {
     const req = document.createElement('span');
     req.className = 'req';
@@ -119,19 +120,19 @@ function showSuccessState(container) {
 
   const successText = document.createElement('p');
   successText.className = 'success-msg';
-  successText.textContent = 'Correo enviado exitosamente.';
+  successText.textContent = t('contact_success');
   successWrap.appendChild(successText);
 
   const subText = document.createElement('p');
   subText.className = 'sub-text';
-  subText.textContent = 'Tu mensaje ha sido transmitido al servidor.\nResponderé a la brevedad, detective.';
+  subText.textContent = t('contact_success_sub');
   successWrap.appendChild(subText);
 
   const resetBtn = document.createElement('button');
   resetBtn.type = 'button';
   resetBtn.className = 'reset-btn';
   resetBtn.id = 'email-reset-btn';
-  resetBtn.textContent = '[ ENVIAR OTRO ]';
+  resetBtn.textContent = t('contact_reset_btn');
   resetBtn.addEventListener('click', () => renderEmailForm(container));
   successWrap.appendChild(resetBtn);
 
@@ -148,8 +149,7 @@ function renderEmailForm(container) {
   header.appendChild(document.createElement('div')).className = 'em-title-bar';
   const banner = document.createElement('span');
   banner.className = 'em-banner';
-  banner.textContent = 'Sistema de correo privilegiado de detectives';
-  header.appendChild(banner);
+  banner.textContent = t('contact_header');
   container.appendChild(header);
 
   // Formulario
@@ -157,12 +157,12 @@ function renderEmailForm(container) {
   form.className = 'email-form';
   form.id = 'email-form';
 
-  form.appendChild(makeRetroInput('from', 'DE', { required: true, type: 'email', placeholder: 'tu@email.com', name: 'from' }));
-  form.appendChild(makeRetroInput('to', 'PARA', { value: CONFIG.contact.email, readonly: true, name: '_replyto' }));
-  form.appendChild(makeRetroInput('cc', 'CC', { type: 'email', placeholder: 'copia@destino.com (opcional)', name: 'cc' }));
-  form.appendChild(makeRetroInput('bcc', 'CCO', { type: 'email', placeholder: 'copia oculta (opcional)', name: 'bcc' }));
-  form.appendChild(makeRetroInput('subject', 'ASUNTO', { required: true, placeholder: 'Tema del mensaje...', name: 'subject' }));
-  form.appendChild(makeRetroTextarea('body', 'MENSAJE', { required: true, rows: 6, placeholder: 'Escribe tu mensaje aquí...', name: 'message' }));
+  form.appendChild(makeRetroInput('from', 'contact_email_label', { required: true, type: 'email', placeholder: 'your@email.com', name: 'from' }));
+  form.appendChild(makeRetroInput('to', 'contact_to_label', { value: CONFIG.contact.email, readonly: true, name: '_replyto' }));
+  form.appendChild(makeRetroInput('cc', 'contact_cc_label', { type: 'email', placeholder: 'copy@destination.com (optional)', name: 'cc' }));
+  form.appendChild(makeRetroInput('bcc', 'contact_bcc_label', { type: 'email', placeholder: 'blind copy (optional)', name: 'bcc' }));
+  form.appendChild(makeRetroInput('subject', 'contact_subject_label', { required: true, placeholder: 'Message subject...', name: 'subject' }));
+  form.appendChild(makeRetroTextarea('body', 'contact_message_label', { required: true, rows: 6, placeholder: 'Write your message here...', name: 'message' }));
 
   // Botón de envío
   const btnRow = document.createElement('div');
@@ -171,7 +171,7 @@ function renderEmailForm(container) {
   submitBtn.type = 'submit';
   submitBtn.className = 'send-btn';
   submitBtn.id = 'email-submit-btn';
-  submitBtn.textContent = '[ ENVIAR MENSAJE ]';
+  submitBtn.textContent = t('contact_send_btn');
   btnRow.appendChild(submitBtn);
   form.appendChild(btnRow);
 
@@ -198,7 +198,7 @@ async function handleFormSubmit(container, e) {
   const statusDiv = container.querySelector('.em-status');
   const submitBtn = document.getElementById('email-submit-btn');
 
-  submitBtn.textContent = '[ ENVIANDO... ]';
+  submitBtn.textContent = t('contact_sending_btn');
   submitBtn.disabled = true;
   submitBtn.classList.add('sending');
 
@@ -216,7 +216,7 @@ async function handleFormSubmit(container, e) {
     let frameIdx = 0;
     const loadingInterval = setInterval(() => {
       frameIdx = (frameIdx + 1) % frames.length;
-      barEl.textContent = '[ ENVIANDO ] ' + frames[frameIdx];
+      barEl.textContent = t('contact_sending_bar') + ' ' + frames[frameIdx];
     }, 200);
 
     statusDiv.dataset.loadingInterval = String(loadingInterval);
@@ -257,7 +257,7 @@ async function handleFormSubmit(container, e) {
       throw new Error('Formspree error: ' + response.status);
     }
   } catch (err) {
-    console.error('[CONTACT] Error al enviar:', err);
+    console.error('[CONTACT] Error sending:', err);
     if (statusDiv && statusDiv.dataset.loadingInterval) {
       clearInterval(parseInt(statusDiv.dataset.loadingInterval));
       delete statusDiv.dataset.loadingInterval;
@@ -266,13 +266,13 @@ async function handleFormSubmit(container, e) {
       statusDiv.innerHTML = '';
       const errEl = document.createElement('div');
       errEl.className = 'em-status-err';
-      errEl.textContent = '[ERR] Fallo en la transmisión. Intenta de nuevo.';
+      errEl.textContent = t('contact_err');
       statusDiv.appendChild(errEl);
     }
   } finally {
     isEmailSending = false;
     if (submitBtn) {
-      submitBtn.textContent = '[ ENVIAR MENSAJE ]';
+      submitBtn.textContent = t('contact_send_btn');
       submitBtn.disabled = false;
       submitBtn.classList.remove('sending');
     }
@@ -286,7 +286,7 @@ function createContactFolder() {
   folder.dataset.id = 'contact';
   folder.tabIndex = 0;
   folder.setAttribute('role', 'listitem');
-  folder.setAttribute('aria-label', 'Contacto — Enviar correo electrónico');
+  folder.setAttribute('aria-label', t('contact_folder_name') + ' — Send email');
 
   const ico = document.createElement('span');
   ico.className = 'ico';
@@ -295,7 +295,7 @@ function createContactFolder() {
 
   const lbl = document.createElement('span');
   lbl.className = 'lbl';
-  lbl.textContent = 'Contacto';
+  lbl.textContent = t('contact_folder_name');
   folder.appendChild(lbl);
 
   const cat = document.createElement('span');
@@ -377,7 +377,7 @@ function openEmailWindow(folderEl) {
     });
   }
 
-  Quake.log('[MAIL] Terminal de correo abierta.', 'qt-sys');
+  Quake.log('[MAIL] Mail terminal opened.', 'qt-sys');
 }
 
 // ─── Exportación pública ─────────────────────────────────────────────

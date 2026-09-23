@@ -7,6 +7,7 @@
 
 import { makeDraggable } from './drag.js';
 import { Lightbox } from './lightbox.js';
+import { t } from '../i18n.js';
 
 /** @returns {HTMLElement} */
 function metaLabel(label, value) {
@@ -31,11 +32,6 @@ export const Window = {
 
   /**
    * Crea una ventana genérica con titlebar + content.
-   * @param {string} titulo - Texto de la barra de título
-   * @param {string} ico    - Emoji/icono
-   * @param {string} html   - HTML del contenido (opcional)
-   * @param {object} opts   - Opciones: { id, zIndex, centered }
-   * @returns {HTMLElement} La ventana DOM
    */
   create(titulo, ico, html = '', opts = {}) {
     const container = document.getElementById('windows-container');
@@ -61,13 +57,13 @@ export const Window = {
 
     const minBtn = document.createElement('button');
     minBtn.textContent = '\u2796';
-    minBtn.setAttribute('aria-label', 'Minimizar ventana');
+    minBtn.setAttribute('aria-label', t('win_minimize'));
     winBtns.appendChild(minBtn);
 
     const closeBtn = document.createElement('button');
     closeBtn.className = 'cl';
     closeBtn.textContent = '\u00D7';
-    closeBtn.setAttribute('aria-label', 'Cerrar ventana');
+    closeBtn.setAttribute('aria-label', t('win_close'));
     winBtns.appendChild(closeBtn);
 
     titleBar.appendChild(winBtns);
@@ -96,7 +92,6 @@ export const Window = {
     const dragCleanup = makeDraggable(win, titleBar);
 
     // Traer ventana al frente con mousedown en fase de captura
-    // (dispara ANTES que cualquier child haga stopPropagation())
     const zIdxOnMouseDown = () => { win.style.zIndex = this.nextZ(); };
     win.addEventListener('mousedown', zIdxOnMouseDown, true);
 
@@ -168,13 +163,13 @@ export const Window = {
 
     const minBtn = document.createElement('button');
     minBtn.textContent = '\u2796';
-    minBtn.setAttribute('aria-label', 'Minimizar ventana');
+    minBtn.setAttribute('aria-label', t('win_minimize'));
     winBtns.appendChild(minBtn);
 
     const closeBtn = document.createElement('button');
     closeBtn.className = 'cl';
     closeBtn.textContent = '\u00D7';
-    closeBtn.setAttribute('aria-label', 'Cerrar ventana');
+    closeBtn.setAttribute('aria-label', t('win_close'));
     winBtns.appendChild(closeBtn);
 
     titleBar.appendChild(winBtns);
@@ -192,12 +187,12 @@ export const Window = {
     // Meta info
     const meta = document.createElement('div');
     meta.className = 'meta';
-    meta.appendChild(metaLabel('CATEGORÍA', exp.cat));
-    meta.appendChild(metaLabel('AÑO', exp.ano));
-    meta.appendChild(metaLabel('NIVEL', exp.niv));
+    meta.appendChild(metaLabel(t('win_cat_label'), exp.cat));
+    meta.appendChild(metaLabel(t('win_year_label'), exp.ano));
+    meta.appendChild(metaLabel(t('win_level_label'), exp.niv));
 
     const statusClass = exp.st === 'solved' ? 'tag-solved' : 'tag-open';
-    const tagLabel = exp.st === 'solved' ? 'RESUELTOS ✓' : 'ABIERTO →';
+    const tagLabel = exp.st === 'solved' ? t('win_solved_tag') : t('win_open_tag');
     const statusTag = document.createElement('span');
     statusTag.className = 'ftag ' + statusClass;
     statusTag.textContent = tagLabel;
@@ -218,7 +213,7 @@ export const Window = {
     // Impacto
     if (exp.impacto && exp.impacto.length) {
       const impactH4 = document.createElement('h4');
-      impactH4.textContent = 'RESUMEN DE IMPACTO';
+      impactH4.textContent = t('win_impact_title');
       content.appendChild(impactH4);
 
       const grid = document.createElement('div');
@@ -246,7 +241,7 @@ export const Window = {
     // Desafío
     if (exp.desafio) {
       const desafioH4 = document.createElement('h4');
-      desafioH4.textContent = 'EL DESAFÍO';
+      desafioH4.textContent = t('win_challenge_title');
       content.appendChild(desafioH4);
       const desafioP = document.createElement('p');
       desafioP.className = 'section-text';
@@ -257,7 +252,7 @@ export const Window = {
     // Estrategia
     if (exp.estrategia && exp.estrategia.length) {
       const estratH4 = document.createElement('h4');
-      estratH4.textContent = 'ESTRATEGIA Y ACCIÓN';
+      estratH4.textContent = t('win_strategy_title');
       content.appendChild(estratH4);
       exp.estrategia.forEach(s => {
         const item = document.createElement('div');
@@ -276,7 +271,7 @@ export const Window = {
 
     // Archivos
     const filesH4 = document.createElement('h4');
-    filesH4.textContent = 'ARCHIVOS DEL SISTEMA';
+    filesH4.textContent = t('win_files_title');
     content.appendChild(filesH4);
     const filesDiv = document.createElement('div');
     filesDiv.className = 'files';
@@ -288,10 +283,10 @@ export const Window = {
     });
     content.appendChild(filesDiv);
 
-    // Entregables — imágenes del proyecto
-    const delivH4 = document.createElement('h4');
-    delivH4.textContent = 'ENTREGABLES';
-    content.appendChild(delivH4);
+    // Evidencias — imágenes del proyecto
+    const evdH4 = document.createElement('h4');
+    evdH4.textContent = t('win_evidence_title');
+    content.appendChild(evdH4);
 
     if (exp.imgs && exp.imgs.length > 0) {
       // Renderizar imágenes reales con click para lightbox
@@ -304,7 +299,7 @@ export const Window = {
         const thumb = document.createElement('img');
         thumb.className = 'thumb';
         thumb.src = imgSrc;
-        thumb.alt = exp.titulo + ' — entregable ' + (i + 1);
+        thumb.alt = exp.titulo + ' — deliverable ' + (i + 1);
         thumb.loading = 'lazy';
         thumb.onerror = function() {
           // Si la imagen no existe, mostrar placeholder
@@ -347,7 +342,7 @@ export const Window = {
     win.dataset.id = exp.id;
     win.setAttribute('role', 'dialog');
     win.setAttribute('aria-modal', 'true');
-    win.setAttribute('aria-label', 'Expediente: ' + exp.titulo);
+    win.setAttribute('aria-label', 'File: ' + exp.titulo);
 
     // Posición
     const isMobile = this._isMobile();

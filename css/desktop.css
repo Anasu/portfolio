@@ -169,10 +169,77 @@ html, body {
   padding: 1px 0;
 }
 
+/* ── Selector de idioma en panel ─────────────────── */
+#lang-selector-section .pl {
+  margin-bottom: 6px;
+}
+
+.lang-btn {
+  flex: 1;
+  padding: 4px 8px;
+  background: var(--blue-lt);
+  border: 1px solid var(--brd);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: .8rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+  background: var(--accent-dark);
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+
+.lang-btn.active {
+  background: var(--accent-dark);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(201, 168, 76, .3);
+}
+
+/* ── Selector de idioma en taskbar (mobile) ──────── */
+.tbar-lang {
+  display: none;
+  gap: 4px;
+}
+
+.tbar-lang-btn {
+  padding: 2px 8px;
+  background: transparent;
+  border: 1px solid var(--brd);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: .75rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tbar-lang-btn:hover {
+  background: var(--accent-dark);
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+
+.tbar-lang-btn.active {
+  background: var(--accent-dark);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ── Contacto fijo en desktop ────────────────────── */
 .main-column .contact-folder {
   position: absolute;
   bottom: 24px;
   right: 24px;
   z-index: 350;
+}
+
+/* ── Separador taskbar ───────────────────────────── */
+.tbar-sep {
+  color: var(--brd);
+  margin: 0 4px;
 }

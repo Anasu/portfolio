@@ -36,7 +36,7 @@ export const CONFIG = Object.freeze({
     //    https://formspree.io/f/xNqLaZkV
     // 3. Pegarlo abajo en `endpoint`
     endpoint: 'https://formspree.io/f/moeqypdz',
-    fromName: 'Portafolio — Contacto Web',
+    fromName: 'Portfolio — Web Contact',
     subjectPrefix: '[Portfolio Contact]',
   },
 
@@ -170,15 +170,15 @@ export const CONFIG = Object.freeze({
     (cfg) => `> BIOS v${cfg.system.biosVersion}... OK`,
     (cfg) => `> RAM: ${cfg.system.ramSize}K... OK`,
     (cfg) => `> CRYPT: ${cfg.system.encryption}`,
-    (cfg) => `> CLEARANCE: ${cfg.system.clearanceLabel}`,
+    (cfg) => `> CLEARANCE: LEVEL-Ω`,
   ],
 
   // SEO metadata — se genera dinámicamente desde los expedientes
   seo: {
-    ogTitle: 'Panel del Investigador — Portafolio',
-    ogDescription: 'Portafolio profesional de diseño UX/UI, dirección técnica y estrategia de producto.',
+    ogTitle: 'Investigator\'s Panel — Portfolio',
+    ogDescription: 'Professional UX/UI design, technical direction and product strategy portfolio.',
     ogType: 'website',
-    ogLocale: 'es_CL',
+    ogLocale: 'en_US',
     themeColor: '#c9a84c',
   },
 

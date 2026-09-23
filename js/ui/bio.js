@@ -5,6 +5,7 @@
 
 import { CONFIG } from '../data/config.js';
 import { Window } from './window.js';
+import { t } from '../i18n.js';
 
 export const Bio = {
   /** Abre la ventana de biografía */
@@ -19,24 +20,24 @@ export const Bio = {
       </div>
       <p class="brief">${CONFIG.user.bio}</p>
 
-      <h4>🔗 Enlaces</h4>
+      <h4>🔗 Links</h4>
       <div style="display:flex;gap:16px;margin:12px 0;flex-wrap:wrap">
-        <a href="${CONFIG.contact.linkedin}" target="_blank" rel="noopener" class="ftag">${'LinkedIn ↗'}</a>
-        <a href="${CONFIG.contact.github}" target="_blank" rel="noopener" class="ftag">${'GitHub ↗'}</a>
-        <a href="#" id="btn-download-cv" class="ftag tag-solved">${'Descargar CV (PDF) ↓'}</a>
+        <a href="${CONFIG.contact.linkedin}" target="_blank" rel="noopener" class="ftag">${t('bio_linkedin')}</a>
+        <a href="${CONFIG.contact.github}" target="_blank" rel="noopener" class="ftag">${t('bio_github')}</a>
+        <a href="#" id="btn-download-cv" class="ftag tag-solved">${t('bio_cv')}</a>
       </div>
 
-      <h4>📋 Resumen</h4>
-      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Con experiencia en aeronáutica, fintech, edtech y animación 3D, he liderado la transformación de productos digitales fragmentados en ecosistemas coherentes. Mi enfoque combina investigación de campo rigurosa con arquitectura de sistemas escalables.</p>
+      <h4>📋 Summary</h4>
+      <p style="color:var(--txt);line-height:1.7;margin:8px 0">With experience in aviation, fintech, edtech and 3D animation, I have led the transformation of fragmented digital products into coherent ecosystems. My approach combines rigorous field research with scalable system architecture.</p>
 
       <h4>🛠 Stack</h4>
       <div style="margin:8px 0">${stackTags}</div>
 
-      <h4>📬 Contacto directo</h4>
-      <p style="color:var(--txt);line-height:1.7;margin:8px 0">Para consultas, colaboraciones o propuestas: <a href="mailto:${CONFIG.contact.email}">${CONFIG.contact.email}</a></p>
+      <h4>📬 Direct contact</h4>
+      <p style="color:var(--txt);line-height:1.7;margin:8px 0">For inquiries, collaborations or proposals: <a href="mailto:${CONFIG.contact.email}">${t('user_contact_email')}</a></p>
     `;
 
-    const win = Window.create('bio — perfil profesional', '\u{1F464}', content);
+    const win = Window.create('bio — professional profile', '\u{1F464}', content);
 
     // Event listener para descargar CV
     setTimeout(() => {
@@ -44,7 +45,7 @@ export const Bio = {
       if (btn) {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
-          console.log('[SYS] Para descargar tu CV, accede a linkedin.com/in/anasu o envía un email a anazconte@gmail.com');
+          console.log('[SYS] To download your CV, visit linkedin.com/in/anasu or send an email to anazconte@gmail.com');
         });
       }
     }, 50);

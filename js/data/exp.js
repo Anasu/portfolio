@@ -67,12 +67,12 @@ export const EXP = {
   exp001: {
     id: 'exp001',
     titulo: 'E-MANTTO',
-    cat: 'Design System · Aeronáutica',
+    cat: 'Design System · Aviation',
     ano: '2024',
     ico: '\u2708\uFE0F',
-    niv: 'CONFIDENCIAL',
-    det: 'Design system integral para el área de mantenimiento aeronáutico. Centralización de componentes y optimización de flujos de alta densidad operativa.',
-    tech: 'Figma | Design Tokens | AI (MCP) | Gobernanza UX | Storybook',
+    niv: 'CONFIDENTIAL',
+    det: 'Comprehensive design system for the aviation maintenance area. Centralization of components and optimization of high-density operational workflows.',
+    tech: 'Figma | Design Tokens | AI (MCP) | UX Governance | Storybook',
     fch: '03/2024',
     st: 'solved',
     arc: ['/ds/tokens.json', '/ds/components-library.fig', '/ds/patterns-guidelines.pdf', '/ds/ai-mcp-prompts.json'],
@@ -83,27 +83,27 @@ export const EXP = {
       'assets/emantto/screenshot-04.png'
     ],
     impacto: [
-      { lab: 'TTM', val: '7 → 1 mes', desc: '+IA en fase 2' },
-      { lab: 'Adopción', val: '+90%', desc: 'reutilización en células activas' },
-      { lab: 'CSAT', val: '>4.5 / 5', desc: 'satisfacción equipo producto' },
-      { lab: 'Escala', val: '~10 prod.', desc: 'ecosistema unificado' }
+      { lab: 'TTM', val: '7 → 1 month', desc: '+AI in phase 2' },
+      { lab: 'Adoption', val: '+90%', desc: 'reuse in active cells' },
+      { lab: 'CSAT', val: '>4.5 / 5', desc: 'product team satisfaction' },
+      { lab: 'Scale', val: '~10 prod.', desc: 'unified ecosystem' }
     ],
-    desafio: 'El área de mantenimiento operaba con ~10 productos digitales fragmentados, cada uno resolviendo pantallas complejas (filtros, dashboards, formularios) de forma aislada. Esto generaba graves inconsistencias de flujo y UI, elevando el riesgo de error humano en operaciones críticas de seguridad aérea.',
+    desafio: 'The maintenance area operated with ~10 fragmented digital products, each solving complex screens (filters, dashboards, forms) in isolation. This generated serious workflow and UI inconsistencies, increasing the risk of human error in critical air safety operations.',
     estrategia: [
-      { tit: 'Diseño para la Densidad', txt: 'Traduje la identidad visual a contextos industriales sumamente densos, resguardando accesibilidad y consistencia.' },
-      { tit: 'Estandarización Sin Fricción', txt: 'Guías de patrones UI/UX (dashboards/filtros avanzados) + plantillas con componentes intercambiables. Síntesis de soluciones existentes para minimizar resistencia al cambio.' },
-      { tit: 'Eficiencia con IA', txt: 'Modelo MCP + arneses de IA para automatizar tareas operativas diarias del equipo de diseño.' }
+      { tit: 'Design for Density', txt: 'I translated the visual identity into extremely dense industrial contexts, safeguarding accessibility and consistency.' },
+      { tit: 'Frictionless Standardization', txt: 'UI/UX pattern guides (advanced dashboards/filters) + templates with interchangeable components. Synthesis of existing solutions to minimize resistance to change.' },
+      { tit: 'Efficiency with AI', txt: 'MCP model + AI harnesses to automate the design team\'s daily operational tasks.' }
     ]
   },
 
   exp002: {
     id: 'exp002',
     titulo: 'FLUJO',
-    cat: 'Fintech · Inclusión Financiera',
+    cat: 'Fintech · Financial Inclusion',
     ano: '2021',
     ico: '\u{1F4B1}',
-    niv: 'CONFIDENCIAL',
-    det: 'Rediseño de arquitectura, accesibilidad y convergencia nativa para una app de inclusión financiera de uso masivo. Transición tecnológica y unificación de criterios de diseño multiplataforma para eliminar fricciones operativas.',
+    niv: 'CONFIDENTIAL',
+    det: 'Architecture redesign, accessibility and native convergence for a mass-use financial inclusion app. Technological transition and unification of multi-platform design criteria to eliminate operational frictions.',
     tech: 'Sketch to Figma | iOS | Android | WCAG | Handoff',
     fch: '2021',
     st: 'solved',
@@ -115,28 +115,28 @@ export const EXP = {
       'assets/flujo/flujo-04.png'
     ],
     impacto: [
-      { lab: 'Migración', val: '→ 1 año', desc: 'transición integral completa de la app' },
-      { lab: 'Handoff', val: '→ 0 ambig.', desc: 'fuente única de verdad diseño/dev/QA' },
-      { lab: 'Accesibilidad', val: '→ WCAG', desc: 'optimización universal de contraste y tacto' },
-      { lab: 'Convergencia', val: '→ 2 SO', desc: 'eliminación de inconsistencias iOS/Android' }
+      { lab: 'Migration', val: '→ 1 year', desc: 'complete integral transition of the app' },
+      { lab: 'Handoff', val: '→ 0 ambig.', desc: 'single source of truth design/dev/QA' },
+      { lab: 'Accessibility', val: '→ WCAG', desc: 'universal contrast and touch optimization' },
+      { lab: 'Convergence', val: '→ 2 OS', desc: 'elimination of iOS/Android inconsistencies' }
     ],
-    desafio: 'La plataforma operaba sobre una tecnología híbrida con una arquitectura descentralizada, documentación contradictoria y flujos críticos sin registrar. Adicionalmente, existía una grave falta de consistencia entre Android e iOS (sesgo excesivo hacia Material Design) y pantallas clave sin adaptar para accesibilidad.',
+    desafio: 'The platform operated on a hybrid technology with a decentralized architecture, contradictory documentation and critical flows unrecorded. Additionally, there was a serious lack of consistency between Android and iOS (excessive bias toward Material Design) and key screens not adapted for accessibility.',
     estrategia: [
-      { tit: 'Arqueología de Flujos', txt: 'Mapeé y documenté centralizadamente las pantallas y caminos alternativos (happy paths y unhappy paths) para comprender las decisiones de negocio previas antes de rediseñar.' },
-      { tit: 'Accesibilidad Aplicada', txt: 'Modifiqué la interfaz para cumplir estándares WCAG, optimizando contrastes de color, ampliando áreas táctiles a un mínimo de 40px y adaptando la navegación crítica al alcance del pulgar en dispositivos móviles grandes.' },
-      { tit: 'Diferenciación Multiplataforma', txt: 'Creé librerías específicas para iOS (utilizando tipografía San Francisco, iconos nativos, títulos centrados y bordes redondeados adaptados) de forma sincronizada con Android para garantizar una experiencia nativa real en ambos sistemas operativos.' },
-      { tit: 'Estandarización Crítica', txt: 'Diseñé componentes de apoyo y normalicé patrones de flujo de alta fricción (pantallas de carga, comprobantes y recibos de transferencia).' }
+      { tit: 'Flow Archaeology', txt: 'I mapped and centrally documented screens and alternative paths (happy paths and unhappy paths) to understand previous business decisions before redesigning.' },
+      { tit: 'Applied Accessibility', txt: 'I modified the interface to meet WCAG standards, optimizing color contrasts, enlarging touch areas to a minimum of 40px and adapting critical navigation to thumb reach on large mobile devices.' },
+      { tit: 'Multi-platform Differentiation', txt: 'I created specific libraries for iOS (using San Francisco typography, native icons, centered titles and adapted rounded borders) synchronized with Android to guarantee a truly native experience on both operating systems.' },
+      { tit: 'Critical Standardization', txt: 'I designed support components and normalized high-friction flow patterns (loading screens, receipts and transfer confirmations).' }
     ]
   },
 
   exp003: {
     id: 'exp003',
     titulo: 'PUENTE',
-    cat: 'EdTech · Inclusión Digital',
+    cat: 'EdTech · Digital Inclusion',
     ano: '2024',
     ico: '\u{1F393}\uFE0F',
-    niv: 'CONFIDENCIAL',
-    det: 'Plataforma escolar omnicanal (App Móvil para apoderados + Dashboard Web para colegios) diseñada para mitigar brechas tecnológicas, límites de conectividad y barreras culturales en entornos vulnerables.',
+    niv: 'CONFIDENTIAL',
+    det: 'Omnichannel school platform (Mobile App for parents + Web Dashboard for schools) designed to mitigate technology gaps, connectivity limits and cultural barriers in vulnerable settings.',
     tech: 'B2B/B2C | Inclusive Design | Material Design 2 | Product Strategy | Offline UX',
     fch: '05/2024',
     st: 'solved',
@@ -149,44 +149,44 @@ export const EXP = {
       'assets/puente/Myre.png'
     ],
     impacto: [
-      { lab: 'Omnicanalidad', val: '→ 0% dep.', desc: 'contingencia SMS/Push sin datos móviles' },
-      { lab: 'Accesible', val: '→ Base', desc: 'contrastes optimizados + zonas táctiles aumentadas' },
-      { lab: 'Eficiencia B2B', val: '→ 13"', desc: 'dashboard web ultracoracto para portátiles' },
-      { lab: 'Adopción', val: '→ 0 curva', desc: 'apalancada en modelos mentales de apps diarias' }
+      { lab: 'Omnichannel', val: '→ 0% dep.', desc: 'SMS/Push contingency without mobile data' },
+      { lab: 'Accessible', val: '→ Base', desc: 'optimized contrasts + enlarged touch zones' },
+      { lab: 'B2B Efficiency', val: '→ 13"', desc: 'ultracompact web dashboard for laptops' },
+      { lab: 'Adoption', val: '→ 0 curve', desc: 'leveraging daily app mental models' }
     ],
-    desafio: 'La investigación en escuelas de Quilicura reveló una severa brecha de comunicación entre apoderados (locales y migrantes) y el colegio. Las familias enfrentaban barreras como conectividad intermitente (sin datos móviles activos), dispositivos antiguos de gama baja, baja alfabetización digital y dificultades visuales.',
+    desafio: 'Research in Quilicura schools revealed a severe communication gap between parents (local and migrant) and the school. Families faced barriers such as intermittent connectivity (no active mobile data), low-end older devices, low digital literacy and visual difficulties.',
     estrategia: [
-      { tit: 'Alineación con Modelos Mentales', txt: 'Mapeé en terreno las aplicaciones de uso cotidiano de las familias y aproveché esos patrones UX conocidos (utilizando la base de Material Design 2) para eliminar la resistencia y facilitar el aprendizaje autónomo.' },
-      { tit: 'Diseño Inclusivo Extremo', txt: 'Estructuré una jerarquía visual ultra-clara, aumentando los contrastes de color y escalando las dimensiones de botones e inputs para contrarrestar fatiga visual y baja resolución de terminales.' },
-      { tit: 'SMS Fallback (Tecnología/Negocio)', txt: 'Negocié con el equipo técnico y de negocio el despliegue automático de alertas SMS como canal secundario de comunicación para asegurar la recepción del mensaje cuando los apoderados no dispusieran de conexión a internet para notificaciones Push.' },
-      { tit: 'Dashboard Administrativo Eficiente', txt: 'Diseñé la interfaz del personal escolar optimizándola específicamente para Google Chrome en pantallas portátiles de 13 pulgadas, implementando tablas limpias con acciones inmediatas por fila para no sobrecargar de información a los administrativos.' }
+      { tit: 'Alignment with Mental Models', txt: 'I mapped in the field the everyday apps used by families and leveraged those known UX patterns (using the Material Design 2 base) to eliminate resistance and facilitate autonomous learning.' },
+      { tit: 'Extreme Inclusive Design', txt: 'I structured an ultra-clear visual hierarchy, increasing color contrasts and scaling button and input dimensions to counteract visual fatigue and low terminal resolution.' },
+      { tit: 'SMS Fallback (Tech/Business)', txt: 'I negotiated with the technical and business team the automatic deployment of SMS alerts as a secondary communication channel to ensure message receipt when parents didn\'t have internet access for Push notifications.' },
+      { tit: 'Efficient Administrative Dashboard', txt: 'I designed the school staff interface specifically optimized for Google Chrome on 13-inch laptop screens, implementing clean tables with immediate per-row actions to avoid overwhelming administrators with information.' }
     ]
   },
 
   exp004: {
     id: 'exp004',
     titulo: 'NEXUS',
-    cat: 'Dirección Técnica · Animación 3D',
+    cat: 'Technical Direction · 3D Animation',
     ano: '2017',
     ico: '\u{1F4A1}',
-    niv: 'PÚBLICO (CNTV)',
-    det: 'Dirección técnica, optimización de pipelines de renderizado y reestructuración sistémica de assets 3D para una serie de animación nacional financiada con fondos públicos (CNTV).',
+    niv: 'PUBLIC (CNTV)',
+    det: 'Technical direction, render pipeline optimization and systemic restructuring of 3D assets for a national animation series funded with public funds (CNTV).',
     tech: '3D Pipelines | Render Optimization | Technical Direction | Systemic Design | Budget Auditing',
     fch: '2017',
     st: 'solved',
     arc: ['/nexus/render-pipeline-specs.json', '/nexus/camera-rig-presets.ma', '/nexus/character-rigs-fk-ik.fbx', '/nexus/cntv-audit-report.pdf'],
     impacto: [
-      { lab: 'Render', val: '→ 4 meses', desc: 'reducción costos de tiempo de render' },
-      { lab: 'Layout', val: '<50%', desc: 'reducción tiempo de layout' },
-      { lab: 'Auditoría', val: '→ 100%', desc: 'aprobación y cero observaciones CNTV' },
-      { lab: 'Producto', val: '→ Shift', desc: 'traslado de animación a diseño software' }
+      { lab: 'Render', val: '→ 4 months', desc: 'render time cost reduction' },
+      { lab: 'Layout', val: '<50%', desc: 'layout time reduction' },
+      { lab: 'Audit', val: '→ 100%', desc: 'approval and zero CNTV observations' },
+      { lab: 'Product', val: '→ Shift', desc: 'animation shift to software design' }
     ],
-    desafio: 'La producción de la primera temporada de la serie 3D operaba bajo un flujo altamente ineficiente: los fondos tomaban varios minutos en renderizarse para un promedio de 150 planos por episodio. La iluminación se configuraba de manera ad-hoc por escena, generando inconsistencias, problemas de cámara, riesgo de retrasos críticos en las entregas de compromisos estatales y un gasto de recursos técnicos desproporcionado.',
+    desafio: 'The production of the first season of the 3D series operated under a highly inefficient workflow: backgrounds took several minutes to render for an average of 150 shots per episode. Lighting was configured ad-hoc per scene, generating inconsistencies, camera issues, risk of critical delays in state commitment deliveries and disproportionate technical resource expenditure.',
     estrategia: [
-      { tit: 'Optimización de Layouts y Cámara', txt: 'Diseñé un sistema de fondos predeterminados listos para postproducción. Implementé una cámara riggeada con tiros preestablecidos exclusivos para la interacción de personajes con el fondo, estandarizando una focal de 60 mm para los planos generales.' },
-      { tit: 'Modularización de Iluminación', txt: 'Reemplacé la iluminación universal por un sistema dedicado por personaje, importando sets lumínicos preconfigurados según la posición de la cámara. En la temporada 2, simplifiqué radicalmente la renderización mediante técnicas de colores planos y oclusión ambiental (estilo Pocoyó), sacrificando elementos secundarios para blindar la consistencia visual y los plazos de entrega.' },
-      { tit: 'Depuración Sistémica de Rigs', txt: 'Reconstruí rigs defectuosos de personajes clave para desbloquear su potencial técnico. Rediseñé el tallo del personaje Filomena para otorgarle máxima amplitud de movimiento (permitiéndole protagonizar un capítulo completo) e integré sistemas FK/IK en las extremidades de Rocío para resolver las complejas interacciones con la tecnología del entorno.' },
-      { tit: 'Trazabilidad Financiera y Auditoría', txt: 'Supervisé la administración de recursos y el control de insumos en el equipo. Diseñé un pipeline de reportes minuciosos por capítulo, escena y fotograma para auditar cada render, asegurando la trazabilidad absoluta del presupuesto ante las exigencias estatales.' }
+      { tit: 'Layout and Camera Optimization', txt: 'I designed a system of predetermined backgrounds ready for post-production. I implemented a rigged camera with preset angles exclusive for character-background interaction, standardizing a 60mm focal length for general shots.' },
+      { tit: 'Lighting Modularization', txt: 'I replaced universal lighting with a character-dedicated system, importing preconfigured light sets according to camera position. In season 2, I radically simplified rendering through flat colors and ambient occlusion techniques (Pocoyó style), sacrificing secondary elements to safeguard visual consistency and delivery deadlines.' },
+      { tit: 'Systemic Rig Depuration', txt: 'I rebuilt defective rigs of key characters to unlock their technical potential. I redesigned Filomena\'s spine to give it maximum movement range (allowing her to star in a complete chapter) and integrated FK/IK systems in Rocío\'s limbs to resolve complex interactions with the environment technology.' },
+      { tit: 'Financial Traceability and Auditing', txt: 'I supervised resource management and input control within the team. I designed a detailed reporting pipeline by chapter, scene and frame to audit every render, ensuring absolute budget traceability before state requirements.' }
     ]
   }
 

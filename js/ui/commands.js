@@ -9,6 +9,7 @@ import { Contact } from './contact.js';
 import { Bio } from './bio.js';
 import { Quake } from './quake.js';
 import { TERMINAL_JOKES, ERROR_MESSAGES } from './jokes.js';
+import { t } from '../i18n.js';
 
 /** Escribe un mensaje en el panel lateral (registro) */
 export function logToPanel(msg) {
@@ -57,39 +58,39 @@ function cmdLs() {
 /** Muestra ayuda */
 function cmdHelp() {
   const helpText = [
-    '[CMD] ═══ COMANDOS DISPONIBLES ═══',
+    t('cmd_help_title'),
     '',
-    '  Navegación:',
-    '    help / ayuda          → Muestra esta lista de comandos',
-    '    ls / dir              → Lista los expedientes disponibles',
+    t('cmd_nav'),
+    t('cmd_help_cmd'),
+    t('cmd_ls_cmd'),
     '',
-    '  Expedientes:',
-    '    open [id]             → Abre un expediente por ID (ej: open exp001)',
-    '    open [nombre]         → Abre un expediente por nombre (ej: open e-mantto, open flujo)',
+    t('cmd_open_exp'),
+    t('cmd_open_id'),
+    t('cmd_open_name'),
     '',
-    '  Perfil y contacto:',
-    '    about / bio / cv      → Abre tu perfil profesional con enlaces',
-    '    contact / email       → Muestra vías de contacto directo',
+    t('cmd_profile'),
+    t('cmd_about'),
+    t('cmd_contact'),
     '',
-    '  Utilidades:',
-    '    clear / cls           → Limpia el registro del panel lateral',
-    '    date                  → Fecha y hora actual del sistema',
-    '    whoami                → Información del usuario actual',
+    t('cmd_utils'),
+    t('cmd_clear'),
+    t('cmd_date_cmd'),
+    t('cmd_whoami'),
     '',
-    '  ════════════════════════════════',
+    '  ═════════════════════════════════',
     '',
-    '  🥚 Easter eggs — probá estos:',
-    '    sudo, apt-get install   → Comandos de Linux',
+    '  🥚 Easter eggs — try these:',
+    '    sudo, apt-get install   → Linux commands',
     '    dnf update, npm start   → Fedora, Node, Yarn...',
     '    docker run, cargo build → Docker, Rust...',
-    '    select -all, render     → ¿Maya? Nah.',
-    '    exit, reboot            → ¿Querés salir? Jaja.',
+    '    select -all, render     → Maya? Nah.',
+    '    exit, reboot            → Want to leave? Heh.',
     '',
-    '  ════════════════════════════════'
+    '  ═════════════════════════════════'
   ];
 
   helpText.forEach(line => logToPanel(line));
-  Quake.log('[CMD] ═══ COMANDOS DISPONIBLES ═══', 'qt-sys');
+  Quake.log(t('cmd_help_title'), 'qt-sys');
   helpText.slice(1).forEach(line => {
     if (line === '') Quake.log('');
     else Quake.log(line, 'qt-out');
@@ -101,10 +102,10 @@ function cmdOpen(target) {
   const exp = findExp(target);
   if (exp) {
     Window.open(exp);
-    logToPanel('[OPEN] Abriendo: ' + exp.titulo + ' (' + exp.id + ')');
-    Quake.log('[OPEN] Abriendo: ' + exp.titulo + ' (' + exp.id + ')', 'qt-gold');
+    logToPanel('[OPEN] Opening: ' + exp.titulo + ' (' + exp.id + ')');
+    Quake.log('[OPEN] Opening: ' + exp.titulo + ' (' + exp.id + ')', 'qt-gold');
   } else {
-    const errMsg = '[ERR] Expediente no encontrado: "' + target + '". Escribe "ls" para ver los disponibles.';
+    const errMsg = '[ERR] File not found: "' + target + '". Type "ls" to see available files.';
     logToPanel(errMsg);
     Quake.log(errMsg, 'qt-err');
   }
@@ -112,14 +113,15 @@ function cmdOpen(target) {
 
 /** Muestra fecha y hora */
 function cmdDate() {
-  const dateStr = new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+  const locale = t('lang_es') === 'ES' ? 'es-CL' : 'en-US';
+  const dateStr = new Date().toLocaleString(locale);
   logToPanel('[DATE] ' + dateStr);
   Quake.log('[DATE] ' + dateStr, 'qt-sys');
 }
 
 /** Muestra info del usuario */
 function cmdWhoami() {
-  const msg = '[WHOAMI] investigador@panel — Detective UX/UI, nivel clearance Ω';
+  const msg = '[WHOAMI] investigator@panel — UX/UI Detective, clearance level Ω';
   logToPanel(msg);
   Quake.log(msg, 'qt-gold');
 }
@@ -133,7 +135,7 @@ function cmdReset() {
 function tryPartialMatch(cmd) {
   for (const key of Object.keys(TERMINAL_JOKES)) {
     if (key.startsWith(cmd) || cmd.startsWith(key.substring(0, 3))) {
-      const msg = '[SYS] ¿Quisiste decir: "' + key + '"? → ' + TERMINAL_JOKES[key];
+      const msg = '[SYS] Did you mean: "' + key + '"? → ' + TERMINAL_JOKES[key];
       logToPanel(msg);
       Quake.log(msg, 'qt-sys');
       return true;
@@ -154,8 +156,8 @@ function handleCommand(cmd) {
   if (cmd === 'help' || cmd === 'ayuda') { cmdHelp(); return; }
   if (cmd === 'ls' || cmd === 'dir') { cmdLs(); return; }
   if (cmd === 'about' || cmd === 'bio' || cmd === 'cv') { Bio.open(); return; }
-  if (cmd === 'clear' || cmd === 'cls') { clearPanel(); logToPanel('[SYS] Registro purgado con éxito.'); Quake.log('[SYS] Registro purgado con éxito.', 'qt-sys'); return; }
-  if (cmd === 'contact' || cmd === 'email') { Contact.openFromCommand(); Quake.log('[MAIL] Abriendo terminal de correo electrónico...', 'qt-sys'); logToPanel('[MAIL] Terminal de correo abierta.'); return; }
+  if (cmd === 'clear' || cmd === 'cls') { clearPanel(); logToPanel(t('msg_clear_ok')); Quake.log(t('msg_clear_ok'), 'qt-sys'); return; }
+  if (cmd === 'contact' || cmd === 'email') { Contact.openFromCommand(); Quake.log(t('msg_mail_quake'), 'qt-sys'); logToPanel(t('msg_mail_open')); return; }
   if (cmd === 'date') { cmdDate(); return; }
   if (cmd === 'whoami') { cmdWhoami(); return; }
   if (cmd === 'reset') { cmdReset(); return; }

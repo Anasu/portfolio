@@ -57,6 +57,11 @@
     display: none;
   }
 
+  /* Mostrar selector de idioma en taskbar cuando panel está oculto */
+  .tbar-lang {
+    display: flex !important;
+  }
+
   /* Grid más compacto */
   .grid {
     padding: 16px;

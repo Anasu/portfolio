@@ -4,87 +4,87 @@
  */
 
 export const TERMINAL_JOKES = {
-  'sudo': '[SYS] No tienes privilegios de superusuario aquí, detective. Esto es un portafolio, no un servidor root.',
-  'sudo rm -rf /': '[ALERT] Comando prohibido detectado. El sistema de archivos está protegido por el nivel de clearance Ω. Nice try.',
-  'rm -rf /': '[ALERT] Eliminar todo? Ni lo intentes. Los expedientes están respaldados en triple copia con cifrado AES-256.',
-  'ls -la': '[LS -la] total 4\ndrwx------   4 investigador staff  128  [acceso denegado — nivel Ω requerido]\n-rw-------   1 investigador staff 8192  clasificado\n...',
-  'rm': '[SYS] No se permiten operaciones destructivas. Este es un entorno de solo lectura para visualización.',
-  'cat /etc/passwd': '[SYS] Acceso denegado. El archivo passwd está encriptado con clave cuántica. Solo el administrador del sistema (yo) puede leerlo.',
-  'ifconfig': '[NET] eth0: inet 10.Ω.0.42 — enlace seguro nivel Ω activo. SSID: "CLASSIFIED"',
-  'ping': '[NET] ping: host no especificado. Prueba: ping google.com (pero aquí solo hay expedientes).',
-  'kill': '[SYS] kill -9? Aquí nadie se mata, solo se resuelven problemas. 🕵️',
-  'apt-get install': '[SYS] No hay repositorios apt en este sistema. Solo design tokens y componentes reutilizables.',
-  'git commit': '[GIT] Ya hiciste un commit hace poco: "mover breadcrumb arriba a la izquierda como barra de navegación". Todo limpio.',
-  'git push': '[GIT] Push exitoso. Los cambios están en Forgejo y GitHub. No olvides el mensaje del commit, detective.',
-  'chmod 777': '[SYS] Permiso denegado. Aquí nadie tiene chmod 777. La seguridad es nivel Ω.',
-  'make me a sandwich': '[SYS] "Make me a sandwich" — error 418: I\'m a teapot. El detective está de humor irónico hoy.',
-  'hello': '[USR] Hola, detective. Escribe "help" para ver los comandos disponibles.',
-  'hi': '[USR] Hey. ¿Buscas algún expediente en particular? Prueba: ls',
-  'whoami': '[WHOAMI] Usuario: investigador@panel\nNivel de clearance: Ω\nRol: Detective UX/UI\nEstado: ONLINE',
-  'pwd': '[FS] /home/investigador/expedientes — directorio actual de trabajo.',
-  'exit': '[SYS] No puedes salir. Este portafolio es un bucle infinito de excelencia en diseño. 🔄',
-  'quit': '[SYS] Quit? Ni hablar. Aún quedan expedientes por explorar.',
-  'reboot': '[SYS] Reiniciando... > BIOS v4.2... OK\n> SISTEMA LISTO\nYa estás de vuelta. Todo funciona igual de bien.',
-  'sudo make me a sandwich': '[ALERT] Comando compuesto detectado. No puedes usar sudo para hacer sándwiches en este sistema.',
+  'sudo': '[SYS] You don\'t have superuser privileges here, detective. This is a portfolio, not a root server.',
+  'sudo rm -rf /': '[ALERT] Forbidden command detected. The file system is protected by Ω clearance level. Nice try.',
+  'rm -rf /': '[ALERT] Delete everything? Don\'t even try. The files are backed up in triplicate with AES-256 encryption.',
+  'ls -la': '[LS -la] total 4\ndrwx------   4 investigator staff  128  [access denied — Ω level required]\n-rw-------   1 investigator staff 8192  classified\n...',
+  'rm': '[SYS] Destructive operations are not allowed. This is a read-only environment for viewing.',
+  'cat /etc/passwd': '[SYS] Access denied. The passwd file is encrypted with a quantum key. Only the system administrator (me) can read it.',
+  'ifconfig': '[NET] eth0: inet 10.Ω.0.42 — secure Ω level link active. SSID: "CLASSIFIED"',
+  'ping': '[NET] ping: host not specified. Try: ping google.com (but here there are only files).',
+  'kill': '[SYS] kill -9? Nobody dies here, we only solve problems. 🕵️',
+  'apt-get install': '[SYS] There are no apt repositories in this system. Only design tokens and reusable components.',
+  'git commit': '[GIT] You committed something recently: "move breadcrumb up to the left as navigation bar". All clean.',
+  'git push': '[GIT] Push successful. Changes are on Forgejo and GitHub. Don\'t forget the commit message, detective.',
+  'chmod 777': '[SYS] Permission denied. Nobody has chmod 777 here. Security is Ω level.',
+  'make me a sandwich': '[SYS] "Make me a sandwich" — error 418: I\'m a teapot. The detective is in an ironic mood today.',
+  'hello': '[USR] Hello, detective. Type "help" to see available commands.',
+  'hi': '[USR] Hey. Looking for a specific file? Try: ls',
+  'whoami': '[WHOAMI] User: investigator@panel\nClearance level: Ω\nRole: UX/UI Detective\nStatus: ONLINE',
+  'pwd': '[FS] /home/investigator/files — current working directory.',
+  'exit': '[SYS] You can\'t leave. This portfolio is an infinite loop of design excellence. 🔄',
+  'quit': '[SYS] Quit? No way. There are still files to explore.',
+  'reboot': '[SYS] Rebooting... > BIOS v4.2... OK\n> SYSTEM READY\nYou\'re back. Everything works just as well.',
+  'sudo make me a sandwich': '[ALERT] Compound command detected. You can\'t use sudo to make sandwiches in this system.',
 
   // --- DNF (Fedora/RHEL) ---
-  'dnf update': '[SYS] Este no es Fedora, detective. Aquí las actualizaciones son de portfolio, no del kernel. Pero buena intención.',
-  'dnf install': '[SYS] dnf install? Acá no hay paquetes RPM — solo componentes de diseño y design tokens. Try `open exp001` instead.',
+  'dnf update': '[SYS] This isn\'t Fedora, detective. Updates here are for portfolios, not the kernel. But good intention.',
+  'dnf install': '[SYS] dnf install? There are no RPM packages here — only design components and design tokens. Try `open exp001` instead.',
 
   // --- NPM / Node ---
-  'npm start': '[SYS] npm start? Aquí el proyecto ya está corriendo, detective. No necesitas package.json para explorar los expedientes.',
-  'npm install': '[SYS] No hay node_modules aquí — solo expedientes clasificados. Los dependencies son: creatividad + curiosidad.',
-  'npm run': '[SYS] npm run? El único script disponible es `open [expediente]`. Pero puedes probar: npm run detective',
+  'npm start': '[SYS] npm start? The project is already running here, detective. You don\'t need package.json to explore the files.',
+  'npm install': '[SYS] No node_modules here — only classified files. Dependencies are: creativity + curiosity.',
+  'npm run': '[SYS] npm run? The only available script is `open [file]`. But you can try: npm run detective',
 
   // --- Yarn ---
-  'yarn install': '[SYS] Yarn? Acá no hilamos paquetes, hilamos experiencias. Los expedientes están listos para abrir.',
-  'yarn start': '[SYS] Ya estás dentro del proyecto, detective. No hace falta yarn start — solo escribe `ls` y explora.',
+  'yarn install': '[SYS] Yarn? We don\'t bundle packages here, we weave experiences. Files are ready to open.',
+  'yarn start': '[SYS] You\'re already in the project, detective. No need for yarn start — just type `ls` and explore.',
 
   // --- Pip (Python) ---
-  'pip install': '[SYS] pip install? Esto no es un entorno Python. Acá las librerías son Figma, Storybook y design tokens.',
-  'pip install requests': '[SYS] No necesitas requests para navegar — solo `open [nombre]`. Aunque los datos sí se piden con curiosidad.',
+  'pip install': '[SYS] pip install? This isn\'t a Python environment. Libraries here are Figma, Storybook and design tokens.',
+  'pip install requests': '[SYS] You don\'t need requests to navigate — just `open [name]`. Although data is indeed requested with curiosity.',
 
   // --- Cargo (Rust) ---
-  'cargo build': '[SYS] cargo build? Acá no compilamos en Rust, construimos en UX. Pero el diseño está optimizado como código nativo.',
-  'cargo run': '[SYS] El proyecto ya está corriendo. No hace falta cargo run — solo `open exp001` para empezar.',
+  'cargo build': '[SYS] cargo build? We don\'t compile in Rust here, we build in UX. But the design is optimized like native code.',
+  'cargo run': '[SYS] The project is already running. No need for cargo run — just `open exp001` to start.',
 
   // --- Make ---
-  'make': '[SYS] make? Acá no hay Makefile — solo expedientes. Pero si hiciera falta, el target sería: make experience-awesome',
-  'make all': '[SYS] make all ya se ejecutó al cargar el sistema. Todos los expedientes están compilados y listos.',
+  'make': '[SYS] make? There\'s no Makefile here — only files. But if needed, the target would be: make experience-awesome',
+  'make all': '[SYS] make all already executed on system load. All files are compiled and ready.',
 
   // --- Docker ---
-  'docker run': '[SYS] docker run? No hay contenedores aquí — solo ventanas de expedientes corriendo nativamente. 100% host performance.',
-  'docker ps': '[SYS] docker ps? Las únicas containers running son las ventanas del panel. Usa `ls` para listarlas.',
+  'docker run': '[SYS] docker run? No containers here — only file windows running natively. 100% host performance.',
+  'docker ps': '[SYS] docker ps? The only containers running are the panel windows. Use `ls` to list them.',
 
   // --- Composer (PHP) ---
-  'composer install': '[SYS] composer install? Acá no gestionamos dependencies PHP — solo design systems y flujos de trabajo.',
+  'composer install': '[SYS] composer install? We don\'t manage PHP dependencies here — only design systems and workflows.',
 
   // --- Bundle (Ruby) ---
-  'bundle install': '[SYS] bundle install? No hay Gemfile en este proyecto. Los gems son: creatividad, estrategia y pixel-perfect.',
+  'bundle install': '[SYS] bundle install? There\'s no Gemfile in this project. The gems are: creativity, strategy and pixel-perfect.',
 
   // --- Maya / MEL ---
-  'select -all': '[MAYA] Nice try, detective. Esto no es Maya — no hay viewport para seleccionar todo. Pero sí puedes ver todos los expedientes con `ls`.',
-  'selectAll': '[MAYA] selectAll? Acá no hay escena 3D, solo expedientes 2D. Prueba: `ls` para listar todo el contenido.',
-  'polySphere': '[MAYA] polySphere? Esto no es Maya, detective. No creamos esferas aquí — creamos interfaces. Pero buen intento con el modeling.',
-  'polyCube': '[MAYA] polyCube? Ni modo de crear primitivas 3D en un portafolio web. Acá las cajas son cards de expedientes.',
-  'polyCylinder': '[MAYA] polyCylinder? Acá no hay cilindros — solo datos, diseño y estrategia. El viewport es este panel, detective.',
-  'move': '[MAYA] move? Los objetos no se mueven con el comando MEL aquí. Pero los expedientes sí fluyen entre secciones.',
-  'rotate': '[MAYA] rotate? Acá no rotamos viewports — rotamos perspectivas de producto. Eso se hace en la estrategia, no en MEL.',
-  'scale': '[MAYA] scale? No escalamos polígonos, escalamos experiencias. Pero puedes ampliar expedientes con `open [id]`.',
-  'setKeyframe': '[MAYA] setKeyframe? Esto no es Maya — no hay línea de tiempo ni animación MEL. Los flujos son estáticos pero potentes.',
-  'keyframe': '[MAYA] keyframe? Acá no keyteamos propiedades — keyteamos decisiones de diseño. Eso queda en los expedientes.',
-  'playbackOptions': '[MAYA] playbackOptions? No hay reproducción 3D aquí. Pero los expedientes tienen su propio ritmo de storytelling.',
-  'render': '[MAYA] render? Acá no renderizamos escenas Maya — renderizamos interfaces directamente en el browser. Sin Arnold, sin mental ray.',
-  'renderSceneButton': '[MAYA] renderSceneButton? No hay botón de render en este panel. Solo botones de expedientes y un detective curioso.',
-  'file -new': '[MAYA] file -new? Acá no creamos escenas nuevas — creamos experiencias. Pero puedes explorar otros expedientes con `open [id]`.',
-  'file -open': '[MAYA] file -open? Esto no es Maya, detective. Para abrir contenido usa: `open [nombre o id del expediente]`.',
-  'hotkey': '[MAYA] hotkey? Acá los shortcuts son: `open`, `ls`, `help`. No hay Ctrl+Q para query — pero sí Ctrl+` para la consola, detective.',
-  'delete': '[MAYA] delete? Esto no es Maya viewport. Acá no borramos polyMeshes — solo se eliminan los mal diseño. Y eso no existe aquí.',
+  'select -all': '[MAYA] Nice try, detective. This isn\'t Maya — there\'s no viewport to select all. But you can see all files with `ls`.',
+  'selectAll': '[MAYA] selectAll? There\'s no 3D scene here, only 2D files. Try: `ls` to list all content.',
+  'polySphere': '[MAYA] polySphere? This isn\'t Maya, detective. We don\'t create spheres here — we create interfaces. But good attempt at modeling.',
+  'polyCube': '[MAYA] polyCube? No way to create 3D primitives in a web portfolio. Here the boxes are file cards.',
+  'polyCylinder': '[MAYA] polyCylinder? There are no cylinders here — only data, design and strategy. The viewport is this panel, detective.',
+  'move': '[MAYA] move? Objects don\'t move with MEL commands here. But files do flow between sections.',
+  'rotate': '[MAYA] rotate? We don\'t rotate viewports here — we rotate product perspectives. That\'s done in strategy, not in MEL.',
+  'scale': '[MAYA] scale? We don\'t scale polygons, we scale experiences. But you can enlarge files with `open [id]`.',
+  'setKeyframe': '[MAYA] setKeyframe? This isn\'t Maya — there\'s no timeline or MEL animation. Flows are static but powerful.',
+  'keyframe': '[MAYA] keyframe? We don\'t keyframe properties here — we keyframe design decisions. That stays in the files.',
+  'playbackOptions': '[MAYA] playbackOptions? No 3D playback here. But files have their own storytelling rhythm.',
+  'render': '[MAYA] render? We don\'t render Maya scenes here — we render interfaces directly in the browser. No Arnold, no mental ray.',
+  'renderSceneButton': '[MAYA] renderSceneButton? There\'s no render button in this panel. Only file buttons and a curious detective.',
+  'file -new': '[MAYA] file -new? We don\'t create new scenes here — we create experiences. But you can explore other files with `open [id]`.',
+  'file -open': '[MAYA] file -open? This isn\'t Maya, detective. To open content use: `open [name or id of file]`.',
+  'hotkey': '[MAYA] hotkey? Shortcuts here are: `open`, `ls`, `help`. No Ctrl+Q for query — but there is Ctrl+` for the console, detective.',
+  'delete': '[MAYA] delete? This isn\'t Maya viewport. We don\'t delete polyMeshes here — only bad design gets deleted. And that doesn\'t exist here.',
 };
 
 /** Mensajes de error genéricos (se eligen al azar) */
 export const ERROR_MESSAGES = [
-  '[ERR] Comando desconocido: "%s". Escribe "help" para ver los comandos disponibles.',
-  '[ERR] "%s" no es reconocido. El detective necesita más información. Prueba: help',
-  '[SYS] No reconozco ese comando. Parece código clasificado... o simplemente un error. Escribe "help".',
+  '[ERR] Unknown command: "%s". Type "help" to see available commands.',
+  '[ERR] "%s" is not recognized. The detective needs more info. Try: help',
+  '[SYS] I don\'t recognize that command. It looks like classified code... or just an error. Type "help".',
 ];

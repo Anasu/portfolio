@@ -5,6 +5,7 @@
 
 import { Quake } from './quake.js';
 import { processCommand, logToPanel } from './commands.js';
+import { t } from '../i18n.js';
 
 export function renderConsole() {
   const consoleBar = document.querySelector('.console-bar');
@@ -13,11 +14,11 @@ export function renderConsole() {
   // Crear prompt + input
   const prompt = document.createElement('span');
   prompt.className = 'cp';
-  prompt.textContent = 'investigador@panel:~$ ';
+  prompt.textContent = t('console_prompt');
 
   const input = document.createElement('input');
   input.id = 'cin';
-  input.placeholder = '_ comando...';
+  input.placeholder = t('console_placeholder');
   input.spellcheck = 'false';
   input.autocomplete = 'off';
   input.type = 'text';
@@ -29,7 +30,7 @@ export function renderConsole() {
   const openBtn = document.createElement('button');
   openBtn.type = 'button';
   openBtn.className = 'quake-toggle-btn';
-  openBtn.title = 'Abrir terminal (toggle)';
+  openBtn.title = t('quake_toggle_title');
   openBtn.textContent = '^';
   openBtn.addEventListener('click', e => {
     e.stopPropagation();
@@ -42,7 +43,7 @@ export function renderConsole() {
   const resetBtn = document.createElement('button');
   resetBtn.type = 'button';
   resetBtn.className = 'quake-reset';
-  resetBtn.title = 'Restaurar tamaño de terminal (reset)';
+  resetBtn.title = t('quake_reset_title');
   resetBtn.textContent = '↕';
   resetBtn.addEventListener('click', () => {
     Quake.resetHeight();
