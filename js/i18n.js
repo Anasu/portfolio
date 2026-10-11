@@ -26,6 +26,11 @@ const FALLBACK_ES = {
   tb_brand: '⌘ SISTEMA v2.7b',
   tb_clearance: 'DETECTIVE // CLEARANCE: NIVEL-Ω',
 
+  // Quick View toggle
+  qv_title: 'Vista rápida — mostrar lista de proyectos',
+  qv_label: 'Alternar vista de proyectos',
+  qv_close: 'Cerrar vista rápida',
+
   // Breadcrumb
   bc_prompt: '> C:\\EXPEDIENTES> ',
   bc_hint: 'selecciona una carpeta para abrir expediente',
@@ -207,6 +212,11 @@ const FALLBACK_EN = {
   // Taskbar
   tb_brand: '⌘ SYSTEM v2.7b',
   tb_clearance: 'DETECTIVE // CLEARANCE: LEVEL-Ω',
+
+  // Quick View toggle
+  qv_title: 'Quick view — show project list',
+  qv_label: 'Toggle project overview',
+  qv_close: 'Close quick view',
 
   // Breadcrumb
   bc_prompt: '> C:\\FILES\\>',

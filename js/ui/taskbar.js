@@ -1,6 +1,7 @@
 /* TASKBAR — Barra superior con reloj, clearance y selector de idioma (mobile) */
 import { makeEl } from './utils.js';
 import { t, getLang } from '../i18n.js';
+import { toggleAccessibleView } from './accessible.js';
 
 let langBtns = [];
 
@@ -39,8 +40,27 @@ export function renderTaskbar() {
   const taskbar = document.getElementById('taskbar-top');
   const fragment = document.createDocumentFragment();
 
-  const brand = makeEl('span', '\u2318 SISTEMA v2.7b', { class: 'tbar-brand' });
-  const left = makeEl('span', 'DETECTIVE // CLEARANCE: NIVEL-\u03A9', { class: 'tbar-left' });
+  const brand = makeEl('span', t('tb_brand'), { class: 'tbar-brand' });
+  const left = makeEl('span', t('tb_clearance'), { class: 'tbar-left' });
+
+  // Botón "Quick View" — abre overlay de proyectos y perfil
+  const quickViewBtn = makeEl('button', '📋', {
+    class: 'quick-view-btn',
+    title: t('qv_title') || 'Vista rápida',
+    'aria-label': t('qv_label') || 'Alternar vista de proyectos',
+  });
+  quickViewBtn.addEventListener('click', toggleAccessibleView);
+  left.appendChild(quickViewBtn);
+
+  // Cerrar vista rápida con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const container = document.getElementById('accessible-content');
+      if (container && container.classList.contains('visible')) {
+        toggleAccessibleView();
+      }
+    }
+  });
 
   // Contenedor derecho: separador + idioma + reloj
   const rightGroup = document.createElement('div');
@@ -64,8 +84,15 @@ export function renderTaskbar() {
 
   rightGroup.appendChild(clock);
 
-  fragment.appendChild(brand);
-  fragment.appendChild(left);
+  // Brand y clearance van primero
+  const leftGroup = document.createElement('div');
+  leftGroup.style.display = 'flex';
+  leftGroup.style.alignItems = 'center';
+  leftGroup.style.gap = '12px';
+  leftGroup.appendChild(brand);
+  leftGroup.appendChild(left);
+
+  fragment.appendChild(leftGroup);
   fragment.appendChild(rightGroup);
   taskbar.appendChild(fragment);
 

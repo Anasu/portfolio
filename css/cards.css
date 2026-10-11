@@ -90,3 +90,10 @@
   font-size: 3rem;
   line-height: 1;
 }
+
+/* Focus visible para navegación por teclado */
+.folder:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+  background: rgba(201, 168, 76, .15);
+}

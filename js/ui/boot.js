@@ -11,6 +11,10 @@ export class Boot {
     const bootText = document.getElementById('boot-text');
     const bootBar = document.getElementById('boot-bar');
 
+    // Detectar prefers-reduced-motion
+    const motionPref = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const reducedMotion = motionPref.matches;
+
     // Construir mensajes de boot usando i18n
     const messages = [
       t('boot_bios')(CONFIG.system.biosVersion),
@@ -21,29 +25,40 @@ export class Boot {
       '> UI: escritorio listo...'
     ];
 
+    const charDelay = reducedMotion ? 0 : (3 + Math.random() * 5);
+    const lineDelay = reducedMotion ? 0 : (30 + Math.random() * 40);
+
     for (let i = 0; i < messages.length; i++) {
       const line = document.createElement('div');
       bootText.appendChild(line);
-      for (let j = 0; j < messages[i].length; j++) {
-        line.textContent = messages[i].substring(0, j + 1);
-        await this.wait(3 + Math.random() * 5);
+      if (!reducedMotion) {
+        for (let j = 0; j < messages[i].length; j++) {
+          line.textContent = messages[i].substring(0, j + 1);
+          await this.wait(charDelay);
+        }
+      } else {
+        line.textContent = messages[i];
       }
       if (bootBar) bootBar.style.width = ((i + 1) / messages.length * 95) + '%';
       bootText.scrollTop = bootText.scrollHeight;
-      await this.wait(30 + Math.random() * 40);
+      await this.wait(lineDelay);
     }
 
-    // "SISTEMA LISTO" con cursor parpadeante (2 nodos, sin innerHTML)
+    // "SISTEMA LISTO" con cursor parpadeante (sin efecto si reduced-motion)
     const doneLine = document.createElement('div');
-    doneLine.textContent = '> SISTEMA LISTO';
-    doneLine.appendChild(makeEl('span', '', { class: 'cur' }));
+    doneLine.textContent = '> ' + t('boot_ready');
+    if (!reducedMotion) {
+      doneLine.appendChild(makeEl('span', '', { class: 'cur' }));
+    }
     bootText.appendChild(doneLine);
-    await this.wait(200);
 
     if (bootBar) bootBar.style.width = '100%';
 
+    const delayBeforeHide = reducedMotion ? 100 : 200;
+    await this.wait(delayBeforeHide);
+
     const bootEl = document.getElementById('boot-screen');
-    bootEl.style.transition = 'opacity .3s';
+    bootEl.style.transition = reducedMotion ? 'none' : 'opacity .3s';
     setTimeout(() => { bootEl.style.opacity = '0' }, 50);
 
     const self = this;
@@ -56,7 +71,16 @@ export class Boot {
         Contact.renderIcon();
       }
     };
-    window.addEventListener('transitionend', onTransEnd, false);
+
+    if (reducedMotion) {
+      // Sin transición — mostrar inmediatamente
+      bootEl.style.display = 'none';
+      document.getElementById('desktop').classList.remove('hidden');
+      self.renderFolders();
+      Contact.renderIcon();
+    } else {
+      window.addEventListener('transitionend', onTransEnd, false);
+    }
   }
 
   wait(ms) { return new Promise(r => setTimeout(r, ms)); }

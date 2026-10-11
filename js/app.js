@@ -5,6 +5,7 @@ import { renderPanel } from './ui/panel.js';
 import { renderTaskbar } from './ui/taskbar.js';
 import { renderConsole } from './ui/console.js';
 import { initI18n, setLang, getLang } from './i18n.js';
+import { initAccessibleContent } from './ui/accessible.js';
 
 /** Actualiza metadatos HTML según el idioma activo */
 function updateMetaTags(lang) {
@@ -51,6 +52,9 @@ async function main() {
   // 1. Inicializar i18n antes que cualquier UI
   await initI18n();
   updateMetaTags(getLang());
+
+  // Generar contenido accesible (oculto, listo para Quick View)
+  initAccessibleContent();
 
   renderTaskbar();
   renderPanel();
