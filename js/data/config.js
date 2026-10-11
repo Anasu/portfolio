@@ -14,7 +14,7 @@ export const CONFIG = Object.freeze({
 
   // Usuario / perfil profesional
   user: {
-    name: 'Anasú',
+    name: 'Ana Zúñiga Conte',
     role: 'Diseñador UX/UI · Director Técnico',
     roles: ['Diseñador UX/UI', 'Director Técnico'],
     bio: 'Diseñador de experiencias digitales con enfoque en accesibilidad, estrategia de producto y dirección técnica. Especializado en design systems, inclusión digital y optimización de flujos complejos.',

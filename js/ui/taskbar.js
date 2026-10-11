@@ -52,6 +52,17 @@ export function renderTaskbar() {
   quickViewBtn.addEventListener('click', toggleAccessibleView);
   left.appendChild(quickViewBtn);
 
+  // Cerrar vista rápida con Escape (solo una vez, al inicio)
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+      const container = document.getElementById('accessible-content');
+      if (container && container.classList.contains('visible')) {
+        toggleAccessibleView();
+      }
+    }
+  };
+  document.addEventListener('keydown', handleEscape);
+
   // Cerrar vista rápida con Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {

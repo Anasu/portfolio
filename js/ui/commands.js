@@ -8,6 +8,7 @@ import { Window } from './window.js';
 import { Contact } from './contact.js';
 import { Bio } from './bio.js';
 import { Quake } from './quake.js';
+import { toggleAccessibleView } from './accessible.js';
 import { TERMINAL_JOKES, ERROR_MESSAGES } from './jokes.js';
 import { t } from '../i18n.js';
 
@@ -68,6 +69,8 @@ function cmdHelp() {
     t('cmd_open_id'),
     t('cmd_open_name'),
     '',
+    '    quickview               → Abre la vista rápida de todos los proyectos',
+    '',
     t('cmd_profile'),
     t('cmd_about'),
     t('cmd_contact'),
@@ -109,6 +112,13 @@ function cmdOpen(target) {
     logToPanel(errMsg);
     Quake.log(errMsg, 'qt-err');
   }
+}
+
+/** Abre la vista rápida de todos los proyectos */
+function cmdQuickView() {
+  toggleAccessibleView();
+  logToPanel('[QV] Quick view opened — project overview.');
+  Quake.log('[QV] Quick view opened — project overview.', 'qt-gold');
 }
 
 /** Muestra fecha y hora */
@@ -161,6 +171,7 @@ function handleCommand(cmd) {
   if (cmd === 'date') { cmdDate(); return; }
   if (cmd === 'whoami') { cmdWhoami(); return; }
   if (cmd === 'reset') { cmdReset(); return; }
+  if (cmd === 'quickview' || cmd === 'qv') { cmdQuickView(); return; }
 
   // Jokes directos
   if (TERMINAL_JOKES[cmd]) {

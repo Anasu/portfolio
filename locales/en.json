@@ -8,25 +8,20 @@
   "panel_classified": "CLASSIFIED",
   "panel_uptime": "UPTIME",
   "panel_log": "LOG",
-
   "tb_brand": "⌘ SYSTEM v2.7b",
   "tb_clearance": "DETECTIVE // CLEARANCE: LEVEL-Ω",
-
   "bc_prompt": "> C:\\FILES\\>",
   "bc_hint": "select a folder to open file",
-
   "console_prompt": "investigator@panel:~$ ",
   "console_placeholder": "_ command...",
   "quake_toggle_title": "Open terminal (toggle)",
   "quake_reset_title": "Reset terminal size (reset)",
-
   "log_boot": "[SYS] boot_complete",
   "log_net": "[NET] secure_host",
   "log_auth": "[AUTH] clearance=LEVEL-Ω",
   "log_fs": "[FS] /files mounted",
   "log_db": "[DB] pool ok",
   "log_mon": "[MON] ONLINE",
-
   "win_minimize": "Minimize window",
   "win_close": "Close window",
   "win_cat_label": "CATEGORY",
@@ -39,7 +34,6 @@
   "win_challenge_title": "THE CHALLENGE",
   "win_strategy_title": "STRATEGY AND ACTION",
   "win_evidence_title": "EVIDENCE",
-
   "contact_email_label": "FROM",
   "contact_to_label": "TO",
   "contact_cc_label": "CC",
@@ -54,11 +48,9 @@
   "contact_success_sub": "Your message has been transmitted to the server.\nI'll reply as soon as possible, detective.",
   "contact_err": "[ERR] Transmission failed. Try again.",
   "contact_sending_bar": "[ SENDING ]",
-
   "bio_linkedin": "LinkedIn ↗",
   "bio_github": "GitHub ↗",
   "bio_cv": "Download CV (PDF) ↓",
-
   "cmd_help_title": "[CMD] ═══ AVAILABLE COMMANDS ═══",
   "cmd_nav": "  Navigation:",
   "cmd_help_cmd": "    help                  → Shows this command list",
@@ -73,29 +65,23 @@
   "cmd_clear": "    clear / cls           → Clears the sidebar log",
   "cmd_date_cmd": "    date                  → Current system date and time",
   "cmd_whoami": "    whoami                → Current user information",
-
   "msg_clear_ok": "[SYS] Log purged successfully.",
   "msg_mail_open": "[MAIL] Mail terminal opened.",
   "msg_mail_quake": "[MAIL] Opening email terminal...",
   "msg_terminal_reset": "[SYS] Terminal restored.",
   "msg_qt_cmd": "$ ",
   "msg_usr_log": "[USR] ",
-
   "err_unknown_cmd": "[ERR] Unknown command: \"%s\". Type \"help\" to see available commands.",
   "err_not_recognized": "[ERR] \"%s\" is not recognized. The detective needs more info. Try: help",
   "err_unrecognized": "[SYS] I don't recognize that command. It looks like classified code... or just an error. Type \"help\".",
-
   "exp_not_found": "File not found: \"%s\". Type \"ls\" to see available files.",
-
   "meta_title": "Investigator's Panel — Portfolio",
   "meta_desc": "Professional UX/UI design, technical direction and product strategy portfolio. Case files from E-MANTTO, FLUJO, PUENTE and NEXUS.",
   "og_title": "Investigator's Panel — Portfolio",
   "og_desc": "Professional UX/UI design, technical direction and product strategy portfolio.",
-
   "lang_selector_label": "LANG",
   "lang_es": "ES",
   "lang_en": "EN",
-
   "exp001_titulo": "E-MANTTO",
   "exp001_cat": "Design System · Aviation",
   "exp001_niv": "CONFIDENTIAL",
@@ -116,7 +102,6 @@
   "exp001_estrategia_1_txt": "UI/UX pattern guides (advanced dashboards/filters) + templates with interchangeable components. Synthesis of existing solutions to minimize resistance to change.",
   "exp001_estrategia_2_tit": "Efficiency with AI",
   "exp001_estrategia_2_txt": "MCP model + AI harnesses to automate the design team's daily operational tasks.",
-
   "exp002_titulo": "FLUJO",
   "exp002_cat": "Fintech · Financial Inclusion",
   "exp002_niv": "CONFIDENTIAL",
@@ -139,7 +124,6 @@
   "exp002_estrategia_2_txt": "I created specific libraries for iOS (using San Francisco typography, native icons, centered titles and adapted rounded borders) synchronized with Android to guarantee a truly native experience on both operating systems.",
   "exp002_estrategia_3_tit": "Critical Standardization",
   "exp002_estrategia_3_txt": "I designed support components and normalized high-friction flow patterns (loading screens, receipts and transfer confirmations).",
-
   "exp003_titulo": "PUENTE",
   "exp003_cat": "EdTech · Digital Inclusion",
   "exp003_niv": "CONFIDENTIAL",
@@ -162,7 +146,6 @@
   "exp003_estrategia_2_txt": "I negotiated with the technical and business team the automatic deployment of SMS alerts as a secondary communication channel to ensure message receipt when parents didn't have internet access for Push notifications.",
   "exp003_estrategia_3_tit": "Efficient Administrative Dashboard",
   "exp003_estrategia_3_txt": "I designed the school staff interface specifically optimized for Google Chrome on 13-inch laptop screens, implementing clean tables with immediate per-row actions to avoid overwhelming administrators with information.",
-
   "exp004_titulo": "NEXUS",
   "exp004_cat": "Technical Direction · 3D Animation",
   "exp004_niv": "PUBLIC (CNTV)",
@@ -185,7 +168,6 @@
   "exp004_estrategia_2_txt": "I rebuilt defective rigs of key characters to unlock their technical potential. I redesigned Filomena's spine to give it maximum movement range (allowing her to star in a complete chapter) and integrated FK/IK systems in Rocío's limbs to resolve complex interactions with the environment technology.",
   "exp004_estrategia_3_tit": "Financial Traceability and Auditing",
   "exp004_estrategia_3_txt": "I supervised resource management and input control within the team. I designed a detailed reporting pipeline by chapter, scene and frame to audit every render, ensuring absolute budget traceability before state requirements.",
-
   "j_sudo": "[SYS] You don't have superuser privileges here, detective. This is a portfolio, not a root server.",
   "j_sudo_rm": "[ALERT] Forbidden command detected. The file system is protected by Ω clearance level. Nice try.",
   "j_rm_rf": "[ALERT] Delete everything? Don't even try. The files are backed up in triplicate with AES-256 encryption.",
@@ -242,14 +224,13 @@
   "j_file_open": "[MAYA] file -open? This isn't Maya, detective. To open content use: `open [name or id of file]`.",
   "j_hotkey": "[MAYA] hotkey? Shortcuts here are: `open`, `ls`, `help`. No Ctrl+Q for query — but there is Ctrl+` for the console, detective.",
   "j_delete": "[MAYA] delete? This isn't Maya viewport. We don't delete polyMeshes here — only bad design gets deleted. And that doesn't exist here.",
-
-  "user_name": "Anasú",
+  "user_name": "Ana Zúñiga Conte",
   "user_role": "UX/UI Designer · Technical Director",
   "user_bio": "Digital experience designer focused on accessibility, product strategy and technical direction. Specialized in design systems, digital inclusion and optimization of complex workflows.",
   "user_summary": "With experience in aviation, fintech, edtech and 3D animation, I have led the transformation of fragmented digital products into coherent ecosystems. My approach combines rigorous field research with scalable system architecture.",
   "user_contact": "For inquiries, collaborations or proposals: ",
   "user_contact_email": "Send me an email",
-
   "contact_folder_name": "Contact",
-  "contact_folder_cat": "email"
+  "contact_folder_cat": "email",
+  "cmd_quickview": "    quickview               → Opens the quick project overview"
 }
